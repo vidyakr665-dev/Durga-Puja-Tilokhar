@@ -7,1261 +7,1710 @@
 <title>श्री श्री दुर्गा पूजा महोत्सव</title>
 
 <style>
+
+/* =========================
+   BASIC
+========================= */
+
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
 html{
-  scroll-behavior:smooth;
+    scroll-behavior:smooth;
 }
 
 body{
-  font-family:Arial,"Noto Sans Devanagari",sans-serif;
-  background:#fffaf2;
-  color:#4b1008;
-  overflow-x:hidden;
+    font-family:Arial,"Noto Sans Devanagari",sans-serif;
+    background:#fffaf2;
+    color:#4b1008;
+    overflow-x:hidden;
 }
 
-/* ================= HEADER ================= */
+
+/* =========================
+   HEADER
+========================= */
 
 header{
-  width:100%;
-  min-height:68px;
-  background:linear-gradient(90deg,#810707,#b51010,#810707);
-  border-bottom:3px solid #f4c63d;
+    width:100%;
+    min-height:68px;
 
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+    background:linear-gradient(
+        90deg,
+        #810707,
+        #b51010,
+        #810707
+    );
 
-  padding:7px 3.5%;
-  gap:20px;
+    border-bottom:3px solid #f4c63d;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:7px 4%;
+
+    gap:20px;
 }
 
-/* LEFT BRAND */
+
+/* LEFT */
 
 .brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  min-width:330px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    flex-shrink:0;
 }
 
 .logo{
-  width:47px;
-  height:47px;
-  border:2px solid #ffd94c;
-  border-radius:50%;
+    width:47px;
+    height:47px;
 
-  display:flex;
-  align-items:center;
-  justify-content:center;
+    border:2px solid #ffd84c;
+    border-radius:50%;
 
-  color:#ffd94c;
-  font-size:25px;
-  font-weight:bold;
-  flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:#ffd84c;
+    font-size:25px;
+    font-weight:bold;
 }
 
 .brand-text h1{
-  color:#ffe36a;
-  font-size:21px;
-  line-height:1.1;
-  font-weight:900;
+    color:#ffe36a;
+    font-size:21px;
+    line-height:1.1;
+    font-weight:900;
 }
 
 .brand-text p{
-  color:#fff;
-  font-size:11px;
-  margin-top:4px;
-  font-weight:600;
+    color:white;
+    font-size:11px;
+    margin-top:4px;
+    font-weight:bold;
 }
 
-/* CENTER NAVIGATION */
+
+/* CENTER MENU */
 
 nav{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:30px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:30px;
+
+    flex:1;
 }
 
 nav a{
-  color:#fff;
-  text-decoration:none;
-  font-size:14px;
-  font-weight:bold;
-  white-space:nowrap;
+    color:white;
+    text-decoration:none;
+
+    font-size:14px;
+    font-weight:bold;
+
+    white-space:nowrap;
 }
 
 nav a:hover{
-  color:#ffd84d;
+    color:#ffd84d;
 }
+
 
 /* RIGHT */
 
 .jai-mata{
-  background:#ffd84d;
-  color:#760707;
+    background:#ffd84d;
+    color:#720707;
 
-  padding:10px 18px;
-  border-radius:25px;
+    padding:10px 18px;
 
-  font-size:13px;
-  font-weight:900;
+    border-radius:25px;
 
-  white-space:nowrap;
+    font-size:13px;
+    font-weight:900;
+
+    white-space:nowrap;
 }
 
-/* ================= FULL WIDTH POSTER ================= */
+
+/* =========================
+   POSTER SLIDER
+========================= */
 
 .hero{
-  width:100%;
-  overflow:hidden;
-  background:#4a0606;
+    width:100%;
+    background:#4a0606;
+    overflow:hidden;
 }
 
 .slider{
-  width:100%;
-  position:relative;
-  overflow:hidden;
+    width:100%;
+    position:relative;
+    overflow:hidden;
 }
 
 .slides{
-  width:300%;
-  display:flex;
-  transition:transform .7s ease-in-out;
+    width:300%;
+
+    display:flex;
+
+    transition:transform .7s ease-in-out;
 }
 
 .slide{
-  width:33.333333%;
-  flex:0 0 33.333333%;
+    width:33.333333%;
+    flex:0 0 33.333333%;
 
-  display:flex;
-  justify-content:center;
-  align-items:center;
+    background:#4a0606;
 
-  background:#4a0606;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
 .slide img{
-  width:100%;
-  height:auto;
-  display:block;
-  object-fit:contain;
+    width:100%;
+    height:auto;
+
+    display:block;
+
+    object-fit:contain;
 }
+
 
 /* ARROWS */
 
 .arrow{
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
+    position:absolute;
 
-  width:52px;
-  height:52px;
+    top:50%;
+    transform:translateY(-50%);
 
-  border:0;
-  border-radius:50%;
+    width:54px;
+    height:54px;
 
-  background:rgba(65,0,0,.72);
-  color:white;
+    border:none;
+    border-radius:50%;
 
-  font-size:37px;
-  line-height:52px;
+    background:rgba(65,0,0,.72);
 
-  cursor:pointer;
-  z-index:10;
+    color:white;
+
+    font-size:38px;
+    line-height:54px;
+
+    cursor:pointer;
+
+    z-index:20;
 }
 
 .arrow:hover{
-  background:#d59d18;
-  color:#4a0606;
+    background:#d69d17;
+    color:#4a0606;
 }
 
 .arrow.left{
-  left:18px;
+    left:18px;
 }
 
 .arrow.right{
-  right:18px;
+    right:18px;
 }
+
 
 /* DOTS */
 
 .dots{
-  position:absolute;
-  bottom:14px;
-  left:50%;
-  transform:translateX(-50%);
+    position:absolute;
 
-  display:flex;
-  gap:9px;
-  z-index:10;
+    bottom:15px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    display:flex;
+    gap:9px;
+
+    z-index:20;
 }
 
 .dot{
-  width:12px;
-  height:12px;
+    width:13px;
+    height:13px;
 
-  border-radius:50%;
-  background:#fff;
-  border:1px solid #ddd;
+    border-radius:50%;
 
-  cursor:pointer;
+    background:white;
+
+    border:1px solid #ddd;
+
+    cursor:pointer;
 }
 
 .dot.active{
-  background:#ffd52f;
-  transform:scale(1.15);
+    background:#ffd52f;
+    transform:scale(1.15);
 }
 
-/* ================= COMMON WIDTH ================= */
 
-.container{
-  width:92%;
-  max-width:1450px;
-  margin:auto;
-}
-
-/* ================= THREE CARDS ================= */
+/* =========================
+   QUICK CARDS
+========================= */
 
 .quick-section{
-  background:#fff;
-  padding:20px 0;
+    width:100%;
+
+    background:#fff;
+
+    padding:22px 4%;
 }
 
 .quick-cards{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:16px;
+    width:100%;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:16px;
 }
 
 .quick-card{
-  background:linear-gradient(135deg,#fffaf0,#fffdf8);
+    min-height:105px;
 
-  border:1px solid #e2b842;
-  border-radius:12px;
+    background:
+        linear-gradient(
+            135deg,
+            #fffaf0,
+            #fffdf8
+        );
 
-  padding:17px 22px;
+    border:1px solid #e2b842;
 
-  box-shadow:0 2px 8px rgba(90,40,0,.08);
+    border-radius:12px;
+
+    padding:18px 22px;
+
+    box-shadow:
+        0 2px 8px
+        rgba(90,40,0,.08);
 }
 
 .quick-card h3{
-  color:#8d1111;
-  font-size:18px;
-  margin-bottom:7px;
+    color:#8d1111;
+
+    font-size:19px;
+
+    margin-bottom:8px;
 }
 
 .quick-card p{
-  color:#5a3826;
-  font-size:14px;
-  line-height:1.5;
+    color:#5a3826;
+
+    font-size:15px;
+
+    line-height:1.6;
 }
 
-/* ================= DONATION SECTION ================= */
+
+/* =========================
+   DONATION SECTION
+========================= */
 
 .donation-section{
-  background:linear-gradient(180deg,#fff3db,#fffaf1);
-  padding:30px 0 35px;
+    width:100%;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fff3db,
+            #fffaf1
+        );
+
+    padding:40px 4% 45px;
 }
 
 .section-title{
-  text-align:center;
-  margin-bottom:22px;
+    text-align:center;
+
+    margin-bottom:28px;
 }
 
-.section-title .small-title{
-  color:#b26b16;
-  font-size:13px;
-  font-weight:bold;
-  margin-bottom:4px;
+.small-title{
+    color:#b26b16;
+
+    font-size:14px;
+
+    font-weight:bold;
+
+    margin-bottom:5px;
 }
 
 .section-title h2{
-  color:#8e1111;
-  font-size:27px;
-  margin-bottom:6px;
+    color:#8e1111;
+
+    font-size:32px;
+
+    margin-bottom:8px;
 }
 
 .section-title p{
-  color:#6a4730;
-  font-size:14px;
+    color:#6a4730;
+
+    font-size:16px;
 }
+
 
 /* DONATION BOX */
 
 .donation-box{
-  width:100%;
-  max-width:850px;
-  margin:auto;
+    width:100%;
 
-  background:#fffdf8;
-  border:1px solid #e1b63d;
-  border-radius:12px;
+    background:#fffdf8;
 
-  padding:22px;
+    border:1px solid #e1b63d;
 
-  box-shadow:0 3px 12px rgba(80,30,0,.10);
+    border-radius:13px;
+
+    padding:28px;
+
+    box-shadow:
+        0 3px 12px
+        rgba(80,30,0,.10);
 }
 
 .donation-inner{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
+    display:grid;
+
+    grid-template-columns:
+        1.15fr .85fr;
+
+    gap:30px;
 }
+
 
 /* FORM */
 
 .form-group{
-  margin-bottom:10px;
+    margin-bottom:14px;
 }
 
 .form-group label{
-  display:block;
-  color:#671010;
-  font-size:13px;
-  font-weight:bold;
-  margin-bottom:4px;
+    display:block;
+
+    color:#671010;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+    margin-bottom:6px;
 }
 
-.form-group input,
-.form-group select{
-  width:100%;
-  height:37px;
+.form-group input{
+    width:100%;
 
-  border:1px solid #e2ad32;
-  border-radius:5px;
+    height:44px;
 
-  padding:7px 10px;
+    border:1px solid #e2ad32;
 
-  background:#fff;
-  color:#4b1008;
-  outline:none;
+    border-radius:6px;
+
+    padding:8px 12px;
+
+    font-size:14px;
+
+    background:white;
+
+    color:#4b1008;
+
+    outline:none;
 }
 
-.form-group input:focus,
-.form-group select:focus{
-  border-color:#a41414;
+.form-group input:focus{
+    border-color:#a41414;
 }
+
 
 .donate-button{
-  width:100%;
-  height:39px;
+    width:100%;
 
-  border:0;
-  border-radius:5px;
+    height:45px;
 
-  background:linear-gradient(90deg,#a90d0d,#e18c08);
-  color:white;
+    border:none;
 
-  font-size:14px;
-  font-weight:bold;
+    border-radius:6px;
 
-  cursor:pointer;
+    background:
+        linear-gradient(
+            90deg,
+            #a90d0d,
+            #e18c08
+        );
+
+    color:white;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+    cursor:pointer;
 }
 
 .donate-button:hover{
-  opacity:.9;
+    opacity:.9;
 }
 
-/* DONATION INFO */
+
+/* INFO */
 
 .donation-info{
-  background:#fff8e8;
-  border-radius:8px;
-  padding:18px;
+    background:#fff8e8;
+
+    border-radius:9px;
+
+    padding:24px;
 }
 
 .donation-info h3{
-  color:#8e1111;
-  font-size:18px;
-  margin-bottom:12px;
+    color:#8e1111;
+
+    font-size:22px;
+
+    margin-bottom:15px;
 }
 
 .donation-info p{
-  color:#5d3b27;
-  font-size:14px;
-  line-height:1.8;
+    color:#5d3b27;
+
+    font-size:16px;
+
+    line-height:2;
 }
 
-/* ================= INCOME EXPENSE ================= */
+
+/* =========================
+   ACCOUNTS
+========================= */
 
 .accounts-section{
-  background:#fff0dc;
-  padding:32px 0 38px;
+    width:100%;
+
+    background:#fff0dc;
+
+    padding:42px 4% 48px;
 }
 
 .accounts-box{
-  width:100%;
-  max-width:900px;
-  margin:auto;
+    width:100%;
 }
 
+
+/* CONTROLS */
+
 .account-controls{
-  display:grid;
-  grid-template-columns:1fr 1fr auto;
-  gap:10px;
-  margin-bottom:12px;
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr auto;
+
+    gap:12px;
+
+    margin-bottom:15px;
 }
 
 .account-controls select{
-  height:38px;
-  border:1px solid #dda92f;
-  border-radius:5px;
-  padding:5px 10px;
-  background:#fff;
+    width:100%;
+
+    height:44px;
+
+    border:1px solid #dda92f;
+
+    border-radius:6px;
+
+    padding:6px 12px;
+
+    font-size:14px;
+
+    background:white;
 }
 
 .view-button{
-  background:#720909;
-  color:#fff;
-  border:0;
-  border-radius:5px;
-  padding:0 18px;
-  cursor:pointer;
-  font-weight:bold;
+    height:44px;
+
+    background:#720909;
+
+    color:white;
+
+    border:none;
+
+    border-radius:6px;
+
+    padding:0 25px;
+
+    cursor:pointer;
+
+    font-size:14px;
+
+    font-weight:bold;
 }
 
+
+/* SUMMARY */
+
 .summary{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  margin-bottom:12px;
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:14px;
+
+    margin-bottom:15px;
 }
 
 .summary-box{
-  background:#fff;
-  border:1px solid #e0b039;
-  border-radius:8px;
-  padding:12px;
-  text-align:center;
+    background:white;
+
+    border:1px solid #e0b039;
+
+    border-radius:9px;
+
+    padding:17px;
+
+    text-align:center;
 }
 
 .summary-box span{
-  display:block;
-  font-size:12px;
-  color:#6b4225;
-  margin-bottom:5px;
+    display:block;
+
+    font-size:14px;
+
+    color:#6b4225;
+
+    margin-bottom:7px;
 }
 
 .summary-box strong{
-  color:#8d1111;
-  font-size:17px;
+    color:#8d1111;
+
+    font-size:21px;
 }
 
+
+/* TABLE */
+
 .account-table{
-  width:100%;
-  border-collapse:collapse;
-  background:#fff;
-  border:1px solid #dca72f;
-  border-radius:6px;
-  overflow:hidden;
+    width:100%;
+
+    border-collapse:collapse;
+
+    background:white;
+
+    border:1px solid #dca72f;
+
+    border-radius:7px;
+
+    overflow:hidden;
 }
 
 .account-table th{
-  background:#690808;
-  color:#fff;
-  padding:9px;
-  font-size:13px;
+    background:#690808;
+
+    color:white;
+
+    padding:12px;
+
+    font-size:14px;
 }
 
 .account-table td{
-  padding:10px;
-  border-bottom:1px solid #eee0c7;
-  font-size:13px;
+    padding:13px;
+
+    border-bottom:
+        1px solid #eee0c7;
+
+    font-size:14px;
 }
 
 .no-entry{
-  text-align:center;
-  color:#777;
+    text-align:center;
+
+    color:#777;
 }
 
-/* ================= OFFICERS ================= */
+
+/* =========================
+   OFFICERS
+========================= */
 
 .officers-section{
-  background:#fff;
-  padding:32px 0 35px;
+    width:100%;
+
+    background:#fff;
+
+    padding:42px 4% 45px;
 }
 
 .officers{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px;
-  max-width:850px;
-  margin:auto;
+    width:100%;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:20px;
 }
 
 .officer{
-  background:#fffaf0;
-  border:1px solid #e0b039;
-  border-radius:9px;
-  padding:17px;
-  text-align:center;
+    background:#fffaf0;
+
+    border:1px solid #e0b039;
+
+    border-radius:10px;
+
+    padding:20px;
+
+    text-align:center;
 }
 
 .officer .role{
-  color:#a01818;
-  font-size:12px;
-  margin-bottom:7px;
-  font-weight:bold;
+    color:#a01818;
+
+    font-size:14px;
+
+    margin-bottom:8px;
+
+    font-weight:bold;
 }
 
 .officer h3{
-  color:#54100b;
-  font-size:16px;
+    color:#54100b;
+
+    font-size:20px;
 }
 
 .officer p{
-  color:#765036;
-  font-size:12px;
-  margin-top:4px;
+    color:#765036;
+
+    font-size:14px;
+
+    margin-top:5px;
 }
 
-/* ================= FOOTER ================= */
+
+/* =========================
+   FOOTER
+========================= */
 
 footer{
-  background:linear-gradient(90deg,#650606,#820909,#650606);
-  color:#fff;
-  border-top:3px solid #dcae32;
+    width:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #650606,
+            #820909,
+            #650606
+        );
+
+    color:white;
+
+    border-top:3px solid #dcae32;
 }
 
 .footer-main{
-  width:92%;
-  max-width:1500px;
-  margin:auto;
+    width:100%;
 
-  padding:25px 0;
+    padding:30px 4%;
 
-  display:grid;
-  grid-template-columns:1.4fr 1fr 1fr 1fr 1fr;
-  gap:25px;
+    display:grid;
+
+    grid-template-columns:
+        1.5fr
+        1fr
+        1fr
+        1fr
+        1fr;
+
+    gap:30px;
 }
 
 .footer-column h3{
-  color:#ffd64a;
-  font-size:15px;
-  margin-bottom:8px;
+    color:#ffd64a;
+
+    font-size:16px;
+
+    margin-bottom:10px;
 }
 
 .footer-column p,
 .footer-column a{
-  color:#fff;
-  font-size:12px;
-  line-height:1.8;
-  text-decoration:none;
-  display:block;
+    color:white;
+
+    font-size:13px;
+
+    line-height:1.9;
+
+    text-decoration:none;
+
+    display:block;
 }
 
 .footer-column a:hover{
-  color:#ffd64a;
+    color:#ffd64a;
 }
 
 .footer-bottom{
-  width:92%;
-  max-width:1500px;
-  margin:auto;
+    width:92%;
 
-  border-top:1px solid rgba(255,210,70,.5);
+    margin:auto;
 
-  padding:10px 0;
+    border-top:
+        1px solid
+        rgba(255,210,70,.5);
 
-  text-align:center;
+    padding:12px 0;
 
-  color:#f8d978;
-  font-size:11px;
+    text-align:center;
+
+    color:#f8d978;
+
+    font-size:12px;
 }
 
-/* ================= MOBILE ================= */
+
+/* =========================
+   TABLET
+========================= */
 
 @media(max-width:900px){
 
-  header{
-    flex-wrap:wrap;
-    justify-content:center;
-  }
+    header{
+        flex-wrap:wrap;
 
-  .brand{
-    min-width:auto;
-  }
+        justify-content:center;
+    }
 
-  nav{
-    gap:16px;
-  }
+    .brand{
+        width:100%;
 
-  nav a{
-    font-size:12px;
-  }
+        justify-content:center;
+    }
 
-  .quick-cards{
-    grid-template-columns:1fr;
-  }
+    nav{
+        width:100%;
 
-  .donation-inner{
-    grid-template-columns:1fr;
-  }
+        gap:18px;
+    }
 
-  .footer-main{
-    grid-template-columns:repeat(2,1fr);
-  }
+    .quick-cards{
+        grid-template-columns:1fr;
+    }
+
+    .donation-inner{
+        grid-template-columns:1fr;
+    }
+
+    .officers{
+        grid-template-columns:
+            repeat(3,1fr);
+    }
+
+    .footer-main{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
 }
+
+
+/* =========================
+   MOBILE
+========================= */
 
 @media(max-width:600px){
 
-  header{
-    padding:9px 10px;
-  }
+    header{
+        padding:9px 10px;
+    }
 
-  .brand{
-    width:100%;
-    justify-content:center;
-  }
+    .brand{
+        width:100%;
 
-  .brand-text h1{
-    font-size:18px;
-  }
+        justify-content:center;
+    }
 
-  .brand-text p{
-    font-size:10px;
-  }
+    .brand-text h1{
+        font-size:18px;
+    }
 
-  nav{
-    width:100%;
-    overflow-x:auto;
-    justify-content:flex-start;
-    padding-bottom:3px;
-  }
+    .brand-text p{
+        font-size:10px;
+    }
 
-  .jai-mata{
-    display:none;
-  }
+    nav{
+        width:100%;
 
-  .arrow{
-    width:40px;
-    height:40px;
-    line-height:40px;
-    font-size:28px;
-  }
+        overflow-x:auto;
 
-  .arrow.left{
-    left:8px;
-  }
+        justify-content:flex-start;
 
-  .arrow.right{
-    right:8px;
-  }
+        padding-bottom:4px;
+    }
 
-  .container{
-    width:94%;
-  }
+    nav a{
+        font-size:12px;
+    }
 
-  .quick-cards{
-    gap:10px;
-  }
+    .jai-mata{
+        display:none;
+    }
 
-  .quick-card{
-    padding:14px;
-  }
 
-  .donation-section,
-  .accounts-section,
-  .officers-section{
-    padding:25px 0;
-  }
+    /* POSTER */
 
-  .section-title h2{
-    font-size:23px;
-  }
+    .arrow{
+        width:40px;
+        height:40px;
 
-  .donation-box{
-    padding:14px;
-  }
+        line-height:40px;
 
-  .account-controls{
-    grid-template-columns:1fr;
-  }
+        font-size:28px;
+    }
 
-  .view-button{
-    height:38px;
-  }
+    .arrow.left{
+        left:8px;
+    }
 
-  .summary{
-    grid-template-columns:1fr 1fr 1fr;
-  }
+    .arrow.right{
+        right:8px;
+    }
 
-  .summary-box{
-    padding:8px 4px;
-  }
 
-  .summary-box strong{
-    font-size:14px;
-  }
+    /* CARDS */
 
-  .officers{
-    grid-template-columns:1fr;
-  }
+    .quick-section{
+        padding:15px 4%;
+    }
 
-  .footer-main{
-    grid-template-columns:1fr 1fr;
-    gap:18px;
-  }
+
+    /* DONATION */
+
+    .donation-section{
+        padding:30px 4%;
+    }
+
+    .section-title h2{
+        font-size:25px;
+    }
+
+    .section-title p{
+        font-size:14px;
+    }
+
+    .donation-box{
+        padding:16px;
+    }
+
+    .donation-inner{
+        gap:18px;
+    }
+
+
+    /* ACCOUNTS */
+
+    .accounts-section{
+        padding:30px 4%;
+    }
+
+    .account-controls{
+        grid-template-columns:1fr;
+    }
+
+    .view-button{
+        width:100%;
+    }
+
+    .summary{
+        grid-template-columns:
+            repeat(3,1fr);
+
+        gap:7px;
+    }
+
+    .summary-box{
+        padding:11px 4px;
+    }
+
+    .summary-box span{
+        font-size:11px;
+    }
+
+    .summary-box strong{
+        font-size:16px;
+    }
+
+
+    /* OFFICERS */
+
+    .officers-section{
+        padding:30px 4%;
+    }
+
+    .officers{
+        grid-template-columns:1fr;
+    }
+
+
+    /* FOOTER */
+
+    .footer-main{
+        grid-template-columns:
+            1fr 1fr;
+
+        gap:20px;
+    }
 }
+
 
 @media(max-width:400px){
 
-  .footer-main{
-    grid-template-columns:1fr;
-  }
+    .summary{
+        grid-template-columns:1fr;
+    }
 
-  .summary{
-    grid-template-columns:1fr;
-  }
+    .footer-main{
+        grid-template-columns:1fr;
+    }
 }
+
 </style>
 </head>
 
+
 <body>
 
-<!-- ================= HEADER ================= -->
+
+<!-- =========================
+     HEADER
+========================= -->
 
 <header>
 
-  <div class="brand">
+    <!-- LEFT -->
 
-    <div class="logo">ॐ</div>
+    <div class="brand">
 
-    <div class="brand-text">
-      <h1>श्री श्री दुर्गा पूजा महोत्सव</h1>
-      <p>छात्र नवयुवक संघ, तिलोखर (रोहतास)</p>
+        <div class="logo">
+            ॐ
+        </div>
+
+        <div class="brand-text">
+
+            <h1>
+                श्री श्री दुर्गा पूजा महोत्सव
+            </h1>
+
+            <p>
+                छात्र नवयुवक संघ, तिलोखर (रोहतास)
+            </p>
+
+        </div>
+
     </div>
 
-  </div>
 
-  <nav>
+    <!-- CENTER -->
 
-    <a href="#">मुख्य पृष्ठ</a>
+    <nav>
 
-    <a href="#donation">
-      चंदा सहयोग
-    </a>
+        <a href="#">
+            मुख्य पृष्ठ
+        </a>
 
-    <a href="#accounts">
-      आय-व्यय
-    </a>
+        <a href="#donation">
+            चंदा सहयोग
+        </a>
 
-    <a href="#contact">
-      संपर्क करें
-    </a>
+        <a href="#accounts">
+            आय-व्यय
+        </a>
 
-  </nav>
+        <a href="#contact">
+            संपर्क करें
+        </a>
 
-  <div class="jai-mata">
-    🙏 || जय माता दी ||
-  </div>
+    </nav>
+
+
+    <!-- RIGHT -->
+
+    <div class="jai-mata">
+        🙏 || जय माता दी ||
+    </div>
 
 </header>
 
 
-<!-- ================= POSTER SLIDER ================= -->
+
+<!-- =========================
+     POSTER SLIDER
+========================= -->
 
 <section class="hero">
 
-  <div class="slider">
+    <div class="slider">
 
-    <div class="slides" id="slides">
+        <div
+            class="slides"
+            id="slides"
+        >
 
-      <!-- POSTER 1 -->
-      <div class="slide">
-        <img
-          src="poster-1-puja.jpg"
-          alt="श्री श्री दुर्गा पूजा महोत्सव">
-      </div>
+            <!-- POSTER 1 -->
 
-      <!-- POSTER 2 -->
-      <div class="slide">
-        <img
-          src="poster-2-adhikarigan.jpg"
-          alt="अधिकारी गण">
-      </div>
+            <div class="slide">
 
-      <!-- POSTER 3 -->
-      <div class="slide">
-        <img
-          src="poster-3-donation.jpg"
-          alt="चंदा सहयोग">
-      </div>
+                <img
+                    src="poster-1-puja.jpg"
+                    alt="श्री श्री दुर्गा पूजा महोत्सव"
+                >
+
+            </div>
+
+
+            <!-- POSTER 2 -->
+
+            <div class="slide">
+
+                <img
+                    src="poster-2-adhikarigan.jpg"
+                    alt="अधिकारी गण"
+                >
+
+            </div>
+
+
+            <!-- POSTER 3 -->
+
+            <div class="slide">
+
+                <img
+                    src="poster-3-donation.jpg"
+                    alt="चंदा सहयोग"
+                >
+
+            </div>
+
+        </div>
+
+
+        <!-- LEFT ARROW -->
+
+        <button
+            class="arrow left"
+            onclick="prevSlide()"
+        >
+            ‹
+        </button>
+
+
+        <!-- RIGHT ARROW -->
+
+        <button
+            class="arrow right"
+            onclick="nextSlide()"
+        >
+            ›
+        </button>
+
+
+        <!-- DOTS -->
+
+        <div class="dots">
+
+            <span
+                class="dot active"
+                onclick="goToSlide(0)"
+            ></span>
+
+            <span
+                class="dot"
+                onclick="goToSlide(1)"
+            ></span>
+
+            <span
+                class="dot"
+                onclick="goToSlide(2)"
+            ></span>
+
+        </div>
 
     </div>
-
-    <button
-      class="arrow left"
-      onclick="prevSlide()">
-      ‹
-    </button>
-
-    <button
-      class="arrow right"
-      onclick="nextSlide()">
-      ›
-    </button>
-
-    <div class="dots">
-
-      <span
-        class="dot active"
-        onclick="goToSlide(0)">
-      </span>
-
-      <span
-        class="dot"
-        onclick="goToSlide(1)">
-      </span>
-
-      <span
-        class="dot"
-        onclick="goToSlide(2)">
-      </span>
-
-    </div>
-
-  </div>
 
 </section>
 
 
-<!-- ================= QUICK CARDS ================= -->
+
+<!-- =========================
+     QUICK CARDS
+========================= -->
 
 <section class="quick-section">
 
-  <div class="container">
-
     <div class="quick-cards">
 
-      <div class="quick-card">
 
-        <h3>🌺 भव्य पूजा</h3>
+        <div class="quick-card">
 
-        <p>
-          माँ दुर्गा की आराधना और धार्मिक आयोजन
-        </p>
+            <h3>
+                🌺 भव्य पूजा
+            </h3>
 
-      </div>
+            <p>
+                माँ दुर्गा की आराधना और धार्मिक आयोजन
+            </p>
 
-      <div class="quick-card">
+        </div>
 
-        <h3>🌼 सेवा और सजावट</h3>
 
-        <p>
-          पंडाल, सजावट, प्रसाद और सांस्कृतिक कार्यक्रम
-        </p>
+        <div class="quick-card">
 
-      </div>
+            <h3>
+                🌼 सेवा और सजावट
+            </h3>
 
-      <div class="quick-card">
+            <p>
+                पंडाल, सजावट, प्रसाद और सांस्कृतिक कार्यक्रम
+            </p>
 
-        <h3>🙏 आपका सहयोग</h3>
+        </div>
 
-        <p>
-          अपनी श्रद्धा अनुसार ऑनलाइन सहयोग करें
-        </p>
 
-      </div>
+        <div class="quick-card">
+
+            <h3>
+                🙏 आपका सहयोग
+            </h3>
+
+            <p>
+                अपनी श्रद्धा अनुसार ऑनलाइन सहयोग करें
+            </p>
+
+        </div>
+
 
     </div>
-
-  </div>
 
 </section>
 
 
-<!-- ================= DONATION ================= -->
+
+<!-- =========================
+     DONATION
+========================= -->
 
 <section
-  class="donation-section"
-  id="donation">
-
-  <div class="container">
+    class="donation-section"
+    id="donation"
+>
 
     <div class="section-title">
 
-      <div class="small-title">
-        🙏 माँ के चरणों में
-      </div>
+        <div class="small-title">
+            🙏 माँ के चरणों में
+        </div>
 
-      <h2>
-        माँ के भव्य महोत्सव में अपना योगदान दें
-      </h2>
+        <h2>
+            माँ के भव्य महोत्सव में अपना योगदान दें
+        </h2>
 
-      <p>
-        माँ के आशीर्वाद से ही यह भव्य महोत्सव सफल होता है।
-      </p>
+        <p>
+            माँ के आशीर्वाद से ही यह भव्य महोत्सव सफल होता है।
+        </p>
 
     </div>
 
 
     <div class="donation-box">
 
-      <div class="donation-inner">
+        <div class="donation-inner">
 
-        <!-- FORM -->
 
-        <div>
+            <!-- FORM -->
 
-          <div class="form-group">
-            <label>नाम</label>
-            <input
-              type="text"
-              placeholder="अपना नाम">
-          </div>
+            <div>
 
-          <div class="form-group">
-            <label>मोबाइल नंबर</label>
-            <input
-              type="tel"
-              placeholder="मोबाइल नंबर">
-          </div>
+                <div class="form-group">
 
-          <div class="form-group">
-            <label>चंदा / सहयोग राशि</label>
-            <input
-              type="number"
-              placeholder="राशि दर्ज करें">
-          </div>
+                    <label>
+                        नाम
+                    </label>
 
-          <div class="form-group">
-            <label>आपका क्षेत्र</label>
-            <input
-              type="text"
-              placeholder="गाँव / शहर">
-          </div>
+                    <input
+                        type="text"
+                        placeholder="अपना नाम"
+                    >
 
-          <button
-            class="donate-button"
-            onclick="alert('चंदा सहयोग की सुविधा जल्द उपलब्ध होगी।')">
+                </div>
 
-            🙏 सहयोग करें
 
-          </button>
+                <div class="form-group">
+
+                    <label>
+                        मोबाइल नंबर
+                    </label>
+
+                    <input
+                        type="tel"
+                        placeholder="मोबाइल नंबर"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        चंदा / सहयोग राशि
+                    </label>
+
+                    <input
+                        type="number"
+                        placeholder="राशि दर्ज करें"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        आपका क्षेत्र
+                    </label>
+
+                    <input
+                        type="text"
+                        placeholder="गाँव / शहर"
+                    >
+
+                </div>
+
+
+                <button
+                    class="donate-button"
+                    onclick="alert('चंदा सहयोग की सुविधा जल्द उपलब्ध होगी।')"
+                >
+
+                    🙏 सहयोग करें
+
+                </button>
+
+            </div>
+
+
+            <!-- INFO -->
+
+            <div class="donation-info">
+
+                <h3>
+                    आपके सहयोग से
+                </h3>
+
+                <p>
+                    🛕 भव्य पंडाल निर्माण
+                </p>
+
+                <p>
+                    🌺 माँ की मनमोहक सज्जा
+                </p>
+
+                <p>
+                    🍚 प्रसाद एवं भोग व्यवस्था
+                </p>
+
+                <p>
+                    🎭 सांस्कृतिक कार्यक्रम
+                </p>
+
+            </div>
 
         </div>
-
-
-        <!-- INFO -->
-
-        <div class="donation-info">
-
-          <h3>
-            आपके सहयोग से
-          </h3>
-
-          <p>
-            🛕 भव्य पंडाल निर्माण
-          </p>
-
-          <p>
-            🌺 माँ की मनमोहक सज्जा
-          </p>
-
-          <p>
-            🍚 प्रसाद एवं भोग व्यवस्था
-          </p>
-
-          <p>
-            🎭 सांस्कृतिक कार्यक्रम
-          </p>
-
-        </div>
-
-      </div>
 
     </div>
-
-  </div>
 
 </section>
 
 
-<!-- ================= ACCOUNTS ================= -->
+
+<!-- =========================
+     ACCOUNTS
+========================= -->
 
 <section
-  class="accounts-section"
-  id="accounts">
-
-  <div class="container">
+    class="accounts-section"
+    id="accounts"
+>
 
     <div class="section-title">
 
-      <div class="small-title">
-        📊 पारदर्शिता
-      </div>
+        <div class="small-title">
+            📊 पारदर्शिता
+        </div>
 
-      <h2>
-        आय-व्यय एवं चंदा विवरण
-      </h2>
+        <h2>
+            आय-व्यय एवं चंदा विवरण
+        </h2>
 
-      <p>
-        सभी आय और व्यय का पारदर्शी विवरण यहाँ उपलब्ध रहेगा।
-      </p>
+        <p>
+            सभी आय और व्यय का पारदर्शी विवरण यहाँ उपलब्ध रहेगा।
+        </p>
 
     </div>
 
 
     <div class="accounts-box">
 
-      <div class="account-controls">
 
-        <select>
-          <option>2026</option>
-          <option>2025</option>
-          <option>2024</option>
-        </select>
+        <div class="account-controls">
 
-        <select>
-          <option>सभी महीने</option>
-          <option>सितंबर</option>
-          <option>अक्टूबर</option>
-          <option>नवंबर</option>
-        </select>
+            <select>
 
-        <button class="view-button">
-          विवरण देखें
-        </button>
+                <option>
+                    2026
+                </option>
 
-      </div>
+                <option>
+                    2025
+                </option>
+
+                <option>
+                    2024
+                </option>
+
+            </select>
 
 
-      <div class="summary">
+            <select>
 
-        <div class="summary-box">
-          <span>कुल आय</span>
-          <strong>₹0</strong>
+                <option>
+                    सभी महीने
+                </option>
+
+                <option>
+                    सितंबर
+                </option>
+
+                <option>
+                    अक्टूबर
+                </option>
+
+                <option>
+                    नवंबर
+                </option>
+
+            </select>
+
+
+            <button class="view-button">
+                विवरण देखें
+            </button>
+
         </div>
 
-        <div class="summary-box">
-          <span>कुल खर्च</span>
-          <strong>₹0</strong>
+
+        <div class="summary">
+
+            <div class="summary-box">
+
+                <span>
+                    कुल आय
+                </span>
+
+                <strong>
+                    ₹0
+                </strong>
+
+            </div>
+
+
+            <div class="summary-box">
+
+                <span>
+                    कुल खर्च
+                </span>
+
+                <strong>
+                    ₹0
+                </strong>
+
+            </div>
+
+
+            <div class="summary-box">
+
+                <span>
+                    शेष राशि
+                </span>
+
+                <strong>
+                    ₹0
+                </strong>
+
+            </div>
+
         </div>
 
-        <div class="summary-box">
-          <span>शेष राशि</span>
-          <strong>₹0</strong>
-        </div>
 
-      </div>
+        <table class="account-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        दिनांक / विवरण
+                    </th>
+
+                    <th>
+                        राशि
+                    </th>
+
+                </tr>
+
+            </thead>
 
 
-      <table class="account-table">
+            <tbody>
 
-        <thead>
+                <tr>
 
-          <tr>
-            <th>दिनांक / विवरण</th>
-            <th>राशि</th>
-          </tr>
+                    <td
+                        class="no-entry"
+                        colspan="2"
+                    >
 
-        </thead>
+                        अभी तक कोई आय-व्यय विवरण उपलब्ध नहीं है।
 
-        <tbody>
+                    </td>
 
-          <tr>
-            <td class="no-entry" colspan="2">
-              अभी तक कोई आय-व्यय विवरण उपलब्ध नहीं है।
-            </td>
-          </tr>
+                </tr>
 
-        </tbody>
+            </tbody>
 
-      </table>
+        </table>
 
     </div>
-
-  </div>
 
 </section>
 
 
-<!-- ================= OFFICERS ================= -->
 
-<section
-  class="officers-section">
+<!-- =========================
+     OFFICERS
+========================= -->
 
-  <div class="container">
+<section class="officers-section">
 
     <div class="section-title">
 
-      <div class="small-title">
-        🙏 हमारे सदस्य
-      </div>
+        <div class="small-title">
+            🙏 हमारे सदस्य
+        </div>
 
-      <h2>
-        हमारे अधिकारी गण
-      </h2>
+        <h2>
+            हमारे अधिकारी गण
+        </h2>
 
     </div>
 
 
     <div class="officers">
 
-      <div class="officer">
 
-        <div class="role">
-          अध्यक्ष
+        <div class="officer">
+
+            <div class="role">
+                अध्यक्ष
+            </div>
+
+            <h3>
+                विद्यासागर कुमार
+            </h3>
+
+            <p>
+                अध्यक्ष
+            </p>
+
         </div>
 
-        <h3>
-          विद्यासागर कुमार
-        </h3>
 
-        <p>
-          अध्यक्ष
-        </p>
+        <div class="officer">
 
-      </div>
+            <div class="role">
+                सचिव
+            </div>
 
+            <h3>
+                अमरजीत कुमार
+            </h3>
 
-      <div class="officer">
+            <p>
+                सचिव
+            </p>
 
-        <div class="role">
-          सचिव
         </div>
 
-        <h3>
-          अमरजीत कुमार
-        </h3>
 
-        <p>
-          सचिव
-        </p>
+        <div class="officer">
 
-      </div>
+            <div class="role">
+                कोषाध्यक्ष
+            </div>
 
+            <h3>
+                सुरेंद्र कुमार उर्फ गौरव
+            </h3>
 
-      <div class="officer">
+            <p>
+                कोषाध्यक्ष
+            </p>
 
-        <div class="role">
-          कोषाध्यक्ष
         </div>
 
-        <h3>
-          सुरेंद्र कुमार उर्फ गौरव
-        </h3>
-
-        <p>
-          कोषाध्यक्ष
-        </p>
-
-      </div>
 
     </div>
-
-  </div>
 
 </section>
 
 
-<!-- ================= FOOTER ================= -->
+
+<!-- =========================
+     FOOTER
+========================= -->
 
 <footer id="contact">
 
-  <div class="footer-main">
+    <div class="footer-main">
 
-    <div class="footer-column">
 
-      <h3>
-        ॐ श्री श्री दुर्गा पूजा महोत्सव
-      </h3>
+        <div class="footer-column">
 
-      <p>
+            <h3>
+                ॐ श्री श्री दुर्गा पूजा महोत्सव
+            </h3>
+
+            <p>
+                छात्र नवयुवक संघ, तिलोखर (रोहतास)
+            </p>
+
+            <p>
+                माँ दुर्गा के आशीर्वाद से भव्य आयोजन।
+            </p>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h3>
+                पेज
+            </h3>
+
+            <a href="#">
+                मुख्य पृष्ठ
+            </a>
+
+            <a href="#donation">
+                चंदा सहयोग
+            </a>
+
+            <a href="#accounts">
+                आय-व्यय
+            </a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h3>
+                सहयोग
+            </h3>
+
+            <a href="#donation">
+                ऑनलाइन सहयोग
+            </a>
+
+            <a href="#accounts">
+                आय-व्यय विवरण
+            </a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h3>
+                संपर्क
+            </h3>
+
+            <p>
+                तिलोखर, रोहतास
+            </p>
+
+            <p>
+                बिहार
+            </p>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h3>
+                जय माता दी
+            </h3>
+
+            <p>
+                🙏 माँ दुर्गा का आशीर्वाद
+            </p>
+
+            <p>
+                🌺 शुभ नवरात्रि
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        © 2026 श्री श्री दुर्गा पूजा महोत्सव
+        |
         छात्र नवयुवक संघ, तिलोखर (रोहतास)
-      </p>
-
-      <p>
-        माँ दुर्गा के आशीर्वाद से भव्य आयोजन।
-      </p>
 
     </div>
-
-
-    <div class="footer-column">
-
-      <h3>पेज</h3>
-
-      <a href="#">
-        मुख्य पृष्ठ
-      </a>
-
-      <a href="#donation">
-        चंदा सहयोग
-      </a>
-
-      <a href="#accounts">
-        आय-व्यय
-      </a>
-
-    </div>
-
-
-    <div class="footer-column">
-
-      <h3>सहयोग</h3>
-
-      <a href="#donation">
-        ऑनलाइन सहयोग
-      </a>
-
-      <a href="#accounts">
-        आय-व्यय विवरण
-      </a>
-
-    </div>
-
-
-    <div class="footer-column">
-
-      <h3>संपर्क</h3>
-
-      <p>
-        तिलोखर, रोहतास
-      </p>
-
-      <p>
-        बिहार
-      </p>
-
-    </div>
-
-
-    <div class="footer-column">
-
-      <h3>जय माता दी</h3>
-
-      <p>
-        🙏 माँ दुर्गा का आशीर्वाद
-      </p>
-
-      <p>
-        🌺 शुभ नवरात्रि
-      </p>
-
-    </div>
-
-  </div>
-
-
-  <div class="footer-bottom">
-
-    © 2026 श्री श्री दुर्गा पूजा महोत्सव |
-    छात्र नवयुवक संघ, तिलोखर (रोहतास)
-
-  </div>
 
 </footer>
 
 
-<!-- ================= SLIDER SCRIPT ================= -->
+
+<!-- =========================
+     SLIDER JAVASCRIPT
+========================= -->
 
 <script>
 
@@ -1270,84 +1719,86 @@ let currentSlide = 0;
 const totalSlides = 3;
 
 const slides =
-  document.getElementById("slides");
+    document.getElementById("slides");
 
 const dots =
-  document.querySelectorAll(".dot");
+    document.querySelectorAll(".dot");
 
 
 function updateSlider(){
 
-  slides.style.transform =
-    "translateX(-" +
-    (currentSlide * 33.3333333333) +
-    "%)";
+    slides.style.transform =
+        "translateX(-" +
+        (currentSlide * 33.3333333333) +
+        "%)";
 
-  dots.forEach(function(dot,index){
 
-    if(index === currentSlide){
+    dots.forEach(function(dot,index){
 
-      dot.classList.add("active");
+        if(index === currentSlide){
 
-    }else{
+            dot.classList.add("active");
 
-      dot.classList.remove("active");
+        }else{
 
-    }
+            dot.classList.remove("active");
 
-  });
+        }
+
+    });
 
 }
 
 
 function nextSlide(){
 
-  currentSlide++;
+    currentSlide++;
 
-  if(currentSlide >= totalSlides){
+    if(currentSlide >= totalSlides){
 
-    currentSlide = 0;
+        currentSlide = 0;
 
-  }
+    }
 
-  updateSlider();
+    updateSlider();
 
 }
 
 
 function prevSlide(){
 
-  currentSlide--;
+    currentSlide--;
 
-  if(currentSlide < 0){
+    if(currentSlide < 0){
 
-    currentSlide = totalSlides - 1;
+        currentSlide = totalSlides - 1;
 
-  }
+    }
 
-  updateSlider();
+    updateSlider();
 
 }
 
 
 function goToSlide(index){
 
-  currentSlide = index;
+    currentSlide = index;
 
-  updateSlider();
+    updateSlider();
 
 }
 
 
-/* हर 5 सेकंड में poster बदलेगा */
+/* 5 सेकंड में poster बदलेगा */
 
 setInterval(function(){
 
-  nextSlide();
+    nextSlide();
 
 },5000);
 
 </script>
+
 
 </body>
 </html>
