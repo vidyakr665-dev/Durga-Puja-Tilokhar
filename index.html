@@ -1850,6 +1850,78 @@ function startDonation(){
     window.location.href = "https://rzp.io/rzp/N38fLJM";
 }
 </script>
+<script>
+async function loadAayVyayData() {
 
+    try {
+
+        const response = await fetch(
+            "https://script.google.com/macros/s/AKfycbz3_GtBFIWVwN2rEtzAJhnSBKGqxDrXJjQHf4XSmtJ7HDodZa-BKbPIz9LtIOlBVN5f/exec?action=data"
+        );
+
+        const data = await response.json();
+
+        document.getElementById("totalIncome").textContent =
+            "₹" + data.income;
+
+        document.getElementById("totalExpense").textContent =
+            "₹" + data.expense;
+
+        document.getElementById("totalBalance").textContent =
+            "₹" + data.balance;
+
+        const tableBody =
+            document.getElementById("accountTableBody");
+
+        tableBody.innerHTML = "";
+
+        if (!data.records || data.records.length === 0) {
+
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="2" class="no-entry">
+                        अभी तक कोई आय-व्यय विवरण उपलब्ध नहीं है।
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+        data.records.forEach(record => {
+
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td>
+                    ${record.date}<br>
+                    <strong>${record.description}</strong>
+                    ${record.village ? " - " + record.village : ""}
+                </td>
+
+                <td>
+                    ₹${record.amount}
+                </td>
+            `;
+
+            tableBody.appendChild(row);
+        });
+
+    } catch (error) {
+
+        console.error("Aay-Vyay Error:", error);
+
+        document.getElementById("accountTableBody").innerHTML = `
+            <tr>
+                <td colspan="2" class="no-entry">
+                    विवरण लोड नहीं हो पाया।
+                </td>
+            </tr>
+        `;
+    }
+}
+
+window.addEventListener("load", loadAayVyayData);
+</script>
 </body>
 </html>
