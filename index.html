@@ -1,188 +1,478 @@
-<!doctype html>
+```html
+<!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>श्री श्री दुर्गा पूजा महोत्सव</title>
 
-  <title>श्री श्री दुर्गा पूजा महोत्सव — तिलोखर</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  <link rel="stylesheet" href="style.css">
+    body {
+      font-family: Arial, "Noto Sans Devanagari", sans-serif;
+      background: #fff8ed;
+      color: #4b1710;
+    }
 
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    /* TOP HEADER */
+    header {
+      background: linear-gradient(90deg, #6d0909, #a71919, #6d0909);
+      color: #fff;
+      padding: 12px 20px;
+      text-align: center;
+      border-bottom: 4px solid #f5c451;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+    }
+
+    header h1 {
+      font-size: 30px;
+      color: #ffd95a;
+      margin-bottom: 5px;
+      font-weight: 800;
+    }
+
+    header p {
+      font-size: 16px;
+      color: white;
+      font-weight: 600;
+    }
+
+    /* NAVIGATION */
+    nav {
+      background: #4d0808;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 5px;
+      padding: 8px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 9px 18px;
+      border-radius: 5px;
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    nav a:hover {
+      background: #d59b19;
+      color: #4d0808;
+    }
+
+    /* MAIN */
+    main {
+      max-width: 1250px;
+      margin: auto;
+      padding: 15px;
+    }
+
+    /* POSTER SLIDER */
+    .slider {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border-radius: 12px;
+      background: #4d0808;
+      box-shadow: 0 5px 18px rgba(0,0,0,0.35);
+    }
+
+    .slides {
+      display: flex;
+      width: 300%;
+      transition: transform 0.7s ease-in-out;
+    }
+
+    .slide {
+      width: 33.333333%;
+      flex-shrink: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #4d0808;
+    }
+
+    .slide img {
+      width: 100%;
+      height: auto;
+      max-height: 650px;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* ARROWS */
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(80,0,0,0.75);
+      color: white;
+      font-size: 27px;
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    .arrow:hover {
+      background: #d59b19;
+      color: #4d0808;
+    }
+
+    .left {
+      left: 12px;
+    }
+
+    .right {
+      right: 12px;
+    }
+
+    /* DOTS */
+    .dots {
+      text-align: center;
+      padding: 9px;
+      background: #650909;
+    }
+
+    .dot {
+      display: inline-block;
+      width: 11px;
+      height: 11px;
+      margin: 0 5px;
+      border-radius: 50%;
+      background: #ddd;
+      cursor: pointer;
+    }
+
+    .dot.active {
+      background: #ffd34e;
+    }
+
+    /* CONTRIBUTION SECTION */
+    .contribution {
+      margin-top: 25px;
+      background: linear-gradient(135deg, #fff3d4, #fffdf8);
+      border: 2px solid #d7a52b;
+      border-radius: 14px;
+      padding: 25px 18px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(100,40,0,0.15);
+    }
+
+    .contribution h2 {
+      color: #9b1111;
+      font-size: 31px;
+      margin-bottom: 8px;
+      font-weight: 900;
+    }
+
+    .contribution .subtitle {
+      color: #6d3b10;
+      font-size: 17px;
+      margin-bottom: 22px;
+      font-weight: 600;
+    }
+
+    /* FOUR OPTIONS */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .feature {
+      padding: 18px 10px;
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #e0b84f;
+      box-shadow: 0 3px 9px rgba(0,0,0,0.12);
+    }
+
+    .icon {
+      width: 58px;
+      height: 58px;
+      margin: auto;
+      margin-bottom: 10px;
+      border-radius: 50%;
+      background: #a91414;
+      color: #ffd65b;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 28px;
+    }
+
+    .feature h3 {
+      color: #8e0d0d;
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    .feature p {
+      color: #60402b;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* BOTTOM APPEAL */
+    .bottom-appeal {
+      margin-top: 25px;
+      background: linear-gradient(90deg, #620707, #a81515, #620707);
+      color: white;
+      border-top: 4px solid #f0bd35;
+      border-bottom: 4px solid #f0bd35;
+      padding: 20px 15px;
+      text-align: center;
+      border-radius: 10px;
+    }
+
+    .bottom-appeal .small {
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    .bottom-appeal .big {
+      color: #ffd84d;
+      font-size: 27px;
+      font-weight: 900;
+    }
+
+    /* FOOTER */
+    footer {
+      margin-top: 20px;
+      background: #390505;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      font-size: 14px;
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+
+      header h1 {
+        font-size: 22px;
+      }
+
+      header p {
+        font-size: 13px;
+      }
+
+      nav a {
+        font-size: 13px;
+        padding: 7px 10px;
+      }
+
+      main {
+        padding: 8px;
+      }
+
+      .slide img {
+        max-height: 500px;
+      }
+
+      .contribution h2 {
+        font-size: 24px;
+      }
+
+      .features {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .bottom-appeal .big {
+        font-size: 21px;
+      }
+    }
+
+    @media (max-width: 450px) {
+
+      .features {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      .feature {
+        padding: 13px 6px;
+      }
+
+      .feature h3 {
+        font-size: 15px;
+      }
+
+      .feature p {
+        font-size: 12px;
+      }
+
+      .slide img {
+        max-height: 400px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<header class="site-header">
-
-  <div class="brand">
-    श्री श्री दुर्गा पूजा महोत्सव
-  </div>
+  <header>
+    <h1>श्री श्री दुर्गा पूजा महोत्सव</h1>
+    <p>छात्र नवयुवक संघ, तिलोखर (रोहतास)</p>
+  </header>
 
   <nav>
-    <a href="#home">मुख्य पृष्ठ</a>
-    <a href="#donate">चंदा सहयोग</a>
-    <a href="#ledger">आय-व्यय</a>
+    <a href="#">होम</a>
+    <a href="#contribution">सहयोग करें</a>
+    <a href="#about">हमारे बारे में</a>
     <a href="#contact">संपर्क करें</a>
   </nav>
 
-  <div class="jai">
-    ॥ जय माता दी ॥
-  </div>
+  <main>
 
-</header>
+    <!-- POSTER SLIDER -->
+    <section class="slider">
 
+      <div class="slides" id="slides">
 
-<main>
+        <div class="slide">
+          <img src="poster-1-puja.jpg" alt="दुर्गा पूजा पोस्टर">
+        </div>
 
-  <!-- ================= POSTER SLIDER ================= -->
+        <div class="slide">
+          <img src="poster-2-adhikarigan.jpg" alt="अधिकारी गण">
+        </div>
 
-  <section id="home" class="hero">
+        <div class="slide">
+          <img src="poster-3-donation.jpg" alt="चंदा सहयोग">
+        </div>
 
-    <div class="slides">
+      </div>
 
-      <!-- Poster 1 -->
-      <img
-        class="slide active"
-        src="poster-1-puja.jpg"
-        alt="श्री श्री दुर्गा पूजा महोत्सव">
+      <button class="arrow left" onclick="prevSlide()">‹</button>
+      <button class="arrow right" onclick="nextSlide()">›</button>
 
-      <!-- Poster 2 -->
-      <img
-        class="slide"
-        src="poster-2-adhikarigan.jpg"
-        alt="अधिकारी गण">
+      <div class="dots">
+        <span class="dot active" onclick="goToSlide(0)"></span>
+        <span class="dot" onclick="goToSlide(1)"></span>
+        <span class="dot" onclick="goToSlide(2)"></span>
+      </div>
 
-      <!-- Poster 3 -->
-      <img
-        class="slide"
-        src="poster-3-donation.jpg"
-        alt="दुर्गा पूजा सहयोग">
+    </section>
 
-    </div>
+    <!-- CONTRIBUTION -->
+    <section class="contribution" id="contribution">
 
-    <button
-      class="slider-btn prev"
-      aria-label="पिछला पोस्टर">
-      ❮
-    </button>
+      <h2>अपना योगदान दें</h2>
 
-    <button
-      class="slider-btn next"
-      aria-label="अगला पोस्टर">
-      ❯
-    </button>
+      <p class="subtitle">
+        माँ के दरबार को भव्य और दिव्य बनाने में आपका सहयोग आवश्यक है।
+      </p>
 
-    <div
-      class="dots"
-      aria-label="पोस्टर नेविगेशन">
-    </div>
+      <div class="features">
 
-  </section>
+        <div class="feature">
+          <div class="icon">🛕</div>
+          <h3>भव्य पंडाल निर्माण</h3>
+          <p>माँ के लिए भव्य एवं आकर्षक पंडाल का निर्माण।</p>
+        </div>
 
+        <div class="feature">
+          <div class="icon">🌺</div>
+          <h3>माँ की मनमोहक सज्जा</h3>
+          <p>फूलों और रोशनी से माँ के दरबार की सुंदर सजावट।</p>
+        </div>
 
-  <!-- ================= ONLINE DONATION ================= -->
+        <div class="feature">
+          <div class="icon">🍚</div>
+          <h3>प्रसाद एवं भोग व्यवस्था</h3>
+          <p>भक्तों के लिए प्रसाद एवं भोग की व्यवस्था।</p>
+        </div>
 
-  <section id="donate" class="section">
+        <div class="feature">
+          <div class="icon">🎭</div>
+          <h3>सांस्कृतिक कार्यक्रम</h3>
+          <p>पूजा के अवसर पर विभिन्न सांस्कृतिक कार्यक्रम।</p>
+        </div>
 
-    <div class="section-title">
+      </div>
 
-      <span>🙏</span>
+    </section>
 
-      <h2>
-        ऑनलाइन सहयोग राशि
-      </h2>
+    <!-- BOTTOM APPEAL -->
+    <section class="bottom-appeal">
 
-      <span>🙏</span>
+      <div class="small">
+        🙏 आपकी छोटी-सी सहायता
+      </div>
 
-    </div>
+      <div class="big">
+        माँ के महोत्सव को बनाएगी और भी भव्य
+      </div>
 
+    </section>
 
-    <div class="donate-grid">
+  </main>
 
-      <div class="card donation-card">
-
-        <h3>
-          चंदा / सहयोग दें
-        </h3>
-
-        <p class="muted">
-          भुगतान सफल होने के बाद रसीद संख्या
-          अपने-आप बनेगी और रसीद स्क्रीन पर दिखाई जाएगी।
-        </p>
-
-
-        <form id="donationForm">
-
-          <label>
-            नाम *
-
-            <input
-              id="donorName"
-              required
-              maxlength="80"
-              placeholder="आपका नाम">
-          </label>
+  <footer id="contact">
+    || जय माता दी || &nbsp; | &nbsp; श्री श्री दुर्गा पूजा महोत्सव
+  </footer>
 
 
-          <label>
-            मोबाइल *
+  <script>
 
-            <input
-              id="donorMobile"
-              required
-              inputmode="numeric"
-              pattern="[0-9]{10}"
-              maxlength="10"
-              placeholder="10 अंकों का मोबाइल">
-          </label>
+    let currentSlide = 0;
+    const totalSlides = 3;
 
+    function updateSlider() {
 
-          <label>
-            ईमेल (वैकल्पिक)
+      const slides = document.getElementById("slides");
+      const dots = document.querySelectorAll(".dot");
 
-            <input
-              id="donorEmail"
-              type="email"
-              maxlength="120"
-              placeholder="receipt@example.com">
-          </label>
+      slides.style.transform =
+        "translateX(-" + (currentSlide * 33.333333) + "%)";
 
+      dots.forEach((dot, index) => {
+        dot.classList.toggle("active", index === currentSlide);
+      });
+    }
 
-          <label>
-            राशि (₹) *
+    function nextSlide() {
+      currentSlide++;
 
-            <input
-              id="amount"
-              required
-              type="number"
-              min="1"
-              max="200000"
-              step="1"
-              placeholder="जैसे 501">
-          </label>
+      if (currentSlide >= totalSlides) {
+        currentSlide = 0;
+      }
 
+      updateSlider();
+    }
 
-          <label>
-            नोट (वैकल्पिक)
+    function prevSlide() {
+      currentSlide--;
 
-            <textarea
-              id="note"
-              maxlength="250"
-              placeholder="कोई संदेश">
-            </textarea>
+      if (currentSlide < 0) {
+        currentSlide = totalSlides - 1;
+      }
 
-          </label>
+      updateSlider();
+    }
 
+    function goToSlide(index) {
+      currentSlide = index;
+      updateSlider();
+    }
 
-          <button
-            class="primary"
-            type="submit">
+    /* हर 7 सेकंड में अगला poster */
+    setInterval(function() {
+      nextSlide();
+    }, 7000);
 
-            ₹ अभी सहयोग करें
+  </script>
 
-          </button>
-
-
-          <p
-            id="payStatus
+</body>
+</html>
+```
