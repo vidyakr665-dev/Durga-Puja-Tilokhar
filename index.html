@@ -1,9 +1,9 @@
-```html
 <!DOCTYPE html>
 <html lang="hi">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>श्री श्री दुर्गा पूजा महोत्सव</title>
 
   <style>
@@ -13,286 +13,413 @@
       box-sizing: border-box;
     }
 
+    html, body {
+      width: 100%;
+      min-height: 100%;
+    }
+
     body {
       font-family: Arial, "Noto Sans Devanagari", sans-serif;
-      background: #fff8ed;
-      color: #4b1710;
+      background: #fffaf2;
+      color: #4b1008;
+      overflow-x: hidden;
     }
 
-    /* TOP HEADER */
+    /* ================= HEADER ================= */
+
     header {
-      background: linear-gradient(90deg, #6d0909, #a71919, #6d0909);
-      color: #fff;
-      padding: 12px 20px;
-      text-align: center;
-      border-bottom: 4px solid #f5c451;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.3);
-    }
-
-    header h1 {
-      font-size: 30px;
-      color: #ffd95a;
-      margin-bottom: 5px;
-      font-weight: 800;
-    }
-
-    header p {
-      font-size: 16px;
+      width: 100%;
+      height: 64px;
+      background: linear-gradient(90deg, #8d0909, #b51010, #8d0909);
+      border-bottom: 3px solid #f3c338;
       color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5px 4%;
+      position: relative;
+      z-index: 10;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 43px;
+      height: 43px;
+      border: 2px solid #ffd94e;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffd94e;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .brand-text h1 {
+      font-size: 20px;
+      line-height: 1.1;
+      color: #ffe06a;
+      font-weight: 900;
+    }
+
+    .brand-text p {
+      font-size: 11px;
+      margin-top: 3px;
+      color: #fff;
       font-weight: 600;
     }
 
-    /* NAVIGATION */
+    /* ================= NAV ================= */
+
     nav {
-      background: #4d0808;
       display: flex;
+      align-items: center;
       justify-content: center;
-      flex-wrap: wrap;
-      gap: 5px;
-      padding: 8px;
+      gap: 28px;
     }
 
     nav a {
       color: white;
       text-decoration: none;
-      padding: 9px 18px;
-      border-radius: 5px;
+      font-size: 14px;
       font-weight: bold;
-      font-size: 15px;
+      white-space: nowrap;
     }
 
     nav a:hover {
-      background: #d59b19;
-      color: #4d0808;
+      color: #ffd84d;
     }
 
-    /* MAIN */
-    main {
-      max-width: 1250px;
-      margin: auto;
-      padding: 15px;
+    .jai-mata {
+      background: #ffd84d;
+      color: #7c0909;
+      padding: 10px 17px;
+      border-radius: 25px;
+      font-size: 13px;
+      font-weight: 900;
+      white-space: nowrap;
     }
 
-    /* POSTER SLIDER */
-    .slider {
-      position: relative;
+    /* ================= HERO / SLIDER ================= */
+
+    .hero {
       width: 100%;
+      position: relative;
       overflow: hidden;
-      border-radius: 12px;
-      background: #4d0808;
-      box-shadow: 0 5px 18px rgba(0,0,0,0.35);
+      background: #4d0707;
+    }
+
+    .slider {
+      width: 100%;
+      position: relative;
+      overflow: hidden;
     }
 
     .slides {
-      display: flex;
       width: 300%;
-      transition: transform 0.7s ease-in-out;
+      display: flex;
+      transition: transform 0.65s ease-in-out;
     }
 
     .slide {
       width: 33.333333%;
-      flex-shrink: 0;
+      flex: 0 0 33.333333%;
       display: flex;
-      justify-content: center;
       align-items: center;
-      background: #4d0808;
+      justify-content: center;
+      background: #4d0707;
     }
 
     .slide img {
       width: 100%;
       height: auto;
-      max-height: 650px;
-      object-fit: contain;
       display: block;
+      object-fit: contain;
     }
 
-    /* ARROWS */
+    /* ================= ARROWS ================= */
+
     .arrow {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
+      width: 48px;
+      height: 48px;
       border: none;
-      background: rgba(80,0,0,0.75);
+      border-radius: 50%;
+      background: rgba(70, 0, 0, 0.72);
       color: white;
-      font-size: 27px;
+      font-size: 34px;
+      line-height: 48px;
+      text-align: center;
       cursor: pointer;
       z-index: 5;
+      transition: 0.2s;
     }
 
     .arrow:hover {
-      background: #d59b19;
-      color: #4d0808;
+      background: #d39b16;
+      color: #4d0707;
     }
 
-    .left {
-      left: 12px;
+    .arrow.left {
+      left: 18px;
     }
 
-    .right {
-      right: 12px;
+    .arrow.right {
+      right: 18px;
     }
 
-    /* DOTS */
+    /* ================= DOTS ================= */
+
     .dots {
-      text-align: center;
-      padding: 9px;
-      background: #650909;
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 9px;
+      z-index: 6;
     }
 
     .dot {
-      display: inline-block;
-      width: 11px;
-      height: 11px;
-      margin: 0 5px;
+      width: 12px;
+      height: 12px;
       border-radius: 50%;
-      background: #ddd;
+      background: white;
+      opacity: 0.85;
       cursor: pointer;
+      border: 1px solid #ddd;
     }
 
     .dot.active {
-      background: #ffd34e;
+      background: #ffd52f;
+      opacity: 1;
+      transform: scale(1.15);
     }
 
-    /* CONTRIBUTION SECTION */
-    .contribution {
-      margin-top: 25px;
-      background: linear-gradient(135deg, #fff3d4, #fffdf8);
-      border: 2px solid #d7a52b;
-      border-radius: 14px;
-      padding: 25px 18px;
-      text-align: center;
-      box-shadow: 0 4px 12px rgba(100,40,0,0.15);
+    /* ================= BELOW HERO ================= */
+
+    .content {
+      width: 90%;
+      max-width: 1450px;
+      margin: 20px auto 0;
     }
 
-    .contribution h2 {
-      color: #9b1111;
-      font-size: 31px;
-      margin-bottom: 8px;
-      font-weight: 900;
-    }
-
-    .contribution .subtitle {
-      color: #6d3b10;
-      font-size: 17px;
-      margin-bottom: 22px;
-      font-weight: 600;
-    }
-
-    /* FOUR OPTIONS */
-    .features {
+    .cards {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
     }
 
-    .feature {
-      padding: 18px 10px;
-      background: white;
-      border-radius: 12px;
-      border: 1px solid #e0b84f;
-      box-shadow: 0 3px 9px rgba(0,0,0,0.12);
+    .card {
+      background: linear-gradient(135deg, #fffaf0, #fffdf9);
+      border: 1px solid #e4bd55;
+      border-radius: 14px;
+      padding: 17px 20px;
+      min-height: 95px;
+      box-shadow: 0 2px 8px rgba(80, 30, 0, 0.08);
     }
 
-    .icon {
-      width: 58px;
-      height: 58px;
-      margin: auto;
-      margin-bottom: 10px;
-      border-radius: 50%;
-      background: #a91414;
-      color: #ffd65b;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 28px;
+    .card h3 {
+      color: #8d1111;
+      font-size: 17px;
+      margin-bottom: 8px;
     }
 
-    .feature h3 {
-      color: #8e0d0d;
-      font-size: 18px;
-      margin-bottom: 5px;
-    }
-
-    .feature p {
-      color: #60402b;
+    .card p {
+      color: #5a3826;
       font-size: 14px;
       line-height: 1.5;
     }
 
-    /* BOTTOM APPEAL */
-    .bottom-appeal {
-      margin-top: 25px;
-      background: linear-gradient(90deg, #620707, #a81515, #620707);
-      color: white;
-      border-top: 4px solid #f0bd35;
-      border-bottom: 4px solid #f0bd35;
-      padding: 20px 15px;
+    /* ================= CONTRIBUTION ================= */
+
+    .contribution {
+      margin: 22px auto;
+      background: #fff8e5;
+      border: 1px solid #dcae30;
+      border-radius: 14px;
+      padding: 22px;
       text-align: center;
-      border-radius: 10px;
     }
 
-    .bottom-appeal .small {
-      font-size: 18px;
-      margin-bottom: 5px;
+    .contribution h2 {
+      color: #9b1515;
+      font-size: 30px;
+      margin-bottom: 8px;
     }
 
-    .bottom-appeal .big {
+    .contribution p {
+      font-size: 16px;
+      color: #654027;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .feature {
+      background: white;
+      border: 1px solid #e0bd58;
+      border-radius: 12px;
+      padding: 16px 10px;
+    }
+
+    .feature-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #a91414;
       color: #ffd84d;
-      font-size: 27px;
-      font-weight: 900;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: auto auto 8px;
+      font-size: 25px;
     }
 
-    /* FOOTER */
+    .feature h3 {
+      font-size: 16px;
+      color: #8c1111;
+    }
+
+    /* ================= FOOTER ================= */
+
     footer {
       margin-top: 20px;
-      background: #390505;
+      background: #4b0707;
       color: white;
       text-align: center;
-      padding: 15px;
+      padding: 14px;
       font-size: 14px;
+      border-top: 3px solid #e8bd39;
     }
 
-    /* MOBILE */
-    @media (max-width: 768px) {
+    /* ================= TABLET ================= */
 
-      header h1 {
-        font-size: 22px;
+    @media (max-width: 1000px) {
+
+      header {
+        height: auto;
+        min-height: 65px;
+        padding: 7px 2%;
       }
 
-      header p {
-        font-size: 13px;
+      nav {
+        gap: 14px;
       }
 
       nav a {
-        font-size: 13px;
-        padding: 7px 10px;
+        font-size: 12px;
       }
 
-      main {
-        padding: 8px;
+      .jai-mata {
+        padding: 8px 11px;
+        font-size: 11px;
       }
 
-      .slide img {
-        max-height: 500px;
+      .brand-text h1 {
+        font-size: 17px;
       }
 
-      .contribution h2 {
-        font-size: 24px;
+      .cards {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    /* ================= MOBILE ================= */
+
+    @media (max-width: 700px) {
+
+      header {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        padding: 9px 10px;
+      }
+
+      .brand {
+        width: 100%;
+        justify-content: center;
+      }
+
+      nav {
+        order: 2;
+        width: 100%;
+        gap: 14px;
+        overflow-x: auto;
+        padding-bottom: 3px;
+      }
+
+      nav a {
+        font-size: 12px;
+      }
+
+      .jai-mata {
+        display: none;
+      }
+
+      .brand-text h1 {
+        font-size: 18px;
+      }
+
+      .brand-text p {
+        font-size: 10px;
+      }
+
+      .arrow {
+        width: 38px;
+        height: 38px;
+        line-height: 38px;
+        font-size: 27px;
+      }
+
+      .arrow.left {
+        left: 8px;
+      }
+
+      .arrow.right {
+        right: 8px;
+      }
+
+      .dots {
+        bottom: 8px;
+      }
+
+      .dot {
+        width: 9px;
+        height: 9px;
+      }
+
+      .content {
+        width: 94%;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
       }
 
       .features {
         grid-template-columns: repeat(2, 1fr);
       }
 
-      .bottom-appeal .big {
-        font-size: 21px;
+      .contribution h2 {
+        font-size: 24px;
       }
     }
 
-    @media (max-width: 450px) {
+    /* ================= SMALL MOBILE ================= */
+
+    @media (max-width: 420px) {
 
       .features {
         grid-template-columns: 1fr 1fr;
@@ -300,148 +427,278 @@
       }
 
       .feature {
-        padding: 13px 6px;
+        padding: 12px 5px;
       }
 
       .feature h3 {
-        font-size: 15px;
+        font-size: 13px;
       }
 
-      .feature p {
-        font-size: 12px;
-      }
-
-      .slide img {
-        max-height: 400px;
+      .contribution {
+        padding: 15px 8px;
       }
     }
+
   </style>
 </head>
 
 <body>
 
+  <!-- ================= HEADER ================= -->
+
   <header>
-    <h1>श्री श्री दुर्गा पूजा महोत्सव</h1>
-    <p>छात्र नवयुवक संघ, तिलोखर (रोहतास)</p>
+
+    <div class="brand">
+
+      <div class="logo">ॐ</div>
+
+      <div class="brand-text">
+        <h1>श्री श्री दुर्गा पूजा महोत्सव</h1>
+        <p>छात्र नवयुवक संघ, तिलोखर (रोहतास)</p>
+      </div>
+
+    </div>
+
+
+    <nav>
+      <a href="#">मुख्य पृष्ठ</a>
+      <a href="#contribution">चंदा सहयोग</a>
+      <a href="#income">आय-व्यय</a>
+      <a href="#contact">संपर्क करें</a>
+    </nav>
+
+
+    <div class="jai-mata">
+      🙏 || जय माता दी ||
+    </div>
+
   </header>
 
-  <nav>
-    <a href="#">होम</a>
-    <a href="#contribution">सहयोग करें</a>
-    <a href="#about">हमारे बारे में</a>
-    <a href="#contact">संपर्क करें</a>
-  </nav>
 
-  <main>
+  <!-- ================= FULL WIDTH POSTER ================= -->
 
-    <!-- POSTER SLIDER -->
-    <section class="slider">
+  <section class="hero">
+
+    <div class="slider">
 
       <div class="slides" id="slides">
 
+        <!-- POSTER 1 -->
         <div class="slide">
-          <img src="poster-1-puja.jpg" alt="दुर्गा पूजा पोस्टर">
+          <img
+            src="poster-1-puja.jpg"
+            alt="श्री श्री दुर्गा पूजा महोत्सव">
         </div>
 
+
+        <!-- POSTER 2 -->
         <div class="slide">
-          <img src="poster-2-adhikarigan.jpg" alt="अधिकारी गण">
+          <img
+            src="poster-2-adhikarigan.jpg"
+            alt="अधिकारी गण">
         </div>
 
+
+        <!-- POSTER 3 -->
         <div class="slide">
-          <img src="poster-3-donation.jpg" alt="चंदा सहयोग">
+          <img
+            src="poster-3-donation.jpg"
+            alt="चंदा सहयोग हेतु">
         </div>
 
       </div>
 
-      <button class="arrow left" onclick="prevSlide()">‹</button>
-      <button class="arrow right" onclick="nextSlide()">›</button>
 
+      <!-- LEFT BUTTON -->
+      <button
+        class="arrow left"
+        onclick="prevSlide()"
+        aria-label="Previous">
+        ‹
+      </button>
+
+
+      <!-- RIGHT BUTTON -->
+      <button
+        class="arrow right"
+        onclick="nextSlide()"
+        aria-label="Next">
+        ›
+      </button>
+
+
+      <!-- DOTS -->
       <div class="dots">
-        <span class="dot active" onclick="goToSlide(0)"></span>
-        <span class="dot" onclick="goToSlide(1)"></span>
-        <span class="dot" onclick="goToSlide(2)"></span>
+
+        <span
+          class="dot active"
+          onclick="goToSlide(0)">
+        </span>
+
+        <span
+          class="dot"
+          onclick="goToSlide(1)">
+        </span>
+
+        <span
+          class="dot"
+          onclick="goToSlide(2)">
+        </span>
+
       </div>
 
-    </section>
+    </div>
 
-    <!-- CONTRIBUTION -->
-    <section class="contribution" id="contribution">
+  </section>
 
-      <h2>अपना योगदान दें</h2>
 
-      <p class="subtitle">
-        माँ के दरबार को भव्य और दिव्य बनाने में आपका सहयोग आवश्यक है।
+  <!-- ================= THREE CARDS ================= -->
+
+  <section class="content">
+
+    <div class="cards">
+
+      <div class="card">
+        <h3>🌺 भव्य पूजा</h3>
+        <p>
+          माँ दुर्गा की आराधना और धार्मिक आयोजन
+        </p>
+      </div>
+
+
+      <div class="card">
+        <h3>🎨 सेवा और सजावट</h3>
+        <p>
+          पंडाल, सजावट, प्रसाद और सांस्कृतिक कार्यक्रम
+        </p>
+      </div>
+
+
+      <div class="card">
+        <h3>🙏 आपका सहयोग</h3>
+        <p>
+          अपनी श्रद्धा अनुसार ऑनलाइन सहयोग करें
+        </p>
+      </div>
+
+    </div>
+
+
+    <!-- ================= CONTRIBUTION ================= -->
+
+    <section
+      class="contribution"
+      id="contribution">
+
+      <h2>आपका सहयोग ही माँ की मुस्कान है</h2>
+
+      <p>
+        आइए, इस पावन अवसर पर माँ दुर्गा के भव्य पूजा में अपना योगदान दें।
       </p>
+
 
       <div class="features">
 
         <div class="feature">
-          <div class="icon">🛕</div>
-          <h3>भव्य पंडाल निर्माण</h3>
-          <p>माँ के लिए भव्य एवं आकर्षक पंडाल का निर्माण।</p>
+
+          <div class="feature-icon">
+            🛕
+          </div>
+
+          <h3>
+            भव्य पंडाल निर्माण
+          </h3>
+
         </div>
 
-        <div class="feature">
-          <div class="icon">🌺</div>
-          <h3>माँ की मनमोहक सज्जा</h3>
-          <p>फूलों और रोशनी से माँ के दरबार की सुंदर सजावट।</p>
-        </div>
 
         <div class="feature">
-          <div class="icon">🍚</div>
-          <h3>प्रसाद एवं भोग व्यवस्था</h3>
-          <p>भक्तों के लिए प्रसाद एवं भोग की व्यवस्था।</p>
+
+          <div class="feature-icon">
+            🌺
+          </div>
+
+          <h3>
+            माँ की मनमोहक सज्जा
+          </h3>
+
         </div>
 
+
         <div class="feature">
-          <div class="icon">🎭</div>
-          <h3>सांस्कृतिक कार्यक्रम</h3>
-          <p>पूजा के अवसर पर विभिन्न सांस्कृतिक कार्यक्रम।</p>
+
+          <div class="feature-icon">
+            🍚
+          </div>
+
+          <h3>
+            प्रसाद एवं भोग
+          </h3>
+
+        </div>
+
+
+        <div class="feature">
+
+          <div class="feature-icon">
+            🎭
+          </div>
+
+          <h3>
+            सांस्कृतिक कार्यक्रम
+          </h3>
+
         </div>
 
       </div>
 
     </section>
 
-    <!-- BOTTOM APPEAL -->
-    <section class="bottom-appeal">
+  </section>
 
-      <div class="small">
-        🙏 आपकी छोटी-सी सहायता
-      </div>
 
-      <div class="big">
-        माँ के महोत्सव को बनाएगी और भी भव्य
-      </div>
-
-    </section>
-
-  </main>
+  <!-- ================= FOOTER ================= -->
 
   <footer id="contact">
-    || जय माता दी || &nbsp; | &nbsp; श्री श्री दुर्गा पूजा महोत्सव
+    || जय माता दी || &nbsp; | &nbsp;
+    श्री श्री दुर्गा पूजा महोत्सव
   </footer>
 
+
+  <!-- ================= SLIDER SCRIPT ================= -->
 
   <script>
 
     let currentSlide = 0;
+
     const totalSlides = 3;
+
+    const slides = document.getElementById("slides");
+
+    const dots = document.querySelectorAll(".dot");
+
 
     function updateSlider() {
 
-      const slides = document.getElementById("slides");
-      const dots = document.querySelectorAll(".dot");
-
       slides.style.transform =
-        "translateX(-" + (currentSlide * 33.333333) + "%)";
+        "translateX(-" + (currentSlide * 33.3333333333) + "%)";
 
-      dots.forEach((dot, index) => {
-        dot.classList.toggle("active", index === currentSlide);
+
+      dots.forEach(function(dot, index) {
+
+        if (index === currentSlide) {
+          dot.classList.add("active");
+        } else {
+          dot.classList.remove("active");
+        }
+
       });
+
     }
 
+
     function nextSlide() {
+
       currentSlide++;
 
       if (currentSlide >= totalSlides) {
@@ -449,9 +706,12 @@
       }
 
       updateSlider();
+
     }
 
+
     function prevSlide() {
+
       currentSlide--;
 
       if (currentSlide < 0) {
@@ -459,20 +719,29 @@
       }
 
       updateSlider();
+
     }
+
 
     function goToSlide(index) {
+
       currentSlide = index;
+
       updateSlider();
+
     }
 
-    /* हर 7 सेकंड में अगला poster */
+
+    /* हर 5 सेकंड में poster बदलेगा */
+
     setInterval(function() {
+
       nextSlide();
-    }, 7000);
+
+    }, 5000);
+
 
   </script>
 
 </body>
 </html>
-```
