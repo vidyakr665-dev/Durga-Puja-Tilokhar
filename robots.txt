@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://vidyakr665-dev.github.io/Durga-Puja-Tilokhar/sitemap.xml
