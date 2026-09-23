@@ -1,513 +1,188 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>श्री श्री दुर्गा पूजा महोत्सव | तिलोखर (रोहतास)</title>
-
-  <meta name="description"
-        content="श्री श्री दुर्गा पूजा महोत्सव - छात्र नवयुवक संघ, तिलोखर (रोहतास)">
+  <title>श्री श्री दुर्गा पूजा महोत्सव — तिलोखर</title>
 
   <link rel="stylesheet" href="style.css">
+
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 
 <body>
 
-  <!-- ================= HEADER ================= -->
-  <header class="site-header">
+<header class="site-header">
 
-    <div class="header-inner">
+  <div class="brand">
+    श्री श्री दुर्गा पूजा महोत्सव
+  </div>
 
-      <div class="brand">
-        <div class="brand-title">
-          श्री श्री दुर्गा पूजा महोत्सव
-        </div>
+  <nav>
+    <a href="#home">मुख्य पृष्ठ</a>
+    <a href="#donate">चंदा सहयोग</a>
+    <a href="#ledger">आय-व्यय</a>
+    <a href="#contact">संपर्क करें</a>
+  </nav>
 
-        <div class="brand-subtitle">
-          छात्र नवयुवक संघ
-        </div>
-      </div>
+  <div class="jai">
+    ॥ जय माता दी ॥
+  </div>
 
-      <nav class="main-nav">
+</header>
 
-        <a href="#home">
-          मुख्य पृष्ठ
-        </a>
 
-        <a href="#chanda">
-          चंदा सहयोग
-        </a>
+<main>
 
-        <a href="#income-expense">
-          आय-व्यय
-        </a>
+  <!-- ================= POSTER SLIDER ================= -->
 
-        <a href="#contact">
-          संपर्क करें
-        </a>
+  <section id="home" class="hero">
 
-        <a href="#home" class="jai-mata">
-          ॥ जय माता दी ॥
-        </a>
+    <div class="slides">
 
-      </nav>
+      <!-- Poster 1 -->
+      <img
+        class="slide active"
+        src="poster-1-puja.jpg"
+        alt="श्री श्री दुर्गा पूजा महोत्सव">
+
+      <!-- Poster 2 -->
+      <img
+        class="slide"
+        src="poster-2-adhikarigan.jpg"
+        alt="अधिकारी गण">
+
+      <!-- Poster 3 -->
+      <img
+        class="slide"
+        src="poster-3-donation.jpg"
+        alt="दुर्गा पूजा सहयोग">
 
     </div>
 
-  </header>
+    <button
+      class="slider-btn prev"
+      aria-label="पिछला पोस्टर">
+      ❮
+    </button>
+
+    <button
+      class="slider-btn next"
+      aria-label="अगला पोस्टर">
+      ❯
+    </button>
+
+    <div
+      class="dots"
+      aria-label="पोस्टर नेविगेशन">
+    </div>
+
+  </section>
 
 
-  <!-- ================= MAIN ================= -->
-  <main>
+  <!-- ================= ONLINE DONATION ================= -->
 
-    <!-- ================= POSTER SLIDER ================= -->
-    <section id="home" class="hero-section">
+  <section id="donate" class="section">
 
-      <div class="poster-slider">
+    <div class="section-title">
 
-        <!-- POSTER 1 -->
-        <div class="poster-slide active">
-          <img
-            src="poster-1-puja.jpg"
-            alt="श्री श्री दुर्गा पूजा महोत्सव">
-        </div>
+      <span>🙏</span>
 
-        <!-- POSTER 2 -->
-        <div class="poster-slide">
-          <img
-            src="poster-2-adhikarigan.jpg"
-            alt="अधिकारी गण">
-        </div>
+      <h2>
+        ऑनलाइन सहयोग राशि
+      </h2>
 
-        <!-- POSTER 3 -->
-        <div class="poster-slide">
-          <img
-            src="poster-3-donation.jpg"
-            alt="दुर्गा पूजा सहयोग">
-        </div>
+      <span>🙏</span>
+
+    </div>
 
 
-        <!-- LEFT ARROW -->
-        <button
-          class="slider-btn slider-prev"
-          type="button"
-          aria-label="पिछला पोस्टर">
-          ❮
-        </button>
+    <div class="donate-grid">
 
-        <!-- RIGHT ARROW -->
-        <button
-          class="slider-btn slider-next"
-          type="button"
-          aria-label="अगला पोस्टर">
-          ❯
-        </button>
+      <div class="card donation-card">
 
-      </div>
+        <h3>
+          चंदा / सहयोग दें
+        </h3>
 
-
-      <!-- DOTS -->
-      <div class="slider-dots">
-
-        <button
-          class="slider-dot active"
-          type="button"
-          aria-label="पोस्टर 1">
-        </button>
-
-        <button
-          class="slider-dot"
-          type="button"
-          aria-label="पोस्टर 2">
-        </button>
-
-        <button
-          class="slider-dot"
-          type="button"
-          aria-label="पोस्टर 3">
-        </button>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================= CHANDA ================= -->
-    <section id="chanda" class="content-section">
-
-      <div class="section-box">
-
-        <h2>चंदा सहयोग</h2>
-
-        <p>
-          माँ दुर्गा के भव्य महोत्सव को सफल बनाने में
-          आपका सहयोग हमारे लिए अत्यंत महत्वपूर्ण है।
+        <p class="muted">
+          भुगतान सफल होने के बाद रसीद संख्या
+          अपने-आप बनेगी और रसीद स्क्रीन पर दिखाई जाएगी।
         </p>
 
-        <p>
-          आपके सहयोग से माँ का भव्य दरबार,
-          पंडाल, सजावट, प्रसाद एवं धार्मिक-सांस्कृतिक
-          कार्यक्रमों की व्यवस्था की जाती है।
-        </p>
 
-        <p class="highlight-text">
-          माँ के महोत्सव को और भव्य बनाने में अपना योगदान दें।
-        </p>
+        <form id="donationForm">
 
-        <a href="#donation" class="primary-btn">
-          ऑनलाइन सहयोग करें
-        </a>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================= ONLINE DONATION ================= -->
-    <section id="donation" class="content-section">
-
-      <div class="section-box">
-
-        <h2>ऑनलाइन सहयोग राशि</h2>
-
-        <p>
-          अपनी श्रद्धा एवं सामर्थ्य के अनुसार सहयोग राशि दें।
-        </p>
-
-        <form id="donation-form">
-
-          <div class="form-group">
-
-            <label for="donor-name">
-              नाम
-            </label>
+          <label>
+            नाम *
 
             <input
-              type="text"
-              id="donor-name"
-              name="name"
-              placeholder="अपना नाम लिखें"
-              required>
-
-          </div>
+              id="donorName"
+              required
+              maxlength="80"
+              placeholder="आपका नाम">
+          </label>
 
 
-          <div class="form-group">
-
-            <label for="donor-mobile">
-              मोबाइल नंबर
-            </label>
+          <label>
+            मोबाइल *
 
             <input
-              type="tel"
-              id="donor-mobile"
-              name="mobile"
-              placeholder="मोबाइल नंबर"
-              required>
+              id="donorMobile"
+              required
+              inputmode="numeric"
+              pattern="[0-9]{10}"
+              maxlength="10"
+              placeholder="10 अंकों का मोबाइल">
+          </label>
 
-          </div>
 
-
-          <div class="form-group">
-
-            <label for="donation-amount">
-              सहयोग राशि (₹)
-            </label>
+          <label>
+            ईमेल (वैकल्पिक)
 
             <input
+              id="donorEmail"
+              type="email"
+              maxlength="120"
+              placeholder="receipt@example.com">
+          </label>
+
+
+          <label>
+            राशि (₹) *
+
+            <input
+              id="amount"
+              required
               type="number"
-              id="donation-amount"
-              name="amount"
               min="1"
-              placeholder="जैसे 501"
-              required>
+              max="200000"
+              step="1"
+              placeholder="जैसे 501">
+          </label>
 
-          </div>
+
+          <label>
+            नोट (वैकल्पिक)
+
+            <textarea
+              id="note"
+              maxlength="250"
+              placeholder="कोई संदेश">
+            </textarea>
+
+          </label>
 
 
           <button
-            type="submit"
-            class="primary-btn">
-            ऑनलाइन भुगतान करें
+            class="primary"
+            type="submit">
+
+            ₹ अभी सहयोग करें
+
           </button>
 
-        </form>
 
-        <div id="payment-message"></div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================= INCOME EXPENSE ================= -->
-    <section id="income-expense" class="content-section">
-
-      <div class="section-box">
-
-        <h2>आय-व्यय विवरण</h2>
-
-        <p>
-          समिति की आय और व्यय का विवरण पारदर्शिता के साथ
-          देखने के लिए नीचे दिए गए विकल्प का उपयोग करें।
-        </p>
-
-
-        <div class="finance-cards">
-
-          <div class="finance-card">
-            <span>कुल आय</span>
-            <strong id="total-income">₹0</strong>
-          </div>
-
-          <div class="finance-card">
-            <span>कुल व्यय</span>
-            <strong id="total-expense">₹0</strong>
-          </div>
-
-          <div class="finance-card">
-            <span>शेष राशि</span>
-            <strong id="balance">₹0</strong>
-          </div>
-
-        </div>
-
-
-        <div class="finance-links">
-
-          <a href="receipt.html" class="secondary-btn">
-            रसीद देखें
-          </a>
-
-          <a href="#public-ledger" class="secondary-btn">
-            सहयोगकर्ताओं की सूची
-          </a>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================= PUBLIC LEDGER ================= -->
-    <section id="public-ledger" class="content-section">
-
-      <div class="section-box">
-
-        <h2>सहयोगकर्ताओं का विवरण</h2>
-
-        <p>
-          ऑनलाइन प्राप्त सहयोग राशि का सार्वजनिक विवरण।
-        </p>
-
-        <div class="table-wrapper">
-
-          <table>
-
-            <thead>
-
-              <tr>
-                <th>दिनांक</th>
-                <th>नाम</th>
-                <th>राशि</th>
-              </tr>
-
-            </thead>
-
-            <tbody id="public-ledger-body">
-
-              <tr>
-                <td colspan="3">
-                  विवरण लोड हो रहा है...
-                </td>
-              </tr>
-
-            </tbody>
-
-          </table>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================= CONTACT ================= -->
-    <section id="contact" class="content-section">
-
-      <div class="section-box contact-box">
-
-        <h2>संपर्क करें</h2>
-
-        <h3>
-          छात्र नवयुवक संघ
-        </h3>
-
-        <p>
-          <strong>स्थान:</strong>
-          तिलोखर (रोहतास)
-        </p>
-
-        <p>
-          <strong>मोबाइल:</strong>
-          जल्द उपलब्ध होगा
-        </p>
-
-        <p class="contact-note">
-          पूजा महोत्सव, सहयोग राशि अथवा अन्य जानकारी के लिए
-          समिति से संपर्क करें।
-        </p>
-
-      </div>
-
-    </section>
-
-  </main>
-
-
-  <!-- ================= FOOTER ================= -->
-  <footer class="site-footer">
-
-    <div class="footer-content">
-
-      <h2>
-        श्री श्री दुर्गा पूजा महोत्सव
-      </h2>
-
-      <h3>
-        छात्र नवयुवक संघ
-      </h3>
-
-      <p>
-        तिलोखर (रोहतास)
-      </p>
-
-      <p>
-        माँ दुर्गा का आशीर्वाद सभी पर बना रहे।
-      </p>
-
-      <div class="footer-jai">
-        ॥ जय माता दी ॥
-      </div>
-
-      <p class="copyright">
-        © 2026 छात्र नवयुवक संघ, तिलोखर (रोहतास)
-      </p>
-
-    </div>
-
-  </footer>
-
-
-  <!-- ================= SLIDER SCRIPT ================= -->
-  <script>
-
-    const slides =
-      document.querySelectorAll(".poster-slide");
-
-    const dots =
-      document.querySelectorAll(".slider-dot");
-
-    const nextButton =
-      document.querySelector(".slider-next");
-
-    const prevButton =
-      document.querySelector(".slider-prev");
-
-    let currentSlide = 0;
-
-    let slideTimer;
-
-
-    function showSlide(index) {
-
-      if (index >= slides.length) {
-        index = 0;
-      }
-
-      if (index < 0) {
-        index = slides.length - 1;
-      }
-
-      slides.forEach((slide) => {
-        slide.classList.remove("active");
-      });
-
-      dots.forEach((dot) => {
-        dot.classList.remove("active");
-      });
-
-      slides[index].classList.add("active");
-
-      if (dots[index]) {
-        dots[index].classList.add("active");
-      }
-
-      currentSlide = index;
-    }
-
-
-    function nextSlide() {
-      showSlide(currentSlide + 1);
-    }
-
-
-    function previousSlide() {
-      showSlide(currentSlide - 1);
-    }
-
-
-    function startSlider() {
-
-      clearInterval(slideTimer);
-
-      slideTimer = setInterval(() => {
-        nextSlide();
-      }, 7000);
-
-    }
-
-
-    nextButton.addEventListener("click", () => {
-
-      nextSlide();
-      startSlider();
-
-    });
-
-
-    prevButton.addEventListener("click", () => {
-
-      previousSlide();
-      startSlider();
-
-    });
-
-
-    dots.forEach((dot, index) => {
-
-      dot.addEventListener("click", () => {
-
-        showSlide(index);
-        startSlider();
-
-      });
-
-    });
-
-
-    showSlide(0);
-
-    startSlider();
-
-  </script>
-
-
-  <!-- Existing website/payment JavaScript -->
-  <script src="app.js"></script>
-
-</body>
-</html>
+          <p
+            id="payStatus
