@@ -1,0 +1,1 @@
+पुरानी वेबसाइट की index.html, style.css और script.js को इस version की files से replace करें। यह v3 attractive design है। वास्तविक online payment/database के लिए backend और payment verification जरूरी है।
