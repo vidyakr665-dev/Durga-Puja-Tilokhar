@@ -1,7 +1,9 @@
-// Copy this file to config.js and replace the placeholders.
-// Never put Razorpay Key Secret or Supabase Secret/Service Role keys here.
 window.DURGA_CONFIG = {
   SUPABASE_URL: "https://YOUR_PROJECT.supabase.co",
   SUPABASE_PUBLISHABLE_KEY: "YOUR_SUPABASE_PUBLISHABLE_KEY",
+  RAZORPAY_KEY_ID: "YOUR_RAZORPAY_KEY_ID",
+  CONTACT_PHONE_1: "अपना संपर्क नंबर जोड़ें",
+  CONTACT_PHONE_2: "",
+  CONTACT_EMAIL: "अपना ईमेल जोड़ें",
   DEMO_MODE: true
 };

@@ -1,104 +1,59 @@
 <!doctype html>
 <html lang="hi">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>श्री श्री दुर्गा पूजा महोत्सव — तिलोखर</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>श्री श्री दुर्गा पूजा महोत्सव | छात्र नवयुवक संघ</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header class="site-header">
-  <div class="brand">श्री श्री दुर्गा पूजा महोत्सव</div>
-  <nav>
-    <a href="#home">मुख्य पृष्ठ</a>
-    <a href="#donate">चंदा सहयोग</a>
-    <a href="#ledger">आय-व्यय</a>
-    <a href="#contact">संपर्क करें</a>
-  </nav>
-  <div class="jai">॥ जय माता दी ॥</div>
+  <div class="brand"><div class="brand-mark">ॐ</div><div><h1>श्री श्री दुर्गा पूजा महोत्सव</h1><p>छात्र नवयुवक संघ • तिलोखर (रोहतास)</p></div></div>
+  <nav><a href="#home">मुख्य पृष्ठ</a><a href="#donate">चंदा सहयोग</a><a href="#ledger">आय-व्यय</a><a href="#contact">संपर्क करें</a></nav>
+  <a class="jai" href="#donate">🙏 ॥ जय माता दी ॥</a>
 </header>
 
 <main>
-  <section id="home" class="hero">
-    <div class="slides">
-      <img class="slide active" src="assets/poster-1-puja.jpg" alt="श्री श्री दुर्गा पूजा महोत्सव">
-      <img class="slide" src="assets/poster-2-adhikarigan.jpg" alt="हमारे अधिकारी गण">
-      <img class="slide" src="assets/poster-3-chanda.jpg" alt="ऑनलाइन सहयोग राशि">
-    </div>
-    <button class="slider-btn prev" aria-label="पिछला पोस्टर">❮</button>
-    <button class="slider-btn next" aria-label="अगला पोस्टर">❯</button>
-    <div class="dots" aria-label="पोस्टर नेविगेशन"></div>
-  </section>
+<section id="home" class="hero">
+  <div class="slides">
+    <img class="slide active" src="assets/poster-1-puja.jpg" alt="श्री श्री दुर्गा पूजा महोत्सव">
+    <img class="slide" src="assets/poster-2-adhikari.jpg" alt="अधिकारी गण">
+    <img class="slide" src="assets/poster-3-donation.jpg" alt="चंदा सहयोग">
+  </div>
+  <button class="arrow prev" aria-label="पिछला poster">‹</button><button class="arrow next" aria-label="अगला poster">›</button>
+  <div class="dots"><button class="dot active" data-i="0"></button><button class="dot" data-i="1"></button><button class="dot" data-i="2"></button></div>
+</section>
 
-  <section id="donate" class="section">
-    <div class="section-title">
-      <span>🙏</span>
-      <h2>ऑनलाइन सहयोग राशि</h2>
-      <span>🙏</span>
-    </div>
-    <div class="donate-grid">
-      <div class="card donation-card">
-        <h3>चंदा / सहयोग दें</h3>
-        <p class="muted">भुगतान सफल होने के बाद रसीद संख्या अपने-आप बनेगी और रसीद स्क्रीन पर दिखाई जाएगी।</p>
-        <form id="donationForm">
-          <label>नाम *
-            <input id="donorName" required maxlength="80" placeholder="आपका नाम">
-          </label>
-          <label>मोबाइल *
-            <input id="donorMobile" required inputmode="numeric" pattern="[0-9]{10}" maxlength="10" placeholder="10 अंकों का मोबाइल">
-          </label>
-          <label>ईमेल (वैकल्पिक)
-            <input id="donorEmail" type="email" maxlength="120" placeholder="receipt@example.com">
-          </label>
-          <label>राशि (₹) *
-            <input id="amount" required type="number" min="1" max="200000" step="1" placeholder="जैसे 501">
-          </label>
-          <label>नोट (वैकल्पिक)
-            <textarea id="note" maxlength="250" placeholder="कोई संदेश"></textarea>
-          </label>
-          <button class="primary" type="submit">₹ अभी सहयोग करें</button>
-          <p id="payStatus" class="status"></p>
-        </form>
-      </div>
+<section class="quick-grid">
+  <article><b>🌺 भव्य पूजा</b><span>माँ दुर्गा की आराधना और धार्मिक आयोजन</span></article>
+  <article><b>🪔 सेवा और सजावट</b><span>पंडाल, सजावट, प्रसाद और सांस्कृतिक कार्यक्रम</span></article>
+  <article><b>🙏 आपका सहयोग</b><span>अपनी श्रद्धा अनुसार ऑनलाइन सहयोग करें</span></article>
+</section>
 
-      <div class="card stats-card">
-        <h3>वर्तमान आय-व्यय</h3>
-        <div class="stat"><span>कुल प्राप्त सहयोग</span><strong id="totalIncome">₹0</strong></div>
-        <div class="stat"><span>कुल खर्च</span><strong id="totalExpense">₹0</strong></div>
-        <div class="stat balance"><span>शेष राशि</span><strong id="balance">₹0</strong></div>
-        <p class="muted">केवल सफल/पुष्ट भुगतान और व्यवस्थापक द्वारा दर्ज खर्च ही सार्वजनिक हिसाब में शामिल होंगे।</p>
-      </div>
-    </div>
-  </section>
+<section id="donate" class="section donation">
+  <div class="section-title"><span>चंदा सहयोग</span><h2>माँ के भव्य महोत्सव में अपना योगदान दें</h2><p>आपका सहयोग पूजा, पंडाल, सजावट, प्रसाद और सांस्कृतिक कार्यक्रमों में उपयोग होगा।</p></div>
+  <div class="donation-card">
+    <form id="donationForm">
+      <label>नाम<input id="donorName" required placeholder="अपना नाम"></label>
+      <label>मोबाइल नंबर<input id="donorPhone" required inputmode="numeric" placeholder="10 अंकों का मोबाइल नंबर"></label>
+      <label>चंदा राशि (₹)<input id="donationAmount" required type="number" min="1" step="1" placeholder="501"></label>
+      <button class="primary" type="submit">💳 ऑनलाइन चंदा दें</button>
+      <p id="paymentStatus" class="status"></p>
+    </form>
+    <div class="trust"><div>🔒 सुरक्षित भुगतान</div><div>🧾 भुगतान के बाद रसीद</div><div>🕒 दिनांक व समय सहित रिकॉर्ड</div><div>📊 सार्वजनिक आय-व्यय विवरण</div></div>
+  </div>
+</section>
 
-  <section id="ledger" class="section">
-    <div class="section-title"><h2>आय-व्यय विवरण</h2></div>
-    <div class="card table-wrap">
-      <div class="table-head">
-        <h3>तिथि / समय अनुसार लेन-देन</h3>
-        <button id="refreshLedger" class="secondary">↻ Refresh</button>
-      </div>
-      <table>
-        <thead><tr><th>तिथि / समय</th><th>प्रकार</th><th>विवरण</th><th>राशि</th></tr></thead>
-        <tbody id="ledgerBody"><tr><td colspan="4" class="muted center">लोड हो रहा है…</td></tr></tbody>
-      </table>
-    </div>
-  </section>
+<section id="ledger" class="section ledger">
+  <div class="section-title"><span>पारदर्शिता</span><h2>आय-व्यय एवं चंदा विवरण</h2><p>वर्ष और माह चुनकर जमा चंदा, खर्च और शेष राशि देखें।</p></div>
+  <div class="filters"><select id="yearFilter"></select><select id="monthFilter"><option value="all">सभी माह</option><option value="1">जनवरी</option><option value="2">फरवरी</option><option value="3">मार्च</option><option value="4">अप्रैल</option><option value="5">मई</option><option value="6">जून</option><option value="7">जुलाई</option><option value="8">अगस्त</option><option value="9">सितंबर</option><option value="10">अक्टूबर</option><option value="11">नवंबर</option><option value="12">दिसंबर</option></select><button id="refreshLedger" class="secondary">विवरण देखें</button></div>
+  <div class="totals"><div><span>कुल चंदा</span><strong id="totalIncome">₹0</strong></div><div><span>कुल खर्च</span><strong id="totalExpense">₹0</strong></div><div><span>शेष राशि</span><strong id="balance">₹0</strong></div></div>
+  <div class="table-wrap"><table><thead><tr><th>नाम</th><th>राशि</th><th>दिनांक व समय</th><th>रसीद</th></tr></thead><tbody id="donationRows"><tr><td colspan="4">रिकॉर्ड लोड हो रहे हैं…</td></tr></tbody></table></div>
+</section>
 
-  <section id="contact" class="section contact">
-    <div class="section-title"><h2>संपर्क करें</h2></div>
-    <div class="card">
-      <p><strong>श्री श्री दुर्गा पूजा महोत्सव</strong></p>
-      <p>छात्र नवयुवक संघ, तिलोखर (रोहतास)</p>
-      <p class="muted">व्यवस्थापक से संपर्क के लिए कृप्या 8409651490 इस नम्बर पर सम्पर्क करे ।</p>
-    </div>
-  </section>
+<section class="section committee"><div class="section-title"><span>समिति</span><h2>हमारे अधिकारी गण</h2></div><div class="people"><div><b>अध्यक्ष</b><strong>विद्यासागर कुमार</strong></div><div><b>सचिव</b><strong>अमरजीत कुमार</strong></div><div><b>कोषाध्यक्ष</b><strong>सुरेन्द्र कुमार उर्फ गोरख</strong></div></div></section>
 </main>
 
-<footer>© श्री श्री दुर्गा पूजा महोत्सव • तिलोखर (रोहतास)</footer>
-
-<script src="config.js"></script>
-<script src="app.js"></script>
-</body>
-</html>
+<footer id="contact" class="footer"><div class="footer-brand"><div class="brand-mark">ॐ</div><div><h2>छात्र नवयुवक संघ</h2><p>श्री श्री दुर्गा पूजा महोत्सव</p></div></div><div><b>स्थान</b><span>तिलोखर (रोहतास)</span></div><div><b>संपर्क करें</b><span id="footerPhone">अपना संपर्क नंबर जोड़ें</span></div><div><b>ईमेल</b><span id="footerEmail">अपना ईमेल जोड़ें</span></div><div class="blessing">माँ दुर्गा<br>सदा आपके साथ रहें 🙏</div><small>© श्री श्री दुर्गा पूजा महोत्सव • छात्र नवयुवक संघ</small></footer>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="config.js"></script><script src="app.js"></script>
+</body></html>

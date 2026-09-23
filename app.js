@@ -1,91 +1,14 @@
-const CFG = window.DURGA_CONFIG || {};
-const hasBackend = Boolean(CFG.SUPABASE_URL && CFG.SUPABASE_PUBLISHABLE_KEY && !CFG.DEMO_MODE);
-
-let slides = [...document.querySelectorAll(".slide")], dotsBox = document.querySelector(".dots"), current = 0, timer;
-slides.forEach((_, i) => { const d=document.createElement("button"); d.className="dot"+(i===0?" active":""); d.setAttribute("aria-label",`पोस्टर ${i+1}`); d.onclick=()=>showSlide(i,true); dotsBox.appendChild(d); });
-const dots=[...document.querySelectorAll(".dot")];
-function showSlide(i, manual=false){ current=(i+slides.length)%slides.length; slides.forEach((s,n)=>s.classList.toggle("active",n===current)); dots.forEach((d,n)=>d.classList.toggle("active",n===current)); if(manual)restart(); }
-function restart(){clearInterval(timer);timer=setInterval(()=>showSlide(current+1),4500)}
-document.querySelector(".prev").onclick=()=>showSlide(current-1,true);
-document.querySelector(".next").onclick=()=>showSlide(current+1,true);
-restart();
-
-const money = n => "₹"+Number(n||0).toLocaleString("en-IN");
-function setStatus(msg, ok=false){const e=document.querySelector("#payStatus");e.textContent=msg;e.style.color=ok?"#137333":"#8e1600"}
-
-async function api(path, body){
-  const url = `${CFG.SUPABASE_URL}/functions/v1/${path}`;
-  const r = await fetch(url,{method:"POST",headers:{"Content-Type":"application/json","apikey":CFG.SUPABASE_PUBLISHABLE_KEY},body:JSON.stringify(body)});
-  const data = await r.json().catch(()=>({}));
-  if(!r.ok) throw new Error(data.error||"Server error");
-  return data;
-}
-
-async function loadLedger(){
-  if(!hasBackend){
-    const demo=[
-      {created_at:new Date(Date.now()-86400000).toISOString(),type:"income",description:"ऑनलाइन सहयोग (डेमो)",amount:501},
-      {created_at:new Date(Date.now()-43200000).toISOString(),type:"expense",description:"पूजा सामग्री (डेमो)",amount:250}
-    ];
-    renderLedger(demo); renderStats(501,250); return;
-  }
-  try{
-    const r=await fetch(`${CFG.SUPABASE_URL}/rest/v1/public_ledger?select=*&order=created_at.desc&limit=100`,{headers:{apikey:CFG.SUPABASE_PUBLISHABLE_KEY,Authorization:`Bearer ${CFG.SUPABASE_PUBLISHABLE_KEY}`}});
-    if(!r.ok) throw new Error("Ledger load failed");
-    const rows=await r.json();
-    renderLedger(rows);
-    const income=rows.filter(x=>x.type==="income").reduce((a,x)=>a+Number(x.amount),0);
-    const expense=rows.filter(x=>x.type==="expense").reduce((a,x)=>a+Number(x.amount),0);
-    // Stats endpoint is more accurate for totals beyond the 100 visible rows.
-    try{
-      const s=await fetch(`${CFG.SUPABASE_URL}/rest/v1/public_totals?select=*`,{headers:{apikey:CFG.SUPABASE_PUBLISHABLE_KEY,Authorization:`Bearer ${CFG.SUPABASE_PUBLISHABLE_KEY}`}});
-      const totals=await s.json(); renderStats(Number(totals.total_income||income),Number(totals.total_expense||expense));
-    }catch{renderStats(income,expense)}
-  }catch(e){document.querySelector("#ledgerBody").innerHTML=`<tr><td colspan="4" class="center">हिसाब अभी उपलब्ध नहीं है।</td></tr>`}
-}
-function renderLedger(rows){
-  const body=document.querySelector("#ledgerBody");
-  if(!rows.length){body.innerHTML=`<tr><td colspan="4" class="center">अभी कोई रिकॉर्ड नहीं है।</td></tr>`;return}
-  body.innerHTML=rows.map(x=>{
-    const d=new Date(x.created_at).toLocaleString("hi-IN",{dateStyle:"medium",timeStyle:"short"});
-    const income=x.type==="income";
-    return `<tr><td>${d}</td><td class="${income?"income":"expense"}">${income?"आय":"खर्च"}</td><td>${escapeHtml(x.description||"")}</td><td class="${income?"income":"expense"}">${income?"+":"-"}${money(x.amount)}</td></tr>`;
-  }).join("");
-}
-function renderStats(income,expense){document.querySelector("#totalIncome").textContent=money(income);document.querySelector("#totalExpense").textContent=money(expense);document.querySelector("#balance").textContent=money(income-expense)}
-function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
-
-document.querySelector("#refreshLedger").onclick=loadLedger;
-
-document.querySelector("#donationForm").addEventListener("submit",async e=>{
-  e.preventDefault();
-  const name=document.querySelector("#donorName").value.trim(), mobile=document.querySelector("#donorMobile").value.trim();
-  const email=document.querySelector("#donorEmail").value.trim(), amount=Number(document.querySelector("#amount").value);
-  const note=document.querySelector("#note").value.trim();
-  if(!/^[0-9]{10}$/.test(mobile)) return setStatus("कृपया सही 10 अंकों का मोबाइल नंबर दें।");
-  if(!(amount>0)) return setStatus("कृपया सही राशि दर्ज करें।");
-  if(!hasBackend) return setStatus("डेमो मोड: Supabase और Razorpay की keys जोड़ने के बाद ऑनलाइन भुगतान चालू होगा।");
-  try{
-    setStatus("भुगतान तैयार हो रहा है…");
-    const order=await api("create-order",{name,mobile,email,amount,note});
-    const options={
-      key:order.key_id, order_id:order.order_id, amount:order.amount, currency:"INR",
-      name:"श्री श्री दुर्गा पूजा महोत्सव", description:"पूजा सहयोग राशि",
-      prefill:{name,email,contact:mobile},
-      theme:{color:"#b51d00"},
-      handler:async response=>{
-        try{
-          setStatus("भुगतान सत्यापित हो रहा है…");
-          const result=await api("verify-payment",{receipt_no:order.receipt_no,...response});
-          if(result.status==="paid"){
-            window.location.href=`receipt.html?receipt=${encodeURIComponent(order.receipt_no)}`;
-          }else setStatus("भुगतान अभी सत्यापित नहीं हुआ। कृपया थोड़ी देर बाद रसीद देखें।");
-        }catch(err){setStatus("भुगतान हुआ हो तो भी रसीद webhook से अपने-आप बनेगी। रसीद संख्या: "+order.receipt_no)}
-      },
-      modal:{ondismiss:()=>setStatus("भुगतान विंडो बंद कर दी गई।")}
-    };
-    new Razorpay(options).open();
-  }catch(err){setStatus(err.message||"भुगतान शुरू नहीं हो सका।")}
-});
-
-loadLedger();
+const CFG=window.DURGA_CONFIG||{};
+let current=0;const slides=[...document.querySelectorAll('.slide')],dots=[...document.querySelectorAll('.dot')];
+function showSlide(i){current=(i+slides.length)%slides.length;slides.forEach((s,n)=>s.classList.toggle('active',n===current));dots.forEach((d,n)=>d.classList.toggle('active',n===current));}
+document.querySelector('.next').onclick=()=>showSlide(current+1);document.querySelector('.prev').onclick=()=>showSlide(current-1);dots.forEach(d=>d.onclick=()=>showSlide(+d.dataset.i));setInterval(()=>showSlide(current+1),7000);
+const phone=document.getElementById('footerPhone'),email=document.getElementById('footerEmail');if(phone&&CFG.CONTACT_PHONE_1)phone.textContent=CFG.CONTACT_PHONE_1+(CFG.CONTACT_PHONE_2?' | '+CFG.CONTACT_PHONE_2:'');if(email&&CFG.CONTACT_EMAIL)email.textContent=CFG.CONTACT_EMAIL;
+const demo=!CFG.SUPABASE_URL||CFG.SUPABASE_URL.includes('YOUR_PROJECT')||CFG.DEMO_MODE;
+let supabaseClient=null;
+async function loadSupabase(){if(supabaseClient||demo)return;const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';document.head.appendChild(s);await new Promise(r=>s.onload=r);supabaseClient=window.supabase.createClient(CFG.SUPABASE_URL,CFG.SUPABASE_PUBLISHABLE_KEY)}
+const fmt=n=>'₹'+Number(n||0).toLocaleString('en-IN');
+function years(){const y=new Date().getFullYear();const el=document.getElementById('yearFilter');for(let i=y;i>=y-5;i--){const o=document.createElement('option');o.value=i;o.textContent=i;el.appendChild(o)}}years();
+async function loadLedger(){const rows=document.getElementById('donationRows');if(demo){document.getElementById('totalIncome').textContent='₹0';document.getElementById('totalExpense').textContent='₹0';document.getElementById('balance').textContent='₹0';rows.innerHTML='<tr><td colspan="4">Backend जोड़ने के बाद वास्तविक सार्वजनिक चंदा रिकॉर्ड यहाँ दिखेगा।</td></tr>';return}await loadSupabase();const year=+document.getElementById('yearFilter').value,month=document.getElementById('monthFilter').value;let q=supabaseClient.from('public_ledger').select('*').gte('paid_at',`${year}-01-01T00:00:00`).lt('paid_at',`${year+1}-01-01T00:00:00`).order('paid_at',{ascending:false});const {data,error}=await q;if(error){rows.innerHTML=`<tr><td colspan="4">रिकॉर्ड नहीं मिल सके।</td></tr>`;return}const filtered=month==='all'?data:data.filter(x=>new Date(x.paid_at).getMonth()+1===+month);let income=filtered.reduce((s,x)=>s+Number(x.amount),0);let eq=supabaseClient.from('public_expenses').select('amount,spent_at').gte('spent_at',`${year}-01-01T00:00:00`).lt('spent_at',`${year+1}-01-01T00:00:00`);const er=await eq;let expenses=(er.data||[]).filter(x=>month==='all'||new Date(x.spent_at).getMonth()+1===+month).reduce((s,x)=>s+Number(x.amount),0);document.getElementById('totalIncome').textContent=fmt(income);document.getElementById('totalExpense').textContent=fmt(expenses);document.getElementById('balance').textContent=fmt(income-expenses);rows.innerHTML=filtered.length?filtered.map(x=>`<tr><td>${escapeHtml(x.donor_name)}</td><td>${fmt(x.amount)}</td><td>${new Date(x.paid_at).toLocaleString('hi-IN')}</td><td><a href="receipt.html?receipt=${encodeURIComponent(x.receipt_no)}">${escapeHtml(x.receipt_no)}</a></td></tr>`).join(''):'<tr><td colspan="4">इस अवधि में कोई भुगतान रिकॉर्ड नहीं है।</td></tr>'}
+function escapeHtml(s){return String(s||'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+document.getElementById('refreshLedger').onclick=loadLedger;loadLedger();
+document.getElementById('donationForm').addEventListener('submit',async e=>{e.preventDefault();const status=document.getElementById('paymentStatus');const name=document.getElementById('donorName').value.trim(),phonev=document.getElementById('donorPhone').value.trim(),amount=Number(document.getElementById('donationAmount').value);if(!/^[0-9]{10}$/.test(phonev)){status.textContent='कृपया सही 10 अंकों का मोबाइल नंबर डालें।';return}if(amount<1){status.textContent='कृपया सही राशि डालें।';return}if(demo){status.textContent='Payment अभी demo mode में है। config.js में Supabase और Razorpay keys जोड़ने के बाद online payment चालू होगा।';return}await loadSupabase();status.textContent='Payment तैयार किया जा रहा है…';const {data,error}=await supabaseClient.functions.invoke('create-order',{body:{name,phone:phonev,amount}});if(error||!data?.order_id){status.textContent='Payment order नहीं बन सका।';return}const rzp=new Razorpay({key:CFG.RAZORPAY_KEY_ID,amount:data.amount,currency:'INR',name:'श्री श्री दुर्गा पूजा महोत्सव',description:'छात्र नवयुवक संघ, तिलोखर (रोहतास)',order_id:data.order_id,prefill:{name,contact:phonev},theme:{color:'#8f0c10'},handler:async response=>{status.textContent='Payment verify हो रहा है…';const v=await supabaseClient.functions.invoke('verify-payment',{body:response});if(v.error){status.textContent='Payment verify नहीं हो सका।';return}window.location.href='receipt.html?receipt='+encodeURIComponent(v.data.receipt_no)}});rzp.open()});
