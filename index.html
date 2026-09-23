@@ -1267,7 +1267,9 @@ footer{
 
                     <input
                         type="text"
-                        placeholder="अपना नाम"
+id="donorName"
+placeholder="अपना नाम"
+required
                     >
 
                 </div>
@@ -1275,54 +1277,62 @@ footer{
 
                 <div class="form-group">
 
-                    <label>
-                        मोबाइल नंबर
-                    </label>
+    <label>
+        मोबाइल नंबर
+    </label>
 
-                    <input
-                        type="tel"
-                        placeholder="मोबाइल नंबर"
-                    >
+    <input
+        type="tel"
+        id="donorMobile"
+        placeholder="मोबाइल नंबर"
+        maxlength="10"
+        inputmode="numeric"
+        required
+    >
 
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        चंदा / सहयोग राशि
-                    </label>
-
-                    <input
-                        type="number"
-                        placeholder="राशि दर्ज करें"
-                    >
-
-                </div>
+</div>
 
 
                 <div class="form-group">
 
-                    <label>
-                        आपका क्षेत्र
-                    </label>
+    <label>
+        चंदा / सहयोग राशि
+    </label>
 
-                    <input
-                        type="text"
-                        placeholder="गाँव / शहर"
-                    >
+    <input
+        type="number"
+        id="donationAmount"
+        placeholder="राशि दर्ज करें"
+        min="1"
+        required
+    >
 
-                </div>
+</div>
 
 
-                <button
-                    class="donate-button"
-                    onclick="window.location.href='https://rzp.io/rzp/N38fLJM'"
-                >
+                <div class="form-group">
 
-                    🙏 सहयोग करें
+    <label>
+        आपका गाँव
+    </label>
 
-                </button>
+    <input
+        type="text"
+        id="donorVillage"
+        placeholder="गाँव / शहर"
+        required
+    >
+
+</div>
+
+
+               <button
+    class="donate-button"
+    type="button"
+    onclick="startDonation()"
+>
+    🙏 सहयोग करें
+</button>
 
             </div>
 
@@ -1804,9 +1814,49 @@ setInterval(function(){
     nextSlide();
 
 },5000);
-
 </script>
 
+<script>
+function startDonation(){
+
+    const name = document.getElementById("donorName").value.trim();
+    const mobile = document.getElementById("donorMobile").value.trim();
+    const amount = document.getElementById("donationAmount").value.trim();
+    const village = document.getElementById("donorVillage").value.trim();
+
+    if(name === ""){
+        alert("कृपया अपना नाम भरें।");
+        document.getElementById("donorName").focus();
+        return;
+    }
+
+    if(village === ""){
+        alert("कृपया अपना गाँव / शहर भरें।");
+        document.getElementById("donorVillage").focus();
+        return;
+    }
+
+    if(mobile === ""){
+        alert("कृपया मोबाइल नंबर भरें।");
+        document.getElementById("donorMobile").focus();
+        return;
+    }
+
+    if(!/^[0-9]{10}$/.test(mobile)){
+        alert("कृपया 10 अंकों का सही मोबाइल नंबर भरें।");
+        document.getElementById("donorMobile").focus();
+        return;
+    }
+
+    if(amount === "" || Number(amount) < 1){
+        alert("कृपया सहयोग राशि भरें।");
+        document.getElementById("donationAmount").focus();
+        return;
+    }
+
+    window.location.href = "https://rzp.io/rzp/N38fLJM";
+}
+</script>
 
 </body>
 </html>
