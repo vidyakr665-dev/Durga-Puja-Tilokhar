@@ -1837,26 +1837,70 @@ async function loadAayVyayData() {
 
         const data = await response.json();
 
+        const selectedYear =
+            Number(document.getElementById("accountYear").value);
+
+        const selectedMonth =
+            document.getElementById("accountMonth").value;
+
+        const filteredRecords = (data.records || []).filter(record => {
+
+            const parts = record.date.split(" ");
+            const dateParts = parts[0].split("/");
+
+            const month = Number(dateParts[0]);
+            const year = Number(dateParts[2]);
+
+            const yearMatch = year === selectedYear;
+
+            const monthMatch =
+                selectedMonth === "" ||
+                month === Number(selectedMonth);
+
+            return yearMatch && monthMatch;
+        });
+
+
+        let income = 0;
+        let expense = 0;
+
+        filteredRecords.forEach(record => {
+
+            if (record.type === "आय") {
+                income += Number(record.amount) || 0;
+            }
+
+            if (record.type === "व्यय") {
+                expense += Number(record.amount) || 0;
+            }
+
+        });
+
+        const balance = income - expense;
+
+
         document.getElementById("totalIncome").textContent =
-            "₹" + data.income;
+            "₹" + income;
 
         document.getElementById("totalExpense").textContent =
-            "₹" + data.expense;
+            "₹" + expense;
 
         document.getElementById("totalBalance").textContent =
-            "₹" + data.balance;
+            "₹" + balance;
+
 
         const tableBody =
             document.getElementById("accountTableBody");
 
         tableBody.innerHTML = "";
 
-        if (!data.records || data.records.length === 0) {
+
+        if (filteredRecords.length === 0) {
 
             tableBody.innerHTML = `
                 <tr>
                     <td colspan="2" class="no-entry">
-                        अभी तक कोई आय-व्यय विवरण उपलब्ध नहीं है।
+                        इस महीने अभी तक कोई आय-व्यय विवरण उपलब्ध नहीं है।
                     </td>
                 </tr>
             `;
@@ -1864,7 +1908,8 @@ async function loadAayVyayData() {
             return;
         }
 
-        data.records.forEach(record => {
+
+        filteredRecords.forEach(record => {
 
             const row = document.createElement("tr");
 
@@ -1881,6 +1926,7 @@ async function loadAayVyayData() {
             `;
 
             tableBody.appendChild(row);
+
         });
 
     } catch (error) {
@@ -1894,11 +1940,27 @@ async function loadAayVyayData() {
                 </td>
             </tr>
         `;
+
     }
 }
 
-window.addEventListener("load", loadAayVyayData);
-   setInterval(loadAayVyayData, 5000);
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const viewButton =
+        document.querySelector(".view-button");
+
+    if (viewButton) {
+        viewButton.addEventListener("click", loadAayVyayData);
+    }
+
+    loadAayVyayData();
+
+});
+
+
+setInterval(loadAayVyayData, 5000);
+
 </script>
 </body>
 </html>
