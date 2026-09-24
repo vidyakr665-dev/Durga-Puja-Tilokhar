@@ -2239,9 +2239,20 @@ function renderPagination() {
 
     if (totalPages <= 1) {
 
-        return;
+    const info = document.createElement("span");
 
-    }
+    info.className = "page-info";
+
+    info.textContent =
+        "कुल " +
+        totalRecords +
+        " विवरण";
+
+    pagination.appendChild(info);
+
+    return;
+
+}
 
 
     /* PREVIOUS */
