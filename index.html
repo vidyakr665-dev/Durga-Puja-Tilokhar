@@ -968,7 +968,48 @@ footer{
     .summary-box strong{
         font-size:16px;
     }
+.account-pagination{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:20px;
+}
 
+.account-pagination select{
+    padding:8px 12px;
+    border:1px solid #dca72f;
+    border-radius:6px;
+    background:white;
+    color:#54100b;
+    font-size:14px;
+}
+
+.account-pagination button{
+    padding:8px 12px;
+    border:1px solid #dca72f;
+    border-radius:6px;
+    background:white;
+    color:#54100b;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.account-pagination button.active{
+    background:#690808;
+    color:white;
+}
+
+.account-pagination button:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+}
+
+.account-pagination .page-info{
+    color:#765036;
+    font-size:14px;
+}
 
     /* OFFICERS */
 
