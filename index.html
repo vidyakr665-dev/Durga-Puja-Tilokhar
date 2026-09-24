@@ -1402,13 +1402,15 @@ required
 
         <div class="account-controls">
 
-            <select id="accountYear">
+           <select id="accountYear">
+    <option value="">वर्ष चुनें</option>
     <option value="2026">2026</option>
 </select>
 
 
             <select id="accountMonth">
-    <option value="">सभी महीने</option>
+    <option value="">महीना चुनें</option>
+    <option value="all">सभी महीने</option>
     <option value="9">सितंबर</option>
     <option value="10">अक्टूबर</option>
     <option value="11">नवंबर</option>
@@ -1471,16 +1473,22 @@ required
             <thead>
 
                 <tr>
+    <th>
+        दिनांक / समय
+    </th>
 
-                    <th>
-                        दिनांक / विवरण
-                    </th>
+    <th>
+        दाता का नाम
+    </th>
 
-                    <th>
-                        राशि
-                    </th>
+    <th>
+        गाँव
+    </th>
 
-                </tr>
+    <th>
+        राशि
+    </th>
+</tr>
 
             </thead>
 
@@ -1488,7 +1496,7 @@ required
             <tbody id="accountTableBody">
 
     <tr>
-        <td colspan="2" class="no-entry">
+        <td colspan="4" class="no-entry">
             विवरण लोड हो रहा है...
         </td>
     </tr>
@@ -1838,10 +1846,10 @@ async function loadAayVyayData() {
         const data = await response.json();
 
         const selectedYear =
-            Number(document.getElementById("accountYear").value);
+    document.getElementById("accountYear").value;
 
-        const selectedMonth =
-            document.getElementById("accountMonth").value;
+const selectedMonth =
+    document.getElementById("accountMonth").value;
 
         const filteredRecords = (data.records || []).filter(record => {
 
@@ -1851,11 +1859,16 @@ async function loadAayVyayData() {
             const month = Number(dateParts[0]);
             const year = Number(dateParts[2]);
 
-            const yearMatch = year === selectedYear;
+           const yearMatch =
+    selectedYear !== "" &&
+    year === Number(selectedYear);
 
-            const monthMatch =
-                selectedMonth === "" ||
-                month === Number(selectedMonth);
+const monthMatch =
+    selectedMonth !== "" &&
+    (
+        selectedMonth === "all" ||
+        month === Number(selectedMonth)
+    );
 
             return yearMatch && monthMatch;
         });
@@ -1899,7 +1912,7 @@ async function loadAayVyayData() {
 
             tableBody.innerHTML = `
                 <tr>
-                    <td colspan="2" class="no-entry">
+                    <td colspan="4" class="no-entry">
                         इस महीने अभी तक कोई आय-व्यय विवरण उपलब्ध नहीं है।
                     </td>
                 </tr>
@@ -1911,23 +1924,18 @@ async function loadAayVyayData() {
 
         filteredRecords.forEach(record => {
 
-            const row = document.createElement("tr");
+    const row = document.createElement("tr");
 
-            row.innerHTML = `
-                <td>
-                    ${record.date}<br>
-                    <strong>${record.description}</strong>
-                    ${record.village ? " - " + record.village : ""}
-                </td>
+    row.innerHTML = `
+        <td>${record.date}</td>
+        <td>${record.description}</td>
+        <td>${record.village || ""}</td>
+        <td>₹${record.amount}</td>
+    `;
 
-                <td>
-                    ₹${record.amount}
-                </td>
-            `;
+    tableBody.appendChild(row);
 
-            tableBody.appendChild(row);
-
-        });
+});
 
     } catch (error) {
 
@@ -1935,7 +1943,7 @@ async function loadAayVyayData() {
 
         document.getElementById("accountTableBody").innerHTML = `
             <tr>
-                <td colspan="2" class="no-entry">
+                <td colspan="4" class="no-entry">
                     विवरण लोड नहीं हो पाया।
                 </td>
             </tr>
@@ -1954,12 +1962,12 @@ document.addEventListener("DOMContentLoaded", function () {
         viewButton.addEventListener("click", loadAayVyayData);
     }
 
-    loadAayVyayData();
+   
 
 });
 
 
-setInterval(loadAayVyayData, 5000);
+
 
 </script>
 </body>
