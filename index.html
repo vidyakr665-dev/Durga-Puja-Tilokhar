@@ -1876,7 +1876,34 @@ function startDonation(){
 }
 </script>
 <script>
+
+let allFilteredRecords = [];
+let currentPage = 1;
+let pageSize = 25;
+
+
+/* =========================
+   LOAD AAY-VYAY DATA
+========================= */
+
 async function loadAayVyayData() {
+
+    const selectedYear =
+        document.getElementById("accountYear").value;
+
+    const selectedMonth =
+        document.getElementById("accountMonth").value;
+
+
+    /* YEAR / MONTH CHECK */
+
+    if (selectedYear === "" || selectedMonth === "") {
+
+        alert("कृपया पहले वर्ष और महीना चुनें।");
+        return;
+
+    }
+
 
     try {
 
@@ -1884,131 +1911,499 @@ async function loadAayVyayData() {
             "https://script.google.com/macros/s/AKfycbz3_GtBFIWVwN2rEtzAJhnSBKGqxDrXJjQHf4XSmtJ7HDodZa-BKbPIz9LtIOlBVN5f/exec?action=data"
         );
 
+
         const data = await response.json();
 
-        const selectedYear =
-    document.getElementById("accountYear").value;
 
-const selectedMonth =
-    document.getElementById("accountMonth").value;
+        /* FILTER */
 
-        const filteredRecords = (data.records || []).filter(record => {
+        allFilteredRecords =
+            (data.records || []).filter(record => {
 
-            const parts = record.date.split(" ");
-            const dateParts = parts[0].split("/");
+                const parts =
+                    record.date.split(" ");
 
-            const month = Number(dateParts[0]);
-            const year = Number(dateParts[2]);
+                const dateParts =
+                    parts[0].split("/");
 
-           const yearMatch =
-    selectedYear !== "" &&
-    year === Number(selectedYear);
+                const month =
+                    Number(dateParts[0]);
 
-const monthMatch =
-    selectedMonth !== "" &&
-    (
-        selectedMonth === "all" ||
-        month === Number(selectedMonth)
-    );
+                const year =
+                    Number(dateParts[2]);
 
-            return yearMatch && monthMatch;
-        });
 
+                const yearMatch =
+                    selectedYear !== "" &&
+                    year === Number(selectedYear);
+
+
+                const monthMatch =
+                    selectedMonth !== "" &&
+                    (
+                        selectedMonth === "all" ||
+                        month === Number(selectedMonth)
+                    );
+
+
+                return yearMatch && monthMatch;
+
+            });
+
+
+        currentPage = 1;
+
+
+        /* TOTAL */
 
         let income = 0;
         let expense = 0;
 
-        filteredRecords.forEach(record => {
+
+        allFilteredRecords.forEach(record => {
 
             if (record.type === "आय") {
-                income += Number(record.amount) || 0;
+
+                income +=
+                    Number(record.amount) || 0;
+
             }
 
+
             if (record.type === "व्यय") {
-                expense += Number(record.amount) || 0;
+
+                expense +=
+                    Number(record.amount) || 0;
+
             }
 
         });
 
-        const balance = income - expense;
+
+        const balance =
+            income - expense;
 
 
         document.getElementById("totalIncome").textContent =
             "₹" + income;
 
+
         document.getElementById("totalExpense").textContent =
             "₹" + expense;
+
 
         document.getElementById("totalBalance").textContent =
             "₹" + balance;
 
 
-        const tableBody =
-            document.getElementById("accountTableBody");
+        renderAccountTable();
 
-        tableBody.innerHTML = "";
+    }
 
+    catch (error) {
 
-        if (filteredRecords.length === 0) {
-
-            tableBody.innerHTML = `
-                <tr>
-                    <td colspan="4" class="no-entry">
-                        इस महीने अभी तक कोई आय-व्यय विवरण उपलब्ध नहीं है।
-                    </td>
-                </tr>
-            `;
-
-            return;
-        }
+        console.error(
+            "Aay-Vyay Error:",
+            error
+        );
 
 
-        filteredRecords.forEach(record => {
+        document.getElementById(
+            "accountTableBody"
+        ).innerHTML = `
 
-    const row = document.createElement("tr");
-
-    row.innerHTML = `
-        <td>${record.date}</td>
-        <td>${record.description}</td>
-        <td>${record.village || ""}</td>
-        <td>₹${record.amount}</td>
-    `;
-
-    tableBody.appendChild(row);
-
-});
-
-    } catch (error) {
-
-        console.error("Aay-Vyay Error:", error);
-
-        document.getElementById("accountTableBody").innerHTML = `
             <tr>
-                <td colspan="4" class="no-entry">
+
+                <td
+                    colspan="4"
+                    class="no-entry"
+                >
                     विवरण लोड नहीं हो पाया।
                 </td>
+
             </tr>
+
         `;
 
     }
+
 }
 
 
-document.addEventListener("DOMContentLoaded", function () {
+/* =========================
+   TABLE
+========================= */
 
-    const viewButton =
-        document.querySelector(".view-button");
+function renderAccountTable() {
 
-    if (viewButton) {
-        viewButton.addEventListener("click", loadAayVyayData);
+    const tableBody =
+        document.getElementById(
+            "accountTableBody"
+        );
+
+
+    tableBody.innerHTML = "";
+
+
+    if (allFilteredRecords.length === 0) {
+
+        tableBody.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="4"
+                    class="no-entry"
+                >
+                    इस महीने अभी तक कोई आय-व्यय विवरण उपलब्ध नहीं है।
+                </td>
+
+            </tr>
+
+        `;
+
+
+        renderPagination();
+
+        return;
+
     }
 
-   
 
-});
+    const start =
+        (currentPage - 1) * pageSize;
 
 
+    const end =
+        start + pageSize;
 
+
+    const pageRecords =
+        allFilteredRecords.slice(
+            start,
+            end
+        );
+
+
+    pageRecords.forEach(record => {
+
+        const row =
+            document.createElement("tr");
+
+
+        row.innerHTML = `
+
+            <td>
+                ${record.date}
+            </td>
+
+            <td>
+                ${record.description}
+            </td>
+
+            <td>
+                ${record.village || ""}
+            </td>
+
+            <td>
+                ₹${record.amount}
+            </td>
+
+        `;
+
+
+        tableBody.appendChild(row);
+
+    });
+
+
+    renderPagination();
+
+}
+
+
+/* =========================
+   PAGINATION
+========================= */
+
+function renderPagination() {
+
+    let pagination =
+        document.getElementById(
+            "accountPagination"
+        );
+
+
+    if (!pagination) {
+
+        pagination =
+            document.createElement("div");
+
+        pagination.id =
+            "accountPagination";
+
+        pagination.className =
+            "account-pagination";
+
+
+        const table =
+            document.querySelector(
+                ".account-table"
+            );
+
+
+        table.parentNode.insertBefore(
+            pagination,
+            table.nextSibling
+        );
+
+    }
+
+
+    pagination.innerHTML = "";
+
+
+    const totalRecords =
+        allFilteredRecords.length;
+
+
+    const totalPages =
+        Math.ceil(
+            totalRecords / pageSize
+        );
+
+
+    /* PER PAGE */
+
+    const sizeLabel =
+        document.createElement("span");
+
+    sizeLabel.textContent =
+        "प्रति पेज:";
+
+
+    pagination.appendChild(
+        sizeLabel
+    );
+
+
+    const sizeSelect =
+        document.createElement("select");
+
+
+    [25, 50, 75, 100].forEach(size => {
+
+        const option =
+            document.createElement("option");
+
+        option.value = size;
+
+        option.textContent = size;
+
+
+        if (size === pageSize) {
+
+            option.selected = true;
+
+        }
+
+
+        sizeSelect.appendChild(
+            option
+        );
+
+    });
+
+
+    sizeSelect.addEventListener(
+        "change",
+        function () {
+
+            pageSize =
+                Number(this.value);
+
+            currentPage = 1;
+
+            renderAccountTable();
+
+        }
+    );
+
+
+    pagination.appendChild(
+        sizeSelect
+    );
+
+
+    /* अगर सिर्फ एक पेज है */
+
+    if (totalPages <= 1) {
+
+        return;
+
+    }
+
+
+    /* PREVIOUS */
+
+    const previousButton =
+        document.createElement("button");
+
+
+    previousButton.textContent =
+        "‹ पिछला";
+
+
+    previousButton.disabled =
+        currentPage === 1;
+
+
+    previousButton.onclick =
+        function () {
+
+            if (currentPage > 1) {
+
+                currentPage--;
+
+                renderAccountTable();
+
+            }
+
+        };
+
+
+    pagination.appendChild(
+        previousButton
+    );
+
+
+    /* PAGE NUMBERS */
+
+    for (
+        let page = 1;
+        page <= totalPages;
+        page++
+    ) {
+
+        const pageButton =
+            document.createElement("button");
+
+
+        pageButton.textContent =
+            page;
+
+
+        if (page === currentPage) {
+
+            pageButton.classList.add(
+                "active"
+            );
+
+        }
+
+
+        pageButton.onclick =
+            function () {
+
+                currentPage =
+                    page;
+
+                renderAccountTable();
+
+            };
+
+
+        pagination.appendChild(
+            pageButton
+        );
+
+    }
+
+
+    /* NEXT */
+
+    const nextButton =
+        document.createElement("button");
+
+
+    nextButton.textContent =
+        "अगला ›";
+
+
+    nextButton.disabled =
+        currentPage === totalPages;
+
+
+    nextButton.onclick =
+        function () {
+
+            if (
+                currentPage <
+                totalPages
+            ) {
+
+                currentPage++;
+
+                renderAccountTable();
+
+            }
+
+        };
+
+
+    pagination.appendChild(
+        nextButton
+    );
+
+
+    /* TOTAL */
+
+    const info =
+        document.createElement("span");
+
+
+    info.className =
+        "page-info";
+
+
+    info.textContent =
+        "कुल " +
+        totalRecords +
+        " विवरण";
+
+
+    pagination.appendChild(
+        info
+    );
+
+}
+
+
+/* =========================
+   ONLY "विवरण देखें" BUTTON
+========================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const viewButton =
+            document.querySelector(
+                ".view-button"
+            );
+
+
+        if (viewButton) {
+
+            viewButton.addEventListener(
+                "click",
+                loadAayVyayData
+            );
+
+        }
+
+    }
+);
 
 </script>
 </body>
