@@ -2580,6 +2580,49 @@ async function updateSelectedTotals() {
         const data = await response.json();
         const records = data.records || [];
 
+
+        /* =========================
+           पूरा कुल आय / खर्च
+        ========================= */
+
+        let totalIncome = 0;
+        let totalExpense = 0;
+
+        records.forEach(record => {
+
+            const amount =
+                Number(record.amount) || 0;
+
+            const type =
+                String(record.type || "").trim();
+
+            if (type === "आय") {
+                totalIncome += amount;
+            }
+
+            if (type === "व्यय") {
+                totalExpense += amount;
+            }
+
+        });
+
+
+        /* ऊपर हमेशा कुल दिखेगा */
+
+        document.getElementById("totalIncome").textContent =
+            "₹" + totalIncome;
+
+        document.getElementById("totalExpense").textContent =
+            "₹" + totalExpense;
+
+        document.getElementById("totalBalance").textContent =
+            "₹" + (totalIncome - totalExpense);
+
+
+        /* =========================
+           चुने हुए विकल्प
+        ========================= */
+
         const incomeYear =
             document.getElementById("incomeYear").value;
 
@@ -2589,6 +2632,181 @@ async function updateSelectedTotals() {
         const expenseYear =
             document.getElementById("expenseYear").value;
 
+
+        let selectedIncomeTotal = 0;
+        let selectedExpenseTotal = 0;
+
+
+        /* आय का चुना हुआ महीना */
+
+        if (incomeYear !== "" && incomeMonth !== "") {
+
+            records.forEach(record => {
+
+                if (
+                    String(record.type || "").trim() !== "आय"
+                ) {
+                    return;
+                }
+
+                const dateParts =
+                    String(record.date || "")
+                    .split(" ")[0]
+                    .split("/");
+
+                const month = Number(dateParts[0]);
+                const year = Number(dateParts[2]);
+
+                if (
+                    year === Number(incomeYear) &&
+                    (
+                        incomeMonth === "all" ||
+                        month === Number(incomeMonth)
+                    )
+                ) {
+
+                    selectedIncomeTotal +=
+                        Number(record.amount) || 0;
+
+                }
+
+            });
+
+        }
+
+
+        /* व्यय का चुना हुआ साल */
+
+        if (expenseYear !== "") {
+
+            records.forEach(record => {
+
+                if (
+                    String(record.type || "").trim() !== "व्यय"
+                ) {
+                    return;
+                }
+
+                const dateParts =
+                    String(record.date || "")
+                    .split(" ")[0]
+                    .split("/");
+
+                const year = Number(dateParts[2]);
+
+                if (year === Number(expenseYear)) {
+
+                    selectedExpenseTotal +=
+                        Number(record.amount) || 0;
+
+                }
+
+            });
+
+        }
+
+
+        /* =========================
+           नीचे चुनी हुई कुल राशि
+        ========================= */
+
+        let incomeTotalBox =
+            document.getElementById("selectedIncomeTotal");
+
+        let expenseTotalBox =
+            document.getElementById("selectedExpenseTotal");
+
+
+        if (!incomeTotalBox) {
+
+            incomeTotalBox =
+                document.createElement("div");
+
+            incomeTotalBox.id =
+                "selectedIncomeTotal";
+
+            incomeTotalBox.style.textAlign =
+                "center";
+
+            incomeTotalBox.style.fontWeight =
+                "bold";
+
+            incomeTotalBox.style.fontSize =
+                "18px";
+
+            incomeTotalBox.style.margin =
+                "12px 0 20px";
+
+            document
+                .getElementById("incomePagination")
+                .after(incomeTotalBox);
+
+        }
+
+
+        if (!expenseTotalBox) {
+
+            expenseTotalBox =
+                document.createElement("div");
+
+            expenseTotalBox.id =
+                "selectedExpenseTotal";
+
+            expenseTotalBox.style.textAlign =
+                "center";
+
+            expenseTotalBox.style.fontWeight =
+                "bold";
+
+            expenseTotalBox.style.fontSize =
+                "18px";
+
+            expenseTotalBox.style.margin =
+                "12px 0 20px";
+
+            document
+                .getElementById("expensePagination")
+                .after(expenseTotalBox);
+
+        }
+
+
+        if (incomeYear !== "" && incomeMonth !== "") {
+
+            incomeTotalBox.textContent =
+                "🟢 चयनित महीने की कुल आय: ₹" +
+                selectedIncomeTotal;
+
+        } else {
+
+            incomeTotalBox.textContent = "";
+
+        }
+
+
+        if (expenseYear !== "") {
+
+            expenseTotalBox.textContent =
+                "🔴 चयनित वर्ष का कुल व्यय: ₹" +
+                selectedExpenseTotal;
+
+        } else {
+
+            expenseTotalBox.textContent = "";
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Selected Total Error:",
+            error
+        );
+
+    }
+
+}
 
         /* =========================
            आय का चुना हुआ महीना
