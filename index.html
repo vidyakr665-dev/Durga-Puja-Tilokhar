@@ -2569,6 +2569,10 @@ function renderExpensePagination(totalRecords) {
    SELECTED TOTALS
 ========================= */
 
+/* =========================
+   SELECTED TOTALS
+========================= */
+
 async function updateSelectedTotals() {
 
     try {
@@ -2583,6 +2587,7 @@ async function updateSelectedTotals() {
 
         /* =========================
            पूरा कुल आय / खर्च
+           बिना कुछ select किए भी
         ========================= */
 
         let totalIncome = 0;
@@ -2607,7 +2612,9 @@ async function updateSelectedTotals() {
         });
 
 
-        /* ऊपर हमेशा कुल दिखेगा */
+        /* =========================
+           ऊपर हमेशा कुल दिखे
+        ========================= */
 
         document.getElementById("totalIncome").textContent =
             "₹" + totalIncome;
@@ -2637,184 +2644,14 @@ async function updateSelectedTotals() {
         let selectedExpenseTotal = 0;
 
 
-        /* आय का चुना हुआ महीना */
-
-        if (incomeYear !== "" && incomeMonth !== "") {
-
-            records.forEach(record => {
-
-                if (
-                    String(record.type || "").trim() !== "आय"
-                ) {
-                    return;
-                }
-
-                const dateParts =
-                    String(record.date || "")
-                    .split(" ")[0]
-                    .split("/");
-
-                const month = Number(dateParts[0]);
-                const year = Number(dateParts[2]);
-
-                if (
-                    year === Number(incomeYear) &&
-                    (
-                        incomeMonth === "all" ||
-                        month === Number(incomeMonth)
-                    )
-                ) {
-
-                    selectedIncomeTotal +=
-                        Number(record.amount) || 0;
-
-                }
-
-            });
-
-        }
-
-
-        /* व्यय का चुना हुआ साल */
-
-        if (expenseYear !== "") {
-
-            records.forEach(record => {
-
-                if (
-                    String(record.type || "").trim() !== "व्यय"
-                ) {
-                    return;
-                }
-
-                const dateParts =
-                    String(record.date || "")
-                    .split(" ")[0]
-                    .split("/");
-
-                const year = Number(dateParts[2]);
-
-                if (year === Number(expenseYear)) {
-
-                    selectedExpenseTotal +=
-                        Number(record.amount) || 0;
-
-                }
-
-            });
-
-        }
-
-
-        /* =========================
-           नीचे चुनी हुई कुल राशि
-        ========================= */
-
-        let incomeTotalBox =
-            document.getElementById("selectedIncomeTotal");
-
-        let expenseTotalBox =
-            document.getElementById("selectedExpenseTotal");
-
-
-        if (!incomeTotalBox) {
-
-            incomeTotalBox =
-                document.createElement("div");
-
-            incomeTotalBox.id =
-                "selectedIncomeTotal";
-
-            incomeTotalBox.style.textAlign =
-                "center";
-
-            incomeTotalBox.style.fontWeight =
-                "bold";
-
-            incomeTotalBox.style.fontSize =
-                "18px";
-
-            incomeTotalBox.style.margin =
-                "12px 0 20px";
-
-            document
-                .getElementById("incomePagination")
-                .after(incomeTotalBox);
-
-        }
-
-
-        if (!expenseTotalBox) {
-
-            expenseTotalBox =
-                document.createElement("div");
-
-            expenseTotalBox.id =
-                "selectedExpenseTotal";
-
-            expenseTotalBox.style.textAlign =
-                "center";
-
-            expenseTotalBox.style.fontWeight =
-                "bold";
-
-            expenseTotalBox.style.fontSize =
-                "18px";
-
-            expenseTotalBox.style.margin =
-                "12px 0 20px";
-
-            document
-                .getElementById("expensePagination")
-                .after(expenseTotalBox);
-
-        }
-
-
-        if (incomeYear !== "" && incomeMonth !== "") {
-
-            incomeTotalBox.textContent =
-                "🟢 चयनित महीने की कुल आय: ₹" +
-                selectedIncomeTotal;
-
-        } else {
-
-            incomeTotalBox.textContent = "";
-
-        }
-
-
-        if (expenseYear !== "") {
-
-            expenseTotalBox.textContent =
-                "🔴 चयनित वर्ष का कुल व्यय: ₹" +
-                selectedExpenseTotal;
-
-        } else {
-
-            expenseTotalBox.textContent = "";
-
-        }
-
-
-    } catch (error) {
-
-        console.error(
-            "Selected Total Error:",
-            error
-        );
-
-    }
-
-}
-
         /* =========================
            आय का चुना हुआ महीना
         ========================= */
 
-        let selectedIncomeTotal = 0;
-
-        if (incomeYear !== "" && incomeMonth !== "") {
+        if (
+            incomeYear !== "" &&
+            incomeMonth !== ""
+        ) {
 
             records.forEach(record => {
 
@@ -2829,8 +2666,11 @@ async function updateSelectedTotals() {
                     .split(" ")[0]
                     .split("/");
 
-                const month = Number(dateParts[0]);
-                const year = Number(dateParts[2]);
+                const month =
+                    Number(dateParts[0]);
+
+                const year =
+                    Number(dateParts[2]);
 
                 if (
                     year === Number(incomeYear) &&
@@ -2839,8 +2679,10 @@ async function updateSelectedTotals() {
                         month === Number(incomeMonth)
                     )
                 ) {
+
                     selectedIncomeTotal +=
                         Number(record.amount) || 0;
+
                 }
 
             });
@@ -2852,8 +2694,6 @@ async function updateSelectedTotals() {
            व्यय का चुना हुआ साल
         ========================= */
 
-        let selectedExpenseTotal = 0;
-
         if (expenseYear !== "") {
 
             records.forEach(record => {
@@ -2869,11 +2709,16 @@ async function updateSelectedTotals() {
                     .split(" ")[0]
                     .split("/");
 
-                const year = Number(dateParts[2]);
+                const year =
+                    Number(dateParts[2]);
 
-                if (year === Number(expenseYear)) {
+                if (
+                    year === Number(expenseYear)
+                ) {
+
                     selectedExpenseTotal +=
                         Number(record.amount) || 0;
+
                 }
 
             });
@@ -2882,15 +2727,21 @@ async function updateSelectedTotals() {
 
 
         /* =========================
-           नीचे कुल दिखाना
+           नीचे कुल राशि दिखाना
         ========================= */
 
         let incomeTotalBox =
-            document.getElementById("selectedIncomeTotal");
+            document.getElementById(
+                "selectedIncomeTotal"
+            );
 
         let expenseTotalBox =
-            document.getElementById("selectedExpenseTotal");
+            document.getElementById(
+                "selectedExpenseTotal"
+            );
 
+
+        /* आय का कुल box */
 
         if (!incomeTotalBox) {
 
@@ -2919,6 +2770,8 @@ async function updateSelectedTotals() {
         }
 
 
+        /* व्यय का कुल box */
+
         if (!expenseTotalBox) {
 
             expenseTotalBox =
@@ -2946,7 +2799,14 @@ async function updateSelectedTotals() {
         }
 
 
-        if (incomeYear !== "" && incomeMonth !== "") {
+        /* =========================
+           चुनी हुई आय दिखाना
+        ========================= */
+
+        if (
+            incomeYear !== "" &&
+            incomeMonth !== ""
+        ) {
 
             incomeTotalBox.textContent =
                 "🟢 चयनित महीने की कुल आय: ₹" +
@@ -2959,6 +2819,10 @@ async function updateSelectedTotals() {
         }
 
 
+        /* =========================
+           चुना हुआ व्यय दिखाना
+        ========================= */
+
         if (expenseYear !== "") {
 
             expenseTotalBox.textContent =
@@ -2970,6 +2834,7 @@ async function updateSelectedTotals() {
             expenseTotalBox.textContent = "";
 
         }
+
 
     } catch (error) {
 
