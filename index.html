@@ -2082,10 +2082,10 @@ function renderAccountTable() {
     // ==============================
 
     const incomeRecords =
-    allFilteredRecords.filter(record => record.type === "आय");
+    incomeFilteredRecords || [];
 
 const expenseRecords =
-    allFilteredRecords.filter(record => record.type === "व्यय");
+    expenseFilteredRecords || [];
 
 
     // ==============================
