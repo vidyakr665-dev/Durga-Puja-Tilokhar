@@ -2007,20 +2007,25 @@ async function loadExpenseData() {
         expenseFilteredRecords =
             (data.records || []).filter(record => {
 
-                if (record.type !== "व्यय") {
-                    return false;
-                }
+                if (String(record.type || "").trim() !== "व्यय") {
+    return false;
+}
 
-                const parts =
-                    record.date.split(" ");
+                const parts = String(record.date || "").split(" ");
 
-                const dateParts =
-                    parts[0].split("/");
+if (parts.length === 0) {
+    return false;
+}
 
-                const year =
-                    Number(dateParts[2]);
+const dateParts = parts[0].split("/");
 
-                return year === Number(selectedYear);
+if (dateParts.length !== 3) {
+    return false;
+}
+
+const year = Number(dateParts[2]);
+
+return year === Number(selectedYear);
 
             });
 
