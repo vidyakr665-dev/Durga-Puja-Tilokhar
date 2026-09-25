@@ -1443,28 +1443,40 @@ required
 
         <div class="account-controls">
 
-           <select id="accountYear">
-    <option value="">वर्ष चुनें</option>
-    <option value="2026">2026</option>
-</select>
+    <!-- आय के लिए -->
+    <div class="income-controls">
+        <select id="incomeYear">
+            <option value="">आय का वर्ष चुनें</option>
+            <option value="2026">2026</option>
+        </select>
 
+        <select id="incomeMonth">
+            <option value="">महीना चुनें</option>
+            <option value="all">सभी महीने</option>
+            <option value="9">सितंबर</option>
+            <option value="10">अक्टूबर</option>
+            <option value="11">नवंबर</option>
+            <option value="12">दिसंबर</option>
+        </select>
 
-            <select id="accountMonth">
-    <option value="">महीना चुनें</option>
-    <option value="all">सभी महीने</option>
-    <option value="9">सितंबर</option>
-    <option value="10">अक्टूबर</option>
-    <option value="11">नवंबर</option>
-    <option value="12">दिसंबर</option>
-</select>
+        <button class="view-button" id="incomeViewButton">
+            आय विवरण देखें
+        </button>
+    </div>
 
+    <!-- व्यय के लिए -->
+    <div class="expense-controls">
+        <select id="expenseYear">
+            <option value="">व्यय का वर्ष चुनें</option>
+            <option value="2026">2026</option>
+        </select>
 
-            <button class="view-button">
-                विवरण देखें
-            </button>
+        <button class="view-button" id="expenseViewButton">
+            व्यय विवरण देखें
+        </button>
+    </div>
 
-        </div>
-
+</div>
 </div>
         <div class="summary">
 
