@@ -1509,42 +1509,56 @@ required
         </div>
 
 
-        <table class="account-table">
+        <div class="account-list-section">
 
-            <thead>
+    <h3 class="income-title">🟢 आय का विवरण</h3>
 
-                <tr>
-    <th>
-        दिनांक / समय
-    </th>
+    <table class="account-table">
+        <thead>
+            <tr>
+                <th>दिनांक / समय</th>
+                <th>दाता का नाम</th>
+                <th>गाँव</th>
+                <th>राशि</th>
+            </tr>
+        </thead>
 
-    <th>
-        दाता का नाम
-    </th>
+        <tbody id="incomeTableBody">
+            <tr>
+                <td colspan="4" class="no-entry">
+                    आय का विवरण लोड हो रहा है...
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-    <th>
-        गाँव
-    </th>
-
-    <th>
-        राशि
-    </th>
-</tr>
-
-            </thead>
+    <div id="incomePagination" class="account-pagination"></div>
 
 
-            <tbody id="accountTableBody">
+    <h3 class="expense-title">🔴 व्यय का विवरण</h3>
 
-    <tr>
-        <td colspan="4" class="no-entry">
-            विवरण लोड हो रहा है...
-        </td>
-    </tr>
+    <table class="account-table">
+        <thead>
+            <tr>
+                <th>दिनांक / समय</th>
+                <th>खर्च का विवरण</th>
+                <th>अतिरिक्त विवरण</th>
+                <th>राशि</th>
+            </tr>
+        </thead>
 
-</tbody>
+        <tbody id="expenseTableBody">
+            <tr>
+                <td colspan="4" class="no-entry">
+                    व्यय का विवरण लोड हो रहा है...
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-        </table>
+    <div id="expensePagination" class="account-pagination"></div>
+
+</div>
 
     </div>
 
@@ -2036,89 +2050,113 @@ async function loadAayVyayData() {
 
 function renderAccountTable() {
 
-    const tableBody =
-        document.getElementById(
-            "accountTableBody"
-        );
+    const incomeBody = document.getElementById("incomeTableBody");
+    const expenseBody = document.getElementById("expenseTableBody");
+
+    incomeBody.innerHTML = "";
+    expenseBody.innerHTML = "";
+
+    // ==============================
+    // आय और व्यय अलग-अलग करें
+    // ==============================
+
+    const incomeRecords = allFilteredRecords.filter(
+        record => record.type === "आय"
+    );
+
+    const expenseRecords = allFilteredRecords.filter(
+        record => record.type === "व्यय"
+    );
 
 
-    tableBody.innerHTML = "";
+    // ==============================
+    // आय की सूची
+    // ==============================
 
+    if (incomeRecords.length === 0) {
 
-    if (allFilteredRecords.length === 0) {
-
-        tableBody.innerHTML = `
-
+        incomeBody.innerHTML = `
             <tr>
-
-                <td
-                    colspan="4"
-                    class="no-entry"
-                >
-                    इस महीने अभी तक कोई आय-व्यय विवरण उपलब्ध नहीं है।
+                <td colspan="4" class="no-entry">
+                    इस महीने अभी तक कोई आय विवरण उपलब्ध नहीं है।
                 </td>
-
             </tr>
-
         `;
 
+    } else {
 
-        renderPagination();
+        const incomeStart =
+            (incomeCurrentPage - 1) * pageSize;
 
-        return;
+        const incomeEnd =
+            incomeStart + pageSize;
 
+        const incomePageRecords =
+            incomeRecords.slice(incomeStart, incomeEnd);
+
+        incomePageRecords.forEach(record => {
+
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td>${record.date}</td>
+                <td>${record.description || ""}</td>
+                <td>${record.village || ""}</td>
+                <td>₹${record.amount}</td>
+            `;
+
+            incomeBody.appendChild(row);
+        });
     }
 
 
-    const start =
-        (currentPage - 1) * pageSize;
+    // ==============================
+    // व्यय की सूची
+    // ==============================
 
+    if (expenseRecords.length === 0) {
 
-    const end =
-        start + pageSize;
-
-
-    const pageRecords =
-        allFilteredRecords.slice(
-            start,
-            end
-        );
-
-
-    pageRecords.forEach(record => {
-
-        const row =
-            document.createElement("tr");
-
-
-        row.innerHTML = `
-
-            <td>
-                ${record.date}
-            </td>
-
-            <td>
-                ${record.description}
-            </td>
-
-            <td>
-                ${record.village || ""}
-            </td>
-
-            <td>
-                ₹${record.amount}
-            </td>
-
+        expenseBody.innerHTML = `
+            <tr>
+                <td colspan="4" class="no-entry">
+                    इस महीने अभी तक कोई व्यय विवरण उपलब्ध नहीं है।
+                </td>
+            </tr>
         `;
 
+    } else {
 
-        tableBody.appendChild(row);
+        const expenseStart =
+            (expenseCurrentPage - 1) * pageSize;
 
-    });
+        const expenseEnd =
+            expenseStart + pageSize;
+
+        const expensePageRecords =
+            expenseRecords.slice(expenseStart, expenseEnd);
+
+        expensePageRecords.forEach(record => {
+
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td>${record.date}</td>
+                <td>${record.description || ""}</td>
+                <td>${record.details || ""}</td>
+                <td>₹${record.amount}</td>
+            `;
+
+            expenseBody.appendChild(row);
+        });
+    }
 
 
-    renderPagination();
+    // ==============================
+    // दोनों की Pagination
+    // ==============================
 
+    renderIncomePagination(incomeRecords.length);
+    renderExpensePagination(expenseRecords.length);
 }
 
 
@@ -2126,70 +2164,36 @@ function renderAccountTable() {
    PAGINATION
 ========================= */
 
-function renderPagination() {
-
-    let pagination =
-        document.getElementById(
-            "accountPagination"
-        );
+let incomeCurrentPage = 1;
+let expenseCurrentPage = 1;
 
 
-    if (!pagination) {
+/* =========================
+   आय Pagination
+========================= */
 
-        pagination =
-            document.createElement("div");
+function renderIncomePagination(totalRecords) {
 
-        pagination.id =
-            "accountPagination";
+    const pagination =
+        document.getElementById("incomePagination");
 
-        pagination.className =
-            "account-pagination";
-
-
-        const table =
-            document.querySelector(
-                ".account-table"
-            );
-
-
-        table.parentNode.insertBefore(
-            pagination,
-            table.nextSibling
-        );
-
-    }
-
+    if (!pagination) return;
 
     pagination.innerHTML = "";
 
-
-    const totalRecords =
-        allFilteredRecords.length;
-
-
     const totalPages =
-        Math.ceil(
-            totalRecords / pageSize
-        );
-
-
-    /* PER PAGE */
+        Math.ceil(totalRecords / pageSize);
 
     const sizeLabel =
         document.createElement("span");
 
-    sizeLabel.textContent =
-        "प्रति पेज:";
+    sizeLabel.textContent = "प्रति पेज:";
 
-
-    pagination.appendChild(
-        sizeLabel
-    );
+    pagination.appendChild(sizeLabel);
 
 
     const sizeSelect =
         document.createElement("select");
-
 
     [25, 50, 75, 100].forEach(size => {
 
@@ -2197,98 +2201,70 @@ function renderPagination() {
             document.createElement("option");
 
         option.value = size;
-
         option.textContent = size;
 
-
         if (size === pageSize) {
-
             option.selected = true;
-
         }
 
-
-        sizeSelect.appendChild(
-            option
-        );
+        sizeSelect.appendChild(option);
 
     });
 
 
-    sizeSelect.addEventListener(
-        "change",
-        function () {
+    sizeSelect.addEventListener("change", function () {
 
-            pageSize =
-                Number(this.value);
+        pageSize = Number(this.value);
 
-            currentPage = 1;
+        incomeCurrentPage = 1;
+        expenseCurrentPage = 1;
 
-            renderAccountTable();
+        renderAccountTable();
 
-        }
-    );
+    });
 
 
-    pagination.appendChild(
-        sizeSelect
-    );
+    pagination.appendChild(sizeSelect);
 
-
-    /* अगर सिर्फ एक पेज है */
 
     if (totalPages <= 1) {
 
-    const info = document.createElement("span");
+        const info =
+            document.createElement("span");
 
-    info.className = "page-info";
+        info.className = "page-info";
 
-    info.textContent =
-        "कुल " +
-        totalRecords +
-        " विवरण";
+        info.textContent =
+            "कुल " + totalRecords + " आय विवरण";
 
-    pagination.appendChild(info);
+        pagination.appendChild(info);
 
-    return;
+        return;
+    }
 
-}
-
-
-    /* PREVIOUS */
 
     const previousButton =
         document.createElement("button");
 
-
-    previousButton.textContent =
-        "‹ पिछला";
-
+    previousButton.textContent = "‹ पिछला";
 
     previousButton.disabled =
-        currentPage === 1;
+        incomeCurrentPage === 1;
 
+    previousButton.onclick = function () {
 
-    previousButton.onclick =
-        function () {
+        if (incomeCurrentPage > 1) {
 
-            if (currentPage > 1) {
+            incomeCurrentPage--;
 
-                currentPage--;
+            renderAccountTable();
 
-                renderAccountTable();
+        }
 
-            }
+    };
 
-        };
+    pagination.appendChild(previousButton);
 
-
-    pagination.appendChild(
-        previousButton
-    );
-
-
-    /* PAGE NUMBERS */
 
     for (
         let page = 1;
@@ -2299,94 +2275,222 @@ function renderPagination() {
         const pageButton =
             document.createElement("button");
 
+        pageButton.textContent = page;
 
-        pageButton.textContent =
-            page;
+        if (page === incomeCurrentPage) {
 
-
-        if (page === currentPage) {
-
-            pageButton.classList.add(
-                "active"
-            );
+            pageButton.classList.add("active");
 
         }
 
+        pageButton.onclick = function () {
 
-        pageButton.onclick =
-            function () {
+            incomeCurrentPage = page;
 
-                currentPage =
-                    page;
+            renderAccountTable();
 
-                renderAccountTable();
+        };
 
-            };
-
-
-        pagination.appendChild(
-            pageButton
-        );
+        pagination.appendChild(pageButton);
 
     }
 
 
-    /* NEXT */
-
     const nextButton =
         document.createElement("button");
 
-
-    nextButton.textContent =
-        "अगला ›";
-
+    nextButton.textContent = "अगला ›";
 
     nextButton.disabled =
-        currentPage === totalPages;
+        incomeCurrentPage === totalPages;
 
+    nextButton.onclick = function () {
 
-    nextButton.onclick =
-        function () {
+        if (incomeCurrentPage < totalPages) {
 
-            if (
-                currentPage <
-                totalPages
-            ) {
+            incomeCurrentPage++;
 
-                currentPage++;
+            renderAccountTable();
 
-                renderAccountTable();
+        }
 
-            }
+    };
 
-        };
+    pagination.appendChild(nextButton);
 
-
-    pagination.appendChild(
-        nextButton
-    );
-
-
-    /* TOTAL */
 
     const info =
         document.createElement("span");
 
-
-    info.className =
-        "page-info";
-
+    info.className = "page-info";
 
     info.textContent =
-        "कुल " +
-        totalRecords +
-        " विवरण";
+        "कुल " + totalRecords + " आय विवरण";
+
+    pagination.appendChild(info);
+}
 
 
-    pagination.appendChild(
-        info
-    );
+/* =========================
+   व्यय Pagination
+========================= */
 
+function renderExpensePagination(totalRecords) {
+
+    const pagination =
+        document.getElementById("expensePagination");
+
+    if (!pagination) return;
+
+    pagination.innerHTML = "";
+
+    const totalPages =
+        Math.ceil(totalRecords / pageSize);
+
+    const sizeLabel =
+        document.createElement("span");
+
+    sizeLabel.textContent = "प्रति पेज:";
+
+    pagination.appendChild(sizeLabel);
+
+
+    const sizeSelect =
+        document.createElement("select");
+
+    [25, 50, 75, 100].forEach(size => {
+
+        const option =
+            document.createElement("option");
+
+        option.value = size;
+        option.textContent = size;
+
+        if (size === pageSize) {
+            option.selected = true;
+        }
+
+        sizeSelect.appendChild(option);
+
+    });
+
+
+    sizeSelect.addEventListener("change", function () {
+
+        pageSize = Number(this.value);
+
+        incomeCurrentPage = 1;
+        expenseCurrentPage = 1;
+
+        renderAccountTable();
+
+    });
+
+
+    pagination.appendChild(sizeSelect);
+
+
+    if (totalPages <= 1) {
+
+        const info =
+            document.createElement("span");
+
+        info.className = "page-info";
+
+        info.textContent =
+            "कुल " + totalRecords + " व्यय विवरण";
+
+        pagination.appendChild(info);
+
+        return;
+    }
+
+
+    const previousButton =
+        document.createElement("button");
+
+    previousButton.textContent = "‹ पिछला";
+
+    previousButton.disabled =
+        expenseCurrentPage === 1;
+
+    previousButton.onclick = function () {
+
+        if (expenseCurrentPage > 1) {
+
+            expenseCurrentPage--;
+
+            renderAccountTable();
+
+        }
+
+    };
+
+    pagination.appendChild(previousButton);
+
+
+    for (
+        let page = 1;
+        page <= totalPages;
+        page++
+    ) {
+
+        const pageButton =
+            document.createElement("button");
+
+        pageButton.textContent = page;
+
+        if (page === expenseCurrentPage) {
+
+            pageButton.classList.add("active");
+
+        }
+
+        pageButton.onclick = function () {
+
+            expenseCurrentPage = page;
+
+            renderAccountTable();
+
+        };
+
+        pagination.appendChild(pageButton);
+
+    }
+
+
+    const nextButton =
+        document.createElement("button");
+
+    nextButton.textContent = "अगला ›";
+
+    nextButton.disabled =
+        expenseCurrentPage === totalPages;
+
+    nextButton.onclick = function () {
+
+        if (expenseCurrentPage < totalPages) {
+
+            expenseCurrentPage++;
+
+            renderAccountTable();
+
+        }
+
+    };
+
+    pagination.appendChild(nextButton);
+
+
+    const info =
+        document.createElement("span");
+
+    info.className = "page-info";
+
+    info.textContent =
+        "कुल " + totalRecords + " व्यय विवरण";
+
+    pagination.appendChild(info);
 }
 
 
