@@ -2003,7 +2003,8 @@ async function loadExpenseData() {
         );
 
         const data = await response.json();
-
+console.log("सभी रिकॉर्ड:", data.records);
+console.log("रिकॉर्ड की संख्या:", (data.records || []).length);
         expenseFilteredRecords =
             (data.records || []).filter(record => {
 
