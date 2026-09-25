@@ -456,32 +456,26 @@ document
             })
         });
 
-        const result =
-            (await response.text()).trim();
+        const result = (await response.text()).trim();
 
-        if(result === "OFFLINE_INCOME_OK"){
+if (result.includes("OFFLINE_INCOME_OK")) {
+    message.textContent =
+        "✅ Offline आय सफलतापूर्वक सुरक्षित हो गई।";
+    this.reset();
 
-            message.textContent =
-                "✅ Offline आय सफलतापूर्वक सुरक्षित हो गई।";
+} else if (result.includes("INVALID_PIN")) {
+    sessionStorage.removeItem("durgaAdminPin");
+    alert("Admin PIN मान्य नहीं है।");
+    location.reload();
 
-            this.reset();
+} else if (result.startsWith("<!DOCTYPE html")) {
+    message.textContent =
+        "✅ आय Google Sheet में सुरक्षित हो गई।";
+    this.reset();
 
-        }else if(result === "INVALID_PIN"){
-
-            sessionStorage.removeItem(
-                "durgaAdminPin"
-            );
-
-            alert("Admin PIN मान्य नहीं है।");
-
-            location.reload();
-
-        }else{
-
-            message.textContent =
-                "❌ " + result;
-
-        }
+} else {
+    message.textContent = "❌ " + result;
+}
 
     }catch(error){
 
