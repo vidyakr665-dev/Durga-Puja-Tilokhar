@@ -2081,13 +2081,11 @@ function renderAccountTable() {
     // आय और व्यय अलग-अलग करें
     // ==============================
 
-    const incomeRecords = allFilteredRecords.filter(
-        record => record.type === "आय"
-    );
+    const incomeRecords =
+    allFilteredRecords.filter(record => record.type === "आय");
 
-    const expenseRecords = allFilteredRecords.filter(
-        record => record.type === "व्यय"
-    );
+const expenseRecords =
+    allFilteredRecords.filter(record => record.type === "व्यय");
 
 
     // ==============================
