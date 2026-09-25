@@ -1958,7 +1958,7 @@ async function loadIncomeData() {
                     parts[0].split("/");
 
                 const month =
-                    Number(dateParts[0]);
+                    Number(dateParts[1]);
 
                 const year =
                     Number(dateParts[2]);
@@ -2183,8 +2183,6 @@ const expenseRecords =
    PAGINATION
 ========================= */
 
-let incomeCurrentPage = 1;
-let expenseCurrentPage = 1;
 let incomeFilteredRecords = [];
 let expenseFilteredRecords = [];
 
