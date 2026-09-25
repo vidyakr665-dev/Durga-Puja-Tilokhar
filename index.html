@@ -1939,26 +1939,21 @@ async function loadIncomeData() {
                     return false;
                 }
 
-                const parts =
-                    record.date.split(" ");
+                const parts = record.date.split(" ");
 
-                const dateParts =
-                    parts[0].split("/");
+const dateParts = parts[0].split("/");
 
-                const month =
-                    Number(dateParts[1]);
+const month = Number(dateParts[0]);
+const year = Number(dateParts[2]);
 
-                const year =
-                    Number(dateParts[2]);
+const yearMatch =
+    year === Number(selectedYear);
 
-                const yearMatch =
-                    year === Number(selectedYear);
+const monthMatch =
+    selectedMonth === "all" ||
+    month === Number(selectedMonth);
 
-                const monthMatch =
-                    selectedMonth === "all" ||
-                    month === Number(selectedMonth);
-
-                return yearMatch && monthMatch;
+return yearMatch && monthMatch;
 
             });
 
@@ -2077,6 +2072,52 @@ function updateAccountSummary() {
     document.getElementById("totalBalance").textContent =
         "₹" + balance;
 }
+   function formatRecordDate(dateValue) {
+
+    const text = String(dateValue || "").trim();
+
+    const parts = text.split(" ");
+
+    if (parts.length < 2) {
+        return text;
+    }
+
+    const dateParts = parts[0].split("/");
+    const timeParts = parts[1].split(":");
+
+    if (dateParts.length !== 3 || timeParts.length < 2) {
+        return text;
+    }
+
+    const month = Number(dateParts[0]);
+    const day = Number(dateParts[1]);
+    const year = Number(dateParts[2]);
+
+    let hour = Number(timeParts[0]);
+    const minute = timeParts[1];
+    const second = timeParts[2] || "00";
+
+    const ampm = hour >= 12 ? "PM" : "AM";
+
+    hour = hour % 12;
+
+    if (hour === 0) {
+        hour = 12;
+    }
+
+    const formattedHour =
+        String(hour).padStart(2, "0");
+
+    return (
+        String(day).padStart(2, "0") + "/" +
+        String(month).padStart(2, "0") + "/" +
+        year + " " +
+        formattedHour + ":" +
+        minute + ":" +
+        second + " " +
+        ampm
+    );
+}
 function renderAccountTable() {
 
     const incomeBody = document.getElementById("incomeTableBody");
@@ -2126,7 +2167,7 @@ const expenseRecords =
             const row = document.createElement("tr");
 
             row.innerHTML = `
-                <td>${record.date}</td>
+                <td>${formatRecordDate(record.date)}</td>
                 <td>${record.description || ""}</td>
                 <td>${record.village || ""}</td>
                 <td>₹${record.amount}</td>
@@ -2167,7 +2208,7 @@ const expenseRecords =
             const row = document.createElement("tr");
 
             row.innerHTML = `
-                <td>${record.date}</td>
+                <td>${formatRecordDate(record.date)}</td>
                 <td>${record.description || ""}</td>
                 <td>${record.details || ""}</td>
                 <td>₹${record.amount}</td>
