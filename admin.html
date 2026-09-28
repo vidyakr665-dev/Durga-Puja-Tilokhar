@@ -4,11 +4,62 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Admin | आय-व्यय</title>
-
+<title>Durga Puja Samiti | आय-व्यय</title>
 <link rel="stylesheet" href="style.css">
 
 <style>
+/* ================= ADMIN HEADER ================= */
+.admin-site-header{
+    width:100%;
+    background:linear-gradient(135deg,#8b0000,#c62828);
+    color:#fff;
+    text-align:center;
+    padding:22px 15px 18px;
+    box-sizing:border-box;
+    box-shadow:0 3px 12px rgba(0,0,0,.25);
+}
+
+.admin-site-header .om{
+    font-size:28px;
+    line-height:1;
+    margin-bottom:8px;
+}
+
+.admin-site-header h1{
+    margin:0;
+    padding:0;
+    font-size:clamp(26px,4vw,42px);
+    line-height:1.25;
+    font-weight:800;
+    color:#fff;
+}
+
+.admin-site-header p{
+    margin:8px 0 0;
+    font-size:clamp(15px,2.2vw,20px);
+    font-weight:700;
+    color:#fff;
+}
+
+/* ================= SINGLE MATA RANI POSTER ================= */
+.admin-poster-wrap{
+    width:100%;
+    background:#000;
+    text-align:center;
+    line-height:0;
+    overflow:hidden;
+}
+
+.admin-poster{
+    display:block;
+    width:100%;
+    max-width:1100px;
+    height:auto;
+    margin:0 auto;
+    object-fit:contain;
+}
+
+/* ================= ADMIN CONTENT ================= */
 .admin-wrap{
     max-width:850px;
     margin:30px auto;
@@ -60,30 +111,17 @@
     margin-top:5px;
 }
 
-.login-btn{
-    background:#690808;
-}
-
-.income-btn{
-    background:#16803c;
-}
-
-.expense-btn{
-    background:#b40000;
-}
-
-.logout-btn{
-    background:#555;
-}
+.login-btn{background:#690808;}
+.income-btn{background:#16803c;}
+.expense-btn{background:#b40000;}
+.logout-btn{background:#555;}
 
 .message{
     margin-top:15px;
     font-weight:bold;
 }
 
-.hidden{
-    display:none;
-}
+.hidden{display:none;}
 
 .top-actions{
     display:flex;
@@ -104,6 +142,18 @@
 }
 
 @media(max-width:600px){
+    .admin-site-header{
+        padding:18px 10px 15px;
+    }
+
+    .admin-site-header h1{
+        font-size:28px;
+    }
+
+    .admin-site-header p{
+        font-size:15px;
+    }
+
     .admin-card{
         padding:18px;
     }
@@ -113,31 +163,25 @@
 
 <body>
 
-<header class="site-header">
-
-    <div class="brand">
-        <div class="brand-mark">ॐ</div>
-
-        <div>
-            <h1>समिति Admin Panel</h1>
-            <p>छात्र नवयुवक संघ • तिलोखर (रोहतास)</p>
-        </div>
-    </div>
-
-    <a class="jai" href="index.html">
-        वेबसाइट
-    </a>
-
+<!-- ================= HEADER ================= -->
+<header class="admin-site-header">
+    <div class="om">ॐ</div>
+    <h1>Durga Puja Samiti</h1>
+    <p>छात्र नवयुवक संघ • तिलोखर (रोहतास)</p>
 </header>
 
+<!-- ================= ONE STATIC MATA RANI POSTER ================= -->
+<section class="admin-poster-wrap">
+    <img
+        class="admin-poster"
+        src="poster-1-puja.jpg"
+        alt="माता रानी - दुर्गा पूजा समिति">
+</section>
 
 <main class="admin-wrap">
 
-
     <!-- LOGIN -->
-
     <div class="admin-card" id="loginBox">
-
         <h2>🔐 Admin Login</h2>
 
         <p>
@@ -145,7 +189,6 @@
         </p>
 
         <form id="loginForm">
-
             <label>
                 Admin PIN
                 <input
@@ -158,32 +201,21 @@
                 >
             </label>
 
-            <button
-                type="submit"
-                class="admin-btn login-btn">
+            <button type="submit" class="admin-btn login-btn">
                 🔐 Login
             </button>
-
         </form>
 
         <p id="loginMessage" class="message"></p>
-
     </div>
 
-
-
     <!-- ADMIN PANEL -->
-
     <div id="adminPanel" class="hidden">
 
-
         <div class="admin-card">
-
             <div class="top-actions">
-
                 <div>
-                    <h2>📊 समिति Admin Panel</h2>
-
+                    <h2>📊 Durga Puja Samiti</h2>
                     <p>
                         यहाँ दर्ज की गई आय-व्यय सीधे Google Sheet में सुरक्षित होगी।
                     </p>
@@ -195,17 +227,11 @@
                     onclick="logout()">
                     Logout
                 </button>
-
             </div>
-
         </div>
 
-
-
         <!-- OFFLINE INCOME -->
-
         <div class="admin-card">
-
             <h2>🟢 Offline आय जोड़ें</h2>
 
             <form id="incomeForm">
@@ -220,7 +246,6 @@
                     >
                 </label>
 
-
                 <label>
                     गाँव / शहर
                     <input
@@ -230,7 +255,6 @@
                         required
                     >
                 </label>
-
 
                 <label>
                     मोबाइल नंबर
@@ -243,7 +267,6 @@
                     >
                 </label>
 
-
                 <label>
                     राशि
                     <input
@@ -255,25 +278,17 @@
                     >
                 </label>
 
-
-                <button
-                    type="submit"
-                    class="admin-btn income-btn">
+                <button type="submit" class="admin-btn income-btn">
                     🟢 आय सुरक्षित करें
                 </button>
 
             </form>
 
             <p id="incomeMessage" class="message"></p>
-
         </div>
 
-
-
         <!-- OFFLINE EXPENSE -->
-
         <div class="admin-card">
-
             <h2>🔴 Offline व्यय जोड़ें</h2>
 
             <form id="expenseForm">
@@ -288,7 +303,6 @@
                     >
                 </label>
 
-
                 <label>
                     राशि
                     <input
@@ -300,52 +314,32 @@
                     >
                 </label>
 
-
-                <button
-                    type="submit"
-                    class="admin-btn expense-btn">
+                <button type="submit" class="admin-btn expense-btn">
                     🔴 व्यय सुरक्षित करें
                 </button>
 
             </form>
 
             <p id="expenseMessage" class="message"></p>
-
         </div>
 
     </div>
-
 </main>
 
-
-
 <script>
-
 const SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbz3_GtBFIWVwN2rEtzAJhnSBKGqxDrXJjQHf4XSmtJ7HDodZa-BKbPIz9LtIOlBVN5f/exec";
 
-
-
-/* =========================
-   LOGIN
-========================= */
-
-document
-.getElementById("loginForm")
-.addEventListener("submit", async function(e){
-
+/* ================= LOGIN ================= */
+document.getElementById("loginForm").addEventListener("submit", async function(e){
     e.preventDefault();
 
-    const pin =
-        document.getElementById("adminPin").value.trim();
-
-    const message =
-        document.getElementById("loginMessage");
+    const pin = document.getElementById("adminPin").value.trim();
+    const message = document.getElementById("loginMessage");
 
     message.textContent = "Login जाँच रहा है...";
 
     try{
-
         const response = await fetch(SCRIPT_URL,{
             method:"POST",
             headers:{
@@ -357,247 +351,147 @@ document
             })
         });
 
-        const result =
-            (await response.text()).trim();
+        const result = (await response.text()).trim();
 
         if(result === "LOGIN_OK"){
-
-            sessionStorage.setItem(
-                "durgaAdminPin",
-                pin
-            );
-
-            document
-                .getElementById("loginBox")
-                .classList.add("hidden");
-
-            document
-                .getElementById("adminPanel")
-                .classList.remove("hidden");
-
+            sessionStorage.setItem("durgaAdminPin", pin);
+            document.getElementById("loginBox").classList.add("hidden");
+            document.getElementById("adminPanel").classList.remove("hidden");
         }else{
-
-            message.textContent =
-                "❌ गलत Admin PIN";
-
+            message.textContent = "❌ गलत Admin PIN";
         }
 
     }catch(error){
-
-        message.textContent =
-            "❌ Server से संपर्क नहीं हो पाया।";
-
+        message.textContent = "❌ Server से संपर्क नहीं हो पाया।";
     }
-
 });
 
-
-
-/* =========================
-   OFFLINE INCOME
-========================= */
-
-document
-.getElementById("incomeForm")
-.addEventListener("submit", async function(e){
-
+/* ================= OFFLINE INCOME ================= */
+document.getElementById("incomeForm").addEventListener("submit", async function(e){
     e.preventDefault();
 
-    const pin =
-        sessionStorage.getItem("durgaAdminPin");
+    const pin = sessionStorage.getItem("durgaAdminPin");
 
     if(!pin){
-
         location.reload();
         return;
     }
 
-    const name =
-        document.getElementById("incomeName").value.trim();
+    const name = document.getElementById("incomeName").value.trim();
+    const village = document.getElementById("incomeVillage").value.trim();
+    const mobile = document.getElementById("incomeMobile").value.trim();
+    const amount = Number(document.getElementById("incomeAmount").value);
+    const message = document.getElementById("incomeMessage");
 
-    const village =
-        document.getElementById("incomeVillage").value.trim();
+    if(mobile && !/^\d{10}$/.test(mobile)){
+        message.textContent = "❌ मोबाइल नंबर 10 अंकों का होना चाहिए।";
+        return;
+    }
 
-    const mobile =
-        document.getElementById("incomeMobile").value.trim();
-
-    const amount =
-        Number(
-            document.getElementById("incomeAmount").value
-        );
-
-    const message =
-        document.getElementById("incomeMessage");
-
-    message.textContent =
-        "आय सुरक्षित की जा रही है...";
+    message.textContent = "आय सुरक्षित की जा रही है...";
 
     try{
-
         const response = await fetch(SCRIPT_URL,{
             method:"POST",
             headers:{
                 "Content-Type":"text/plain;charset=utf-8"
             },
             body:JSON.stringify({
-
                 action:"addOfflineIncome",
-
                 pin:pin,
-
                 donorName:name,
-
                 village:village,
-
                 mobile:mobile,
-
                 amount:amount
-
             })
         });
 
         const result = (await response.text()).trim();
 
-if (result.includes("OFFLINE_INCOME_OK")) {
-    message.textContent =
-        "✅ Offline आय सफलतापूर्वक सुरक्षित हो गई।";
-    this.reset();
+        if(result.includes("OFFLINE_INCOME_OK")){
+            message.textContent = "✅ Offline आय सफलतापूर्वक सुरक्षित हो गई।";
+            this.reset();
 
-} else if (result.includes("INVALID_PIN")) {
-    sessionStorage.removeItem("durgaAdminPin");
-    alert("Admin PIN मान्य नहीं है।");
-    location.reload();
+        }else if(result.includes("INVALID_PIN")){
+            sessionStorage.removeItem("durgaAdminPin");
+            alert("Admin PIN मान्य नहीं है।");
+            location.reload();
 
-} else if (result.startsWith("<!DOCTYPE html")) {
-    message.textContent =
-        "✅ आय Google Sheet में सुरक्षित हो गई।";
-    this.reset();
+        }else if(result.startsWith("<!DOCTYPE html")){
+            message.textContent = "✅ आय Google Sheet में सुरक्षित हो गई।";
+            this.reset();
 
-} else {
-    message.textContent = "❌ " + result;
-}
+        }else{
+            message.textContent = "❌ " + result;
+        }
 
     }catch(error){
-
-        message.textContent =
-            "❌ Server से संपर्क नहीं हो पाया।";
-
+        message.textContent = "❌ Server से संपर्क नहीं हो पाया।";
     }
-
 });
 
-
-
-/* =========================
-   OFFLINE EXPENSE
-========================= */
-
-document
-.getElementById("expenseForm")
-.addEventListener("submit", async function(e){
-
+/* ================= OFFLINE EXPENSE ================= */
+document.getElementById("expenseForm").addEventListener("submit", async function(e){
     e.preventDefault();
 
-    const pin =
-        sessionStorage.getItem("durgaAdminPin");
+    const pin = sessionStorage.getItem("durgaAdminPin");
 
     if(!pin){
-
         location.reload();
         return;
     }
 
     const description =
-        document
-        .getElementById("expenseDescription")
-        .value
-        .trim();
+        document.getElementById("expenseDescription").value.trim();
 
     const amount =
-        Number(
-            document
-            .getElementById("expenseAmount")
-            .value
-        );
+        Number(document.getElementById("expenseAmount").value);
 
     const message =
         document.getElementById("expenseMessage");
 
-    message.textContent =
-        "व्यय सुरक्षित किया जा रहा है...";
+    message.textContent = "व्यय सुरक्षित किया जा रहा है...";
 
     try{
-
         const response = await fetch(SCRIPT_URL,{
             method:"POST",
             headers:{
                 "Content-Type":"text/plain;charset=utf-8"
             },
             body:JSON.stringify({
-
                 action:"addOfflineExpense",
-
                 pin:pin,
-
                 description:description,
-
                 amount:amount
-
             })
         });
 
-        const result =
-            (await response.text()).trim();
+        const result = (await response.text()).trim();
 
         if(result === "OFFLINE_EXPENSE_OK"){
-
             message.textContent =
                 "✅ Offline व्यय सफलतापूर्वक सुरक्षित हो गया।";
-
             this.reset();
 
         }else if(result === "INVALID_PIN"){
-
-            sessionStorage.removeItem(
-                "durgaAdminPin"
-            );
-
+            sessionStorage.removeItem("durgaAdminPin");
             alert("Admin PIN मान्य नहीं है।");
-
             location.reload();
 
         }else{
-
-            message.textContent =
-                "❌ " + result;
-
+            message.textContent = "❌ " + result;
         }
 
     }catch(error){
-
-        message.textContent =
-            "❌ Server से संपर्क नहीं हो पाया।";
-
+        message.textContent = "❌ Server से संपर्क नहीं हो पाया।";
     }
-
 });
 
-
-
-/* =========================
-   LOGOUT
-========================= */
-
+/* ================= LOGOUT ================= */
 function logout(){
-
-    sessionStorage.removeItem(
-        "durgaAdminPin"
-    );
-
+    sessionStorage.removeItem("durgaAdminPin");
     location.reload();
-
 }
-
 </script>
 
 </body>
