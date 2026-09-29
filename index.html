@@ -2491,31 +2491,59 @@ async function loadIncomeData() {
                     return false;
                 }
 
-                const dateParts =
-                    parts[0].split("/");
+               const dateParts =
+    String(record.date || "")
+    .split(" ")[0]
+    .split("/");
 
-                if (dateParts.length !== 3) {
-                    return false;
-                }
+const month =
+    Number(dateParts[0]);
 
-                const month =
-                    Number(dateParts[0]);
+const year =
+    Number(dateParts[2]);
+let selectedIncomeTotal = 0;
 
-                const year =
-                    Number(dateParts[2]);
+if (
+    incomeYear !== "" &&
+    incomeMonth !== ""
+) {
 
+    records.forEach(record => {
 
-                const yearMatch =
-                    year === Number(selectedYear);
+        if (
+            String(record.type || "").trim() !== "आय"
+        ) {
+            return;
+        }
 
-                const monthMatch =
-                    selectedMonth === "all" ||
-                    month === Number(selectedMonth);
+        const dateParts =
+            String(record.date || "")
+            .split(" ")[0]
+            .split("/");
 
+        const month =
+            Number(dateParts[0]);
 
-                return yearMatch && monthMatch;
+        const year =
+            Number(dateParts[2]);
 
-            });
+        if (
+            year === Number(incomeYear) &&
+            (
+                incomeMonth === "all" ||
+                month === Number(incomeMonth)
+            )
+        ) {
+
+            selectedIncomeTotal +=
+                Number(record.amount) || 0;
+
+        }
+
+    });
+
+}
+
 
 
         /* =========================
