@@ -1043,7 +1043,105 @@ footer{
         grid-template-columns:1fr;
     }
 }
+/* =========================
+   UPI PAYMENT PANEL
+========================= */
 
+.upi-payment-panel{
+    display:none;
+    margin-top:20px;
+    padding:20px;
+    background:#fff8e1;
+    border:2px solid #e2ad32;
+    border-radius:12px;
+    text-align:center;
+}
+
+.upi-payment-panel h3{
+    color:#8e1111;
+    font-size:22px;
+    margin-bottom:10px;
+}
+
+.upi-payment-panel p{
+    color:#5d3b27;
+    line-height:1.7;
+}
+
+.upi-id-box{
+    background:white;
+    border:1px solid #e2ad32;
+    padding:12px;
+    margin:15px 0;
+    border-radius:8px;
+    color:#8e1111;
+    font-weight:bold;
+}
+
+.upi-qr{
+    width:260px;
+    max-width:100%;
+    height:auto;
+    display:block;
+    margin:15px auto;
+    border-radius:10px;
+    border:1px solid #ddd;
+}
+
+.upi-pay-button{
+    display:block;
+    width:100%;
+    padding:13px;
+    margin:12px 0;
+    background:#198754;
+    color:white;
+    text-decoration:none;
+    border-radius:7px;
+    font-weight:bold;
+    font-size:15px;
+}
+
+.upi-pay-button:hover{
+    opacity:.9;
+}
+
+.utr-input{
+    width:100%;
+    height:45px;
+    padding:10px 12px;
+    margin:10px 0;
+    border:1px solid #dca72f;
+    border-radius:7px;
+    font-size:14px;
+    box-sizing:border-box;
+    outline:none;
+}
+
+.utr-input:focus{
+    border-color:#8e1111;
+}
+
+.payment-submit-button{
+    width:100%;
+    min-height:45px;
+    padding:10px;
+    border:none;
+    border-radius:7px;
+    background:#a90d0d;
+    color:white;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.payment-submit-button:hover{
+    opacity:.9;
+}
+
+.payment-note{
+    font-size:13px !important;
+    color:#6a4730 !important;
+}
 </style>
 </head>
 
@@ -1313,84 +1411,143 @@ footer{
 
             <!-- FORM -->
 
-            <div>
+<div>
 
-                <div class="form-group">
+    <!-- नाम -->
+    <div class="form-group">
+        <label>नाम</label>
 
-                    <label>
-                        नाम
-                    </label>
-
-                    <input
-                        type="text"
-id="donorName"
-placeholder="अपना नाम"
-required
-                    >
-
-                </div>
+        <input
+            type="text"
+            id="donorName"
+            placeholder="अपना नाम"
+            required
+        >
+    </div>
 
 
-                <div class="form-group">
+    <!-- गाँव -->
+    <div class="form-group">
+        <label>आपका गाँव</label>
 
-    <label>
-        मोबाइल नंबर
-    </label>
+        <input
+            type="text"
+            id="donorVillage"
+            placeholder="गाँव / शहर"
+            required
+        >
+    </div>
 
-    <input
-        type="tel"
-        id="donorMobile"
-        placeholder="मोबाइल नंबर"
-        maxlength="10"
-        inputmode="numeric"
-        required
+
+    <!-- मोबाइल -->
+    <div class="form-group">
+        <label>मोबाइल नंबर</label>
+
+        <input
+            type="tel"
+            id="donorMobile"
+            placeholder="मोबाइल नंबर"
+            maxlength="10"
+            inputmode="numeric"
+            required
+        >
+    </div>
+
+
+    <!-- राशि -->
+    <div class="form-group">
+        <label>चंदा / सहयोग राशि</label>
+
+        <input
+            type="number"
+            id="donationAmount"
+            placeholder="राशि दर्ज करें"
+            min="101"
+            step="1"
+            required
+        >
+    </div>
+
+
+    <!-- सहयोग बटन -->
+    <button
+        class="donate-button"
+        type="button"
+        onclick="startDonation()"
+    >
+        🙏 सहयोग करें
+    </button>
+
+
+    <!-- =========================
+         UPI PAYMENT PANEL
+    ========================= -->
+
+    <div
+        id="upiPaymentPanel"
+        class="upi-payment-panel"
     >
 
+        <h3>
+            🙏 UPI से भुगतान करें
+        </h3>
+
+        <p>
+            सहयोग राशि:
+            <strong id="selectedDonationAmount">
+                ₹0
+            </strong>
+        </p>
+
+        <div class="upi-id-box">
+            UPI ID: 8409651490-2@ybl
+        </div>
+
+
+        <!-- QR CODE -->
+        <img
+            src="IPPB QR.png"
+            alt="UPI QR Code"
+            class="upi-qr"
+        >
+
+
+        <!-- UPI APP BUTTON -->
+        <a
+            id="upiPayButton"
+            class="upi-pay-button"
+            href="#"
+        >
+            📱 UPI App से भुगतान करें
+        </a>
+
+
+        <p class="payment-note">
+            भुगतान करने के बाद नीचे अपना
+            UTR / Transaction ID दर्ज करें।
+        </p>
+
+
+        <input
+            type="text"
+            id="donationUTR"
+            class="utr-input"
+            placeholder="UTR / Transaction ID"
+        >
+
+
+        <button
+            id="paymentSubmitButton"
+            class="payment-submit-button"
+            type="button"
+            onclick="submitDonationPayment()"
+        >
+            ✅ भुगतान विवरण जमा करें
+        </button>
+
+    </div>
+
 </div>
-
-
-                <div class="form-group">
-
-    <label>
-        चंदा / सहयोग राशि
-    </label>
-
-    <input
-        type="number"
-        id="donationAmount"
-        placeholder="राशि दर्ज करें"
-        min="1"
-        required
-    >
-
-</div>
-
-
-                <div class="form-group">
-
-    <label>
-        आपका गाँव
-    </label>
-
-    <input
-        type="text"
-        id="donorVillage"
-        placeholder="गाँव / शहर"
-        required
-    >
-
-</div>
-
-
-               <button
-    class="donate-button"
-    type="button"
-    onclick="startDonation()"
->
-    🙏 सहयोग करें
-</button>
-
-            </div>
 
 
             <!-- INFO -->
@@ -1864,45 +2021,302 @@ setInterval(function(){
 </script>
 
 <script>
+
+const DONATION_API =
+"https://script.google.com/macros/s/AKfycbzNDVvmdV065wPFZJHofYkh-Wq0-lKgg-ZEoMPbWK6GQ5FKU-4zhekWtM7u2Y5OPdy7eg/exec";
+
+let currentDonationData = null;
+
+
+/* =========================
+   START DONATION
+========================= */
+
 function startDonation(){
 
-    const name = document.getElementById("donorName").value.trim();
-    const mobile = document.getElementById("donorMobile").value.trim();
-    const amount = document.getElementById("donationAmount").value.trim();
-    const village = document.getElementById("donorVillage").value.trim();
+    const name =
+        document.getElementById("donorName").value.trim();
+
+    const village =
+        document.getElementById("donorVillage").value.trim();
+
+    const mobile =
+        document.getElementById("donorMobile").value.trim();
+
+    const amount =
+        document.getElementById("donationAmount").value.trim();
+
+
+    /* नाम */
 
     if(name === ""){
         alert("कृपया अपना नाम भरें।");
-        document.getElementById("donorName").focus();
+
+        document
+            .getElementById("donorName")
+            .focus();
+
         return;
     }
+
+
+    /* गाँव */
 
     if(village === ""){
         alert("कृपया अपना गाँव / शहर भरें।");
-        document.getElementById("donorVillage").focus();
+
+        document
+            .getElementById("donorVillage")
+            .focus();
+
         return;
     }
 
-    if(mobile === ""){
-        alert("कृपया मोबाइल नंबर भरें।");
-        document.getElementById("donorMobile").focus();
-        return;
-    }
+
+    /* मोबाइल */
 
     if(!/^[0-9]{10}$/.test(mobile)){
         alert("कृपया 10 अंकों का सही मोबाइल नंबर भरें।");
-        document.getElementById("donorMobile").focus();
+
+        document
+            .getElementById("donorMobile")
+            .focus();
+
         return;
     }
 
-    if(amount === "" || Number(amount) < 1){
-        alert("कृपया सहयोग राशि भरें।");
-        document.getElementById("donationAmount").focus();
+
+    /* राशि */
+
+    const numericAmount =
+        Number(amount);
+
+
+    if(
+        amount === "" ||
+        !Number.isFinite(numericAmount) ||
+        numericAmount < 101
+    ){
+
+        alert(
+            "न्यूनतम ऑनलाइन सहयोग राशि ₹101 है।"
+        );
+
+        document
+            .getElementById("donationAmount")
+            .focus();
+
         return;
     }
 
-    window.location.href = "https://rzp.io/rzp/N38fLJM";
+
+    /* DONATION DATA */
+
+    currentDonationData = {
+
+        name:name,
+
+        village:village,
+
+        mobile:mobile,
+
+        amount:numericAmount
+
+    };
+
+
+    /* राशि दिखाएँ */
+
+    document
+        .getElementById("selectedDonationAmount")
+        .textContent =
+        "₹" + numericAmount;
+
+
+    /* UPI LINK */
+
+    const upiLink =
+        "upi://pay" +
+        "?pa=8409651490-2@ybl" +
+        "&pn=Shri%20Shri%20Durga%20Puja%20Mahotsav" +
+        "&am=" +
+        encodeURIComponent(numericAmount) +
+        "&cu=INR";
+
+
+    document
+        .getElementById("upiPayButton")
+        .href = upiLink;
+
+
+    /* PAYMENT PANEL SHOW */
+
+    const panel =
+        document.getElementById(
+            "upiPaymentPanel"
+        );
+
+    panel.style.display = "block";
+
+
+    panel.scrollIntoView({
+        behavior:"smooth",
+        block:"center"
+    });
+
 }
+
+
+/* =========================
+   SUBMIT PAYMENT DETAILS
+========================= */
+
+async function submitDonationPayment(){
+
+    if(!currentDonationData){
+
+        alert(
+            "पहले सहयोग राशि भरकर सहयोग करें।"
+        );
+
+        return;
+    }
+
+
+    const utr =
+        document
+            .getElementById("donationUTR")
+            .value
+            .trim();
+
+
+    if(utr === ""){
+
+        alert(
+            "कृपया भुगतान के बाद UTR / Transaction ID भरें।"
+        );
+
+        document
+            .getElementById("donationUTR")
+            .focus();
+
+        return;
+    }
+
+
+    const button =
+        document.getElementById(
+            "paymentSubmitButton"
+        );
+
+
+    button.disabled = true;
+
+    button.textContent =
+        "⏳ जमा हो रहा है...";
+
+
+    const payload = {
+
+        type:"ONLINE",
+
+        name:
+            currentDonationData.name,
+
+        amount:
+            currentDonationData.amount,
+
+        utr:utr,
+
+        mobile:
+            currentDonationData.mobile,
+
+        note:
+            "गाँव: " +
+            currentDonationData.village
+
+    };
+
+
+    try{
+
+        const response =
+            await fetch(
+                DONATION_API,
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "text/plain;charset=utf-8"
+                    },
+
+                    body:
+                        JSON.stringify(payload)
+                }
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if(result.success){
+
+            alert(
+                "आपका भुगतान विवरण सफलतापूर्वक जमा हो गया है।\n\nभुगतान की जाँच के बाद इसे आय-व्यय में दिखाया जाएगा।"
+            );
+
+
+            document
+                .getElementById(
+                    "donationUTR"
+                )
+                .value = "";
+
+
+            currentDonationData = null;
+
+
+            document
+                .getElementById(
+                    "upiPaymentPanel"
+                )
+                .style.display = "none";
+
+
+        }else{
+
+            alert(
+                result.message ||
+                "भुगतान विवरण जमा नहीं हो पाया।"
+            );
+
+        }
+
+
+    }catch(error){
+
+        console.error(
+            "Donation Error:",
+            error
+        );
+
+
+        alert(
+            "भुगतान विवरण जमा नहीं हो पाया। कृपया इंटरनेट कनेक्शन जाँचें और दोबारा प्रयास करें।"
+        );
+
+    }
+
+
+    button.disabled = false;
+
+    button.textContent =
+        "✅ भुगतान विवरण जमा करें";
+
+}
+
 </script>
 <script>
 
