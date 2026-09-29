@@ -3343,7 +3343,91 @@ document.getElementById("expenseYear")
        updateSelectedTotals();
     }
 );
+/* =========================
+   VERIFIED ONLINE DONATIONS
+========================= */
 
+async function loadVerifiedDonations() {
+    const tableBody = document.getElementById("verifiedDonationTableBody");
+    if (!tableBody) return;
+
+    try {
+        const response = await fetch(DONATION_API + "?action=verified");
+        const donations = await response.json();
+
+        tableBody.innerHTML = "";
+
+        if (!Array.isArray(donations) || donations.length === 0) {
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="4" class="no-entry">
+                        अभी कोई सत्यापित ऑनलाइन चंदा उपलब्ध नहीं है।
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        donations.forEach(function(donation) {
+            const row = document.createElement("tr");
+
+            const date = donation.Timestamp || "";
+            const name = donation.Name || "";
+            let village = donation.Note || "";
+            village = village.replace("गाँव:", "").trim();
+            const amount = Number(donation.Amount) || 0;
+
+            row.innerHTML = `
+                <td>${formatDonationDate(date)}</td>
+                <td>${escapeDonationHTML(name)}</td>
+                <td>${escapeDonationHTML(village)}</td>
+                <td>₹${amount}</td>
+            `;
+
+            tableBody.appendChild(row);
+        });
+
+    } catch (error) {
+        console.error("Verified Donation Error:", error);
+
+        tableBody.innerHTML = `
+            <tr>
+                <td colspan="4" class="no-entry">
+                    सत्यापित चंदा लोड नहीं हो पाया।
+                </td>
+            </tr>
+        `;
+    }
+}
+
+function formatDonationDate(value) {
+    if (!value) return "";
+
+    const date = new Date(value);
+
+    if (isNaN(date.getTime())) return String(value);
+
+    return date.toLocaleString("hi-IN", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+}
+
+function escapeDonationHTML(value) {
+    return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    loadVerifiedDonations();
+});
 </script>
 </body>
 </html>
