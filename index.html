@@ -2355,16 +2355,16 @@ async function loadIncomeData() {
 
     try {
 
+        /* =========================
+           NORMAL / OFFLINE आय
+        ========================= */
+
         const normalResponse = await fetch(
             "https://script.google.com/macros/s/AKfycbz3_GtBFIWVwN2rEtzAJhnSBKGqxDrXJjQHf4XSmtJ7HDodZa-BKbPIz9LtIOlBVN5f/exec?action=data"
         );
 
         const normalData =
             await normalResponse.json();
-
-        /* =========================
-           OFFLINE / NORMAL आय
-        ========================= */
 
         const normalIncome =
             (normalData.records || [])
@@ -2464,46 +2464,25 @@ async function loadIncomeData() {
             });
 
         }
-        /* =========================
-           VERIFIED ONLINE FILTER
-        ========================= */
-
-        const filteredVerifiedIncome =
-            verifiedDonationRecords.filter(record => {
-
-                const parts =
-                    String(record.date || "").split(" ");
-
-                const dateParts =
-                    parts[0].split("/");
-
-                if (dateParts.length !== 3) {
-                    return false;
-                }
-
-                const month =
-                    Number(dateParts[0]);
-
-                const year =
-                    Number(dateParts[2]);
-
-                return (
-                    year === Number(selectedYear) &&
-                    (
-                        selectedMonth === "all" ||
-                        month === Number(selectedMonth)
-                    )
-                );
-
-            });
 
 
         /* =========================
-           NORMAL / OFFLINE आय FILTER
+           NORMAL + VERIFIED
+           आय को एक साथ जोड़ें
         ========================= */
 
-        const filteredNormalIncome =
-            normalIncome.filter(record => {
+        const allIncomeRecords = [
+            ...normalIncome,
+            ...verifiedDonationRecords
+        ];
+
+
+        /* =========================
+           YEAR + MONTH FILTER
+        ========================= */
+
+        incomeFilteredRecords =
+            allIncomeRecords.filter(record => {
 
                 const parts =
                     String(record.date || "").split(" ");
@@ -2525,201 +2504,48 @@ async function loadIncomeData() {
                 const year =
                     Number(dateParts[2]);
 
-                return (
-                    year === Number(selectedYear) &&
-                    (
-                        selectedMonth === "all" ||
-                        month === Number(selectedMonth)
-                    )
-                );
+
+                const yearMatch =
+                    year === Number(selectedYear);
+
+                const monthMatch =
+                    selectedMonth === "all" ||
+                    month === Number(selectedMonth);
+
+
+                return yearMatch && monthMatch;
 
             });
 
 
         /* =========================
-           OFFLINE + VERIFIED ONLINE
-           एक ही आय में जोड़ें
+           PAGE RESET
         ========================= */
 
-        incomeFilteredRecords =
-            filteredNormalIncome.concat(
-                filteredVerifiedIncome
-            );
+        incomeCurrentPage = 1;
 
 
         /* =========================
-           नई तारीख पहले
+           TABLE RENDER
         ========================= */
-
-        incomeFilteredRecords.sort(
-            function(a, b) {
-
-                const dateA =
-                    new Date(
-                        String(a.date).replace(
-                            /^(\d+)\/(\d+)\/(\d+)/,
-                            "$3-$1-$2"
-                        )
-                    );
-
-                const dateB =
-                    new Date(
-                        String(b.date).replace(
-                            /^(\d+)\/(\d+)\/(\d+)/,
-                            "$3-$1-$2"
-                        )
-                    );
-
-                return dateB - dateA;
-
-            }
-        );
-
-
-        incomeCurrentPage = 1;
 
         renderAccountTable();
 
 
-    } catch (error) {
-
-        console.error(
-            "Income Error:",
-            error
-        );
-
-        document.getElementById(
-            "incomeTableBody"
-        ).innerHTML = `
-            <tr>
-                <td colspan="4" class="no-entry">
-                    आय का विवरण लोड नहीं हो पाया
-                </td>
-            </tr>
-        `;
-
-    }
-
-}
-
-        /* =========================
-           चुने हुए साल / महीने के अनुसार
-           VERIFIED ONLINE FILTER
-        ========================= */
-
-        const verifiedIncome =
-            verifiedDonationRecords
-            .filter(record => {
-
-                const parts =
-                    String(record.date).split(" ");
-
-                const dateParts =
-                    parts[0].split("/");
-
-                if (dateParts.length !== 3) {
-                    return false;
-                }
-
-                const month =
-                    Number(dateParts[0]);
-
-                const year =
-                    Number(dateParts[2]);
-
-
-                return (
-                    year === Number(selectedYear) &&
-                    (
-                        selectedMonth === "all" ||
-                        month === Number(selectedMonth)
-                    )
-                );
-
-            });
-
-
-        /* =========================
-           NORMAL आय FILTER
-        ========================= */
-
-        const filteredNormalIncome =
+        console.log(
+            "Normal Income:",
             normalIncome
-            .filter(record => {
+        );
 
-                const parts =
-                    String(record.date || "").split(" ");
+        console.log(
+            "Verified Online Income:",
+            verifiedDonationRecords
+        );
 
-                if (parts.length === 0) {
-                    return false;
-                }
-
-                const dateParts =
-                    parts[0].split("/");
-
-                if (dateParts.length !== 3) {
-                    return false;
-                }
-
-                const month =
-                    Number(dateParts[0]);
-
-                const year =
-                    Number(dateParts[2]);
-
-
-                return (
-                    year === Number(selectedYear) &&
-                    (
-                        selectedMonth === "all" ||
-                        month === Number(selectedMonth)
-                    )
-                );
-
-            });
-
-
-        /* =========================
-           OFFLINE + VERIFIED ONLINE
-           एक ही आय तालिका
-        ========================= */
-
-        incomeFilteredRecords =
-            filteredNormalIncome.concat(
-                verifiedIncome
-            );
-
-
-        /* तारीख के अनुसार नई आय पहले */
-
-        incomeFilteredRecords.sort(function(a, b) {
-
-            const dateA =
-                new Date(
-                    String(a.date)
-                    .replace(
-                        /^(\d+)\/(\d+)\/(\d+)/,
-                        "$3-$1-$2"
-                    )
-                );
-
-            const dateB =
-                new Date(
-                    String(b.date)
-                    .replace(
-                        /^(\d+)\/(\d+)\/(\d+)/,
-                        "$3-$1-$2"
-                    )
-                );
-
-            return dateB - dateA;
-
-        });
-
-
-        incomeCurrentPage = 1;
-
-        renderAccountTable();
+        console.log(
+            "Final Income Records:",
+            incomeFilteredRecords
+        );
 
 
     } catch (error) {
@@ -2740,7 +2566,6 @@ async function loadIncomeData() {
         `;
 
     }
-
 }
 
 
