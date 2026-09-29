@@ -3264,33 +3264,88 @@ async function updateSelectedTotals() {
                     return;
                 }
 
-                const dateParts =
-                    String(record.date || "")
-                    .split(" ")[0]
-                    .split("/");
+                const rawDate =
+    String(record.date || "").trim();
 
-                const month =
-                    Number(dateParts[0]);
+const dateOnly =
+    rawDate.split(" ")[0];
 
-                const year =
-                    Number(dateParts[2]);
+let month = 0;
+let year = 0;
 
-                if (
-                    year === Number(incomeYear) &&
-                    (
-                        incomeMonth === "all" ||
-                        month === Number(incomeMonth)
-                    )
-                ) {
+if (dateOnly.includes("/")) {
 
-                    selectedIncomeTotal +=
-                        Number(record.amount) || 0;
+    const parts = dateOnly.split("/");
 
-                }
+    if (parts.length === 3) {
 
-            });
+        const first = Number(parts[0]);
+        const second = Number(parts[1]);
+        const third = Number(parts[2]);
+
+        /*
+           अगर format YYYY/MM/DD है
+        */
+        if (first >= 1900) {
+
+            year = first;
+            month = second;
 
         }
+
+        /*
+           अगर format DD/MM/YYYY है
+        */
+        else if (first > 12) {
+
+            year = third;
+            month = second;
+
+        }
+
+        /*
+           अगर format MM/DD/YYYY है
+        */
+        else if (second > 12) {
+
+            year = third;
+            month = first;
+
+        }
+
+        /*
+           सामान्य स्थिति
+           DD/MM/YYYY
+        */
+        else {
+
+            year = third;
+            month = second;
+
+        }
+
+    }
+
+} else if (dateOnly.includes("-")) {
+
+    const parts = dateOnly.split("-");
+
+    if (parts.length === 3) {
+
+        /*
+           YYYY-MM-DD
+        */
+        if (Number(parts[0]) >= 1900) {
+
+            year = Number(parts[0]);
+            month = Number(parts[1]);
+
+        }
+
+    }
+
+}
+
 
 
         /* =========================
