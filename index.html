@@ -2501,11 +2501,7 @@ const month =
 
 const year =
     Number(dateParts[2]);
-const month =
-    Number(dateParts[0]);
 
-const year =
-    Number(dateParts[2]);
 
 return (
     year === Number(selectedYear) &&
@@ -2514,7 +2510,7 @@ return (
         month === Number(selectedMonth)
     )
 );
-
+});
 
         /* =========================
            PAGE RESET
@@ -3608,8 +3604,52 @@ async function updateSelectedTotals() {
     }
 
 }
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
-}
+        const incomeButton =
+            document.getElementById("incomeViewButton");
+
+        const expenseButton =
+            document.getElementById("expenseViewButton");
+
+        if (incomeButton) {
+            incomeButton.addEventListener(
+                "click",
+                loadIncomeData
+            );
+        }
+
+        if (expenseButton) {
+            expenseButton.addEventListener(
+                "click",
+                loadExpenseData
+            );
+        }
+
+        document.getElementById("incomeYear")
+            .addEventListener(
+                "change",
+                updateSelectedTotals
+            );
+
+        document.getElementById("incomeMonth")
+            .addEventListener(
+                "change",
+                updateSelectedTotals
+            );
+
+        document.getElementById("expenseYear")
+            .addEventListener(
+                "change",
+                updateSelectedTotals
+            );
+
+        updateSelectedTotals();
+
+   } 
+);
 </script>
 </body>
 </html>
