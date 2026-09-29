@@ -2501,49 +2501,19 @@ const month =
 
 const year =
     Number(dateParts[2]);
-let selectedIncomeTotal = 0;
+const month =
+    Number(dateParts[0]);
 
-if (
-    incomeYear !== "" &&
-    incomeMonth !== ""
-) {
+const year =
+    Number(dateParts[2]);
 
-    records.forEach(record => {
-
-        if (
-            String(record.type || "").trim() !== "आय"
-        ) {
-            return;
-        }
-
-        const dateParts =
-            String(record.date || "")
-            .split(" ")[0]
-            .split("/");
-
-        const month =
-            Number(dateParts[0]);
-
-        const year =
-            Number(dateParts[2]);
-
-        if (
-            year === Number(incomeYear) &&
-            (
-                incomeMonth === "all" ||
-                month === Number(incomeMonth)
-            )
-        ) {
-
-            selectedIncomeTotal +=
-                Number(record.amount) || 0;
-
-        }
-
-    });
-
-}
-
+return (
+    year === Number(selectedYear) &&
+    (
+        selectedMonth === "all" ||
+        month === Number(selectedMonth)
+    )
+);
 
 
         /* =========================
@@ -2862,7 +2832,7 @@ const expenseRecords =
 
     renderIncomePagination(incomeRecords.length);
     renderExpensePagination(expenseRecords.length);
-   updateAccountSummary();
+   updateSelectedTotals();
 }
 
 
@@ -3196,6 +3166,8 @@ function renderExpensePagination(totalRecords) {
     pagination.appendChild(info);
 }
 
+
+
 /* =========================
    SELECTED TOTALS
 ========================= */
@@ -3208,23 +3180,63 @@ async function updateSelectedTotals() {
 
     try {
 
-        const response = await fetch(
+        /* =========================
+           NORMAL SHEET DATA
+        ========================= */
+
+        const normalResponse = await fetch(
             "https://script.google.com/macros/s/AKfycbz3_GtBFIWVwN2rEtzAJhnSBKGqxDrXJjQHf4XSmtJ7HDodZa-BKbPIz9LtIOlBVN5f/exec?action=data"
         );
 
-        const data = await response.json();
-        const records = data.records || [];
+        const normalData =
+            await normalResponse.json();
+
+        const normalRecords =
+            normalData.records || [];
 
 
         /* =========================
-           पूरा कुल आय / खर्च
-           बिना कुछ select किए भी
+           VERIFIED ONLINE UPI DATA
+        ========================= */
+
+        let onlineRecords = [];
+
+        try {
+
+            const onlineResponse =
+                await fetch(
+                    DONATION_API + "?action=verified"
+                );
+
+            const onlineData =
+                await onlineResponse.json();
+
+            if (Array.isArray(onlineData)) {
+
+                onlineRecords =
+                    onlineData;
+
+            }
+
+        } catch (onlineError) {
+
+            console.error(
+                "Online Income Error:",
+                onlineError
+            );
+
+        }
+
+
+        /* =========================
+           पूरा कुल आय
         ========================= */
 
         let totalIncome = 0;
         let totalExpense = 0;
 
-        records.forEach(record => {
+
+        normalRecords.forEach(record => {
 
             const amount =
                 Number(record.amount) || 0;
@@ -3233,12 +3245,26 @@ async function updateSelectedTotals() {
                 String(record.type || "").trim();
 
             if (type === "आय") {
+
                 totalIncome += amount;
+
             }
 
             if (type === "व्यय") {
+
                 totalExpense += amount;
+
             }
+
+        });
+
+
+        /* Verified Online Income */
+
+        onlineRecords.forEach(donation => {
+
+            totalIncome +=
+                Number(donation.Amount) || 0;
 
         });
 
@@ -3247,28 +3273,45 @@ async function updateSelectedTotals() {
            ऊपर हमेशा कुल दिखे
         ========================= */
 
-        document.getElementById("totalIncome").textContent =
+        document.getElementById(
+            "totalIncome"
+        ).textContent =
             "₹" + totalIncome;
 
-        document.getElementById("totalExpense").textContent =
+
+        document.getElementById(
+            "totalExpense"
+        ).textContent =
             "₹" + totalExpense;
 
-        document.getElementById("totalBalance").textContent =
-            "₹" + (totalIncome - totalExpense);
+
+        document.getElementById(
+            "totalBalance"
+        ).textContent =
+            "₹" + (
+                totalIncome -
+                totalExpense
+            );
 
 
         /* =========================
-           चुने हुए विकल्प
+           SELECTED VALUES
         ========================= */
 
         const incomeYear =
-            document.getElementById("incomeYear").value;
+            document.getElementById(
+                "incomeYear"
+            ).value;
 
         const incomeMonth =
-            document.getElementById("incomeMonth").value;
+            document.getElementById(
+                "incomeMonth"
+            ).value;
 
         const expenseYear =
-            document.getElementById("expenseYear").value;
+            document.getElementById(
+                "expenseYear"
+            ).value;
 
 
         let selectedIncomeTotal = 0;
@@ -3276,7 +3319,7 @@ async function updateSelectedTotals() {
 
 
         /* =========================
-           आय का चुना हुआ महीना
+           चुने हुए महीने की आय
         ========================= */
 
         if (
@@ -3284,126 +3327,153 @@ async function updateSelectedTotals() {
             incomeMonth !== ""
         ) {
 
-            records.forEach(record => {
+            /* Normal Income */
+
+            normalRecords.forEach(record => {
 
                 if (
-                    String(record.type || "").trim() !== "आय"
-                ) {
-                    return;
-                }
-
-                const rawDate =
-    String(record.date || "").trim();
-
-const dateOnly =
-    rawDate.split(" ")[0];
-
-let month = 0;
-let year = 0;
-
-if (dateOnly.includes("/")) {
-
-    const parts = dateOnly.split("/");
-
-    if (parts.length === 3) {
-
-        const first = Number(parts[0]);
-        const second = Number(parts[1]);
-        const third = Number(parts[2]);
-
-        /*
-           अगर format YYYY/MM/DD है
-        */
-        if (first >= 1900) {
-
-            year = first;
-            month = second;
-
-        }
-
-        /*
-           अगर format DD/MM/YYYY है
-        */
-        else if (first > 12) {
-
-            year = third;
-            month = second;
-
-        }
-
-        /*
-           अगर format MM/DD/YYYY है
-        */
-        else if (second > 12) {
-
-            year = third;
-            month = first;
-
-        }
-
-        /*
-           सामान्य स्थिति
-           DD/MM/YYYY
-        */
-        else {
-
-            year = third;
-            month = second;
-
-        }
-
-    }
-
-} else if (dateOnly.includes("-")) {
-
-    const parts = dateOnly.split("-");
-
-    if (parts.length === 3) {
-
-        /*
-           YYYY-MM-DD
-        */
-        if (Number(parts[0]) >= 1900) {
-
-            year = Number(parts[0]);
-            month = Number(parts[1]);
-
-        }
-
-    }
-
-}
-
-
-
-        /* =========================
-           व्यय का चुना हुआ साल
-        ========================= */
-
-        if (expenseYear !== "") {
-
-            records.forEach(record => {
-
-                if (
-                    String(record.type || "").trim() !== "व्यय"
+                    String(
+                        record.type || ""
+                    ).trim() !== "आय"
                 ) {
                     return;
                 }
 
                 const dateParts =
-                    String(record.date || "")
+                    String(
+                        record.date || ""
+                    )
                     .split(" ")[0]
                     .split("/");
+
+                if (
+                    dateParts.length !== 3
+                ) {
+                    return;
+                }
+
+                const month =
+                    Number(dateParts[0]);
 
                 const year =
                     Number(dateParts[2]);
 
+
                 if (
-                    year === Number(expenseYear)
+                    year === Number(
+                        incomeYear
+                    ) &&
+                    (
+                        incomeMonth === "all" ||
+                        month === Number(
+                            incomeMonth
+                        )
+                    )
+                ) {
+
+                    selectedIncomeTotal +=
+                        Number(
+                            record.amount
+                        ) || 0;
+
+                }
+
+            });
+
+
+            /* Verified Online Income */
+
+            onlineRecords.forEach(
+                donation => {
+
+                    const dateObject =
+                        new Date(
+                            donation.Timestamp
+                        );
+
+                    if (
+                        isNaN(
+                            dateObject.getTime()
+                        )
+                    ) {
+                        return;
+                    }
+
+                    const year =
+                        dateObject.getFullYear();
+
+                    const month =
+                        dateObject.getMonth() + 1;
+
+
+                    if (
+                        year === Number(
+                            incomeYear
+                        ) &&
+                        (
+                            incomeMonth === "all" ||
+                            month === Number(
+                                incomeMonth
+                            )
+                        )
+                    ) {
+
+                        selectedIncomeTotal +=
+                            Number(
+                                donation.Amount
+                            ) || 0;
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        /* =========================
+           चुने हुए साल का व्यय
+        ========================= */
+
+        if (expenseYear !== "") {
+
+            normalRecords.forEach(record => {
+
+                if (
+                    String(
+                        record.type || ""
+                    ).trim() !== "व्यय"
+                ) {
+                    return;
+                }
+
+                const dateParts =
+                    String(
+                        record.date || ""
+                    )
+                    .split(" ")[0]
+                    .split("/");
+
+                if (
+                    dateParts.length !== 3
+                ) {
+                    return;
+                }
+
+                const year =
+                    Number(dateParts[2]);
+
+
+                if (
+                    year === Number(
+                        expenseYear
+                    )
                 ) {
 
                     selectedExpenseTotal +=
-                        Number(record.amount) || 0;
+                        Number(
+                            record.amount
+                        ) || 0;
 
                 }
 
@@ -3413,21 +3483,13 @@ if (dateOnly.includes("/")) {
 
 
         /* =========================
-           नीचे कुल राशि दिखाना
+           नीचे चयनित कुल आय
         ========================= */
 
         let incomeTotalBox =
             document.getElementById(
                 "selectedIncomeTotal"
             );
-
-        let expenseTotalBox =
-            document.getElementById(
-                "selectedExpenseTotal"
-            );
-
-
-        /* आय का कुल box */
 
         if (!incomeTotalBox) {
 
@@ -3450,13 +3512,24 @@ if (dateOnly.includes("/")) {
                 "12px 0 20px";
 
             document
-                .getElementById("incomePagination")
-                .after(incomeTotalBox);
+                .getElementById(
+                    "incomePagination"
+                )
+                .after(
+                    incomeTotalBox
+                );
 
         }
 
 
-        /* व्यय का कुल box */
+        /* =========================
+           नीचे चयनित कुल व्यय
+        ========================= */
+
+        let expenseTotalBox =
+            document.getElementById(
+                "selectedExpenseTotal"
+            );
 
         if (!expenseTotalBox) {
 
@@ -3479,14 +3552,18 @@ if (dateOnly.includes("/")) {
                 "12px 0 20px";
 
             document
-                .getElementById("expensePagination")
-                .after(expenseTotalBox);
+                .getElementById(
+                    "expensePagination"
+                )
+                .after(
+                    expenseTotalBox
+                );
 
         }
 
 
         /* =========================
-           चुनी हुई आय दिखाना
+           आय का चयनित कुल
         ========================= */
 
         if (
@@ -3506,7 +3583,7 @@ if (dateOnly.includes("/")) {
 
 
         /* =========================
-           चुना हुआ व्यय दिखाना
+           व्यय का चयनित कुल
         ========================= */
 
         if (expenseYear !== "") {
@@ -3521,7 +3598,6 @@ if (dateOnly.includes("/")) {
 
         }
 
-
     } catch (error) {
 
         console.error(
@@ -3532,124 +3608,6 @@ if (dateOnly.includes("/")) {
     }
 
 }
-/* =========================
-   ONLY "विवरण देखें" BUTTON
-========================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-
-        const incomeButton =
-            document.getElementById(
-                "incomeViewButton"
-            );
-
-        const expenseButton =
-            document.getElementById(
-                "expenseViewButton"
-            );
-
-
-        if (incomeButton) {
-
-            incomeButton.addEventListener(
-                "click",
-                loadIncomeData
-            );
-
-        }
-
-
-        if (expenseButton) {
-
-            expenseButton.addEventListener(
-                "click",
-                loadExpenseData
-            );
-
-        }
-document.getElementById("incomeYear")
-    .addEventListener("change", updateSelectedTotals);
-
-document.getElementById("incomeMonth")
-    .addEventListener("change", updateSelectedTotals);
-
-document.getElementById("expenseYear")
-    .addEventListener("change", updateSelectedTotals);
-       updateSelectedTotals();
-    }
-);
-/* =========================
-   VERIFIED ONLINE DONATIONS
-========================= */
-
-/* =========================
-   LOAD VERIFIED ONLINE DONATIONS
-   INTO INCOME
-========================= */
-
-async function getVerifiedOnlineIncome() {
-
-    try {
-
-        const response = await fetch(
-            DONATION_API + "?action=verified"
-        );
-
-        const donations = await response.json();
-
-        if (!Array.isArray(donations)) {
-            return [];
-        }
-
-        return donations.map(function(donation) {
-
-            const date =
-                donation.Timestamp || "";
-
-            const name =
-                donation.Name || "";
-
-            let village =
-                donation.Note || "";
-
-            village =
-                village
-                .replace("गाँव:", "")
-                .trim();
-
-            const amount =
-                Number(donation.Amount) || 0;
-
-            return {
-
-                type: "आय",
-
-                date: date,
-
-                description: name,
-
-                village: village,
-
-                amount: amount,
-
-                onlineVerified: true
-
-            };
-
-        });
-
-    } catch (error) {
-
-        console.error(
-            "Verified Online Donation Error:",
-            error
-        );
-
-        return [];
-
-    }
 
 }
 </script>
