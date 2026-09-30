@@ -1692,40 +1692,60 @@ footer{
         </div>
 
 
-        <div class="account-list-section">
+       <div class="account-list-section">
+
+    <!-- =========================
+         आय का विवरण
+    ========================= -->
 
     <h3 class="income-title">🟢 आय का विवरण</h3>
 
     <table class="account-table">
-    <thead>
-        <tr>
-            <th>दाता का नाम<br>दिनांक / समय</th>
-            <th>गाँव</th>
-            <th>राशि</th>
-        </tr>
-    </thead>
 
-    <tbody id="incomeTableBody"></tbody>
-</table>
+        <thead>
+            <tr>
+                <th>दाता का नाम</th>
+                <th>दिनांक / समय</th>
+                <th>गाँव</th>
+                <th>राशि</th>
+            </tr>
+        </thead>
 
-    <div id="incomePagination" class="account-pagination"></div>
+        <tbody id="incomeTableBody"></tbody>
 
+    </table>
+
+    <div
+        id="incomePagination"
+        class="account-pagination"
+    ></div>
+
+
+    <!-- =========================
+         व्यय का विवरण
+    ========================= -->
 
     <h3 class="expense-title">🔴 व्यय का विवरण</h3>
 
     <table class="account-table">
-    <thead>
-        <tr>
-            <th>खर्च का विवरण<br>दिनांक / समय</th>
-            <th>अतिरिक्त विवरण</th>
-            <th>राशि</th>
-        </tr>
-    </thead>
 
-    <tbody id="expenseTableBody"></tbody>
-</table>
+        <thead>
+            <tr>
+                <th>खर्च का विवरण</th>
+                <th>दिनांक / समय</th>
+                <th>अतिरिक्त विवरण</th>
+                <th>राशि</th>
+            </tr>
+        </thead>
 
-    <div id="expensePagination" class="account-pagination"></div>
+        <tbody id="expenseTableBody"></tbody>
+
+    </table>
+
+    <div
+        id="expensePagination"
+        class="account-pagination"
+    ></div>
 
 </div>
 
@@ -2704,26 +2724,24 @@ function updateAccountSummary() {
 }
 function renderAccountTable() {
 
-    const incomeBody = document.getElementById("incomeTableBody");
-    const expenseBody = document.getElementById("expenseTableBody");
+    const incomeBody =
+        document.getElementById("incomeTableBody");
+
+    const expenseBody =
+        document.getElementById("expenseTableBody");
+
 
     incomeBody.innerHTML = "";
     expenseBody.innerHTML = "";
 
+
     // ==============================
-    // आय और व्यय अलग-अलग करें
+    // आय
     // ==============================
 
     const incomeRecords =
-    incomeFilteredRecords || [];
+        incomeFilteredRecords || [];
 
-const expenseRecords =
-    expenseFilteredRecords || [];
-
-
-    // ==============================
-    // आय की सूची
-    // ==============================
 
     if (incomeRecords.length === 0) {
 
@@ -2744,50 +2762,59 @@ const expenseRecords =
             incomeStart + pageSize;
 
         const incomePageRecords =
-            incomeRecords.slice(incomeStart, incomeEnd);
+            incomeRecords.slice(
+                incomeStart,
+                incomeEnd
+            );
 
-        incomePageRecords.forEach(record => {
 
-            const row = document.createElement("tr");
+        incomePageRecords.forEach(function(record) {
 
-           row.innerHTML = `
-    <td>
-        <div class="account-name-date">
+            const row =
+                document.createElement("tr");
 
-            <span class="record-name">
-                ${record.description || ""}
-            </span>
 
-            <span class="record-date">
-                ${formatRecordDate(record.date)}
-            </span>
+            row.innerHTML = `
 
-            ${
-                record.onlineVerified
-                ? '<span class="verified">✓ सत्यापित ऑनलाइन</span>'
-                : ''
-            }
+                <td>
+                    ${record.description || ""}
 
-        </div>
-    </td>
+                    ${
+                        record.onlineVerified
+                        ? '<div class="verified">✓ सत्यापित ऑनलाइन</div>'
+                        : ''
+                    }
+                </td>
 
-    <td>
-        ${record.village || ""}
-    </td>
+                <td>
+                    ${formatRecordDate(record.date)}
+                </td>
 
-    <td>
-        ₹${record.amount}
-    </td>
-`;
+                <td>
+                    ${record.village || ""}
+                </td>
+
+                <td>
+                    ₹${Number(record.amount) || 0}
+                </td>
+
+            `;
+
 
             incomeBody.appendChild(row);
+
         });
+
     }
 
 
     // ==============================
-    // व्यय की सूची
+    // व्यय
     // ==============================
+
+    const expenseRecords =
+        expenseFilteredRecords || [];
+
 
     if (expenseRecords.length === 0) {
 
@@ -2808,46 +2835,66 @@ const expenseRecords =
             expenseStart + pageSize;
 
         const expensePageRecords =
-            expenseRecords.slice(expenseStart, expenseEnd);
+            expenseRecords.slice(
+                expenseStart,
+                expenseEnd
+            );
 
-        expensePageRecords.forEach(record => {
 
-            const row = document.createElement("tr");
+        expensePageRecords.forEach(function(record) {
+
+            const row =
+                document.createElement("tr");
+
 
             row.innerHTML = `
-    <td>
-        <div class="account-name-date">
 
-            <span class="record-name">
-                ${record.description || ""}
-            </span>
+                <td>
+                    ${record.description || ""}
+                </td>
 
-            <span class="record-date">
-                ${formatRecordDate(record.date)}
-            </span>
+                <td>
+                    ${formatRecordDate(record.date)}
+                </td>
 
-        </div>
-    </td>
+                <td>
+                    ${record.details || ""}
+                </td>
 
-    <td>
-        ${record.details || ""}
-    </td>
+                <td>
+                    ₹${Number(record.amount) || 0}
+                </td>
 
-    <td>
-        ₹${record.amount}
-    </td>
-`;
+            `;
+
+
+            expenseBody.appendChild(row);
+
+        });
+
+    }
 
 
     // ==============================
-    // दोनों की Pagination
+    // PAGINATION
     // ==============================
 
-    renderIncomePagination(incomeRecords.length);
-    renderExpensePagination(expenseRecords.length);
-   updateSelectedTotals();
+    renderIncomePagination(
+        incomeRecords.length
+    );
+
+    renderExpensePagination(
+        expenseRecords.length
+    );
+
+
+    // ==============================
+    // TOTAL
+    // ==============================
+
+    updateSelectedTotals();
+
 }
-
 
 /* =========================
    PAGINATION
@@ -3180,10 +3227,6 @@ function renderExpensePagination(totalRecords) {
 }
 
 
-
-/* =========================
-   SELECTED TOTALS
-========================= */
 
 /* =========================
    SELECTED TOTALS
