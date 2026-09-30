@@ -656,7 +656,35 @@ nav a:hover{
 
     color:#777;
 }
+/* =========================
+   NAME + DATE/TIME ALIGNMENT
+========================= */
 
+.account-name-date{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    line-height:1.45;
+}
+
+.account-name-date .record-name{
+    font-weight:500;
+    color:#4b1008;
+}
+
+.account-name-date .record-date{
+    font-size:13px;
+    color:#765036;
+    margin-top:2px;
+    white-space:nowrap;
+}
+
+.account-name-date .verified{
+    font-size:12px;
+    color:green;
+    font-weight:bold;
+    margin-top:2px;
+}
 
 /* =========================
    OFFICERS
@@ -1698,17 +1726,16 @@ footer{
     <h3 class="income-title">🟢 आय का विवरण</h3>
 
     <table class="account-table">
-        <thead>
-            <tr>
-                <th>दिनांक / समय</th>
-                <th>दाता का नाम</th>
-                <th>गाँव</th>
-                <th>राशि</th>
-            </tr>
-        </thead>
+    <thead>
+        <tr>
+            <th>दाता का नाम<br>दिनांक / समय</th>
+            <th>गाँव</th>
+            <th>राशि</th>
+        </tr>
+    </thead>
 
-        <tbody id="incomeTableBody"></tbody>
-    </table>
+    <tbody id="incomeTableBody"></tbody>
+</table>
 
     <div id="incomePagination" class="account-pagination"></div>
 
@@ -1716,17 +1743,16 @@ footer{
     <h3 class="expense-title">🔴 व्यय का विवरण</h3>
 
     <table class="account-table">
-        <thead>
-            <tr>
-                <th>दिनांक / समय</th>
-                <th>खर्च का विवरण</th>
-                <th>अतिरिक्त विवरण</th>
-                <th>राशि</th>
-            </tr>
-        </thead>
+    <thead>
+        <tr>
+            <th>खर्च का विवरण<br>दिनांक / समय</th>
+            <th>अतिरिक्त विवरण</th>
+            <th>राशि</th>
+        </tr>
+    </thead>
 
-        <tbody id="expenseTableBody"></tbody>
-    </table>
+    <tbody id="expenseTableBody"></tbody>
+</table>
 
     <div id="expensePagination" class="account-pagination"></div>
 
@@ -2753,18 +2779,25 @@ const expenseRecords =
 
             const row = document.createElement("tr");
 
-            row.innerHTML = `
+           row.innerHTML = `
     <td>
-        ${formatRecordDate(record.date)}
-        ${
-            record.onlineVerified
-            ? '<br><small style="color:green;font-weight:bold;">✓ सत्यापित ऑनलाइन</small>'
-            : ''
-        }
-    </td>
+        <div class="account-name-date">
 
-    <td>
-        ${record.description || ""}
+            <span class="record-name">
+                ${record.description || ""}
+            </span>
+
+            <span class="record-date">
+                ${formatRecordDate(record.date)}
+            </span>
+
+            ${
+                record.onlineVerified
+                ? '<span class="verified">✓ सत्यापित ऑनलाइन</span>'
+                : ''
+            }
+
+        </div>
     </td>
 
     <td>
@@ -2811,15 +2844,28 @@ const expenseRecords =
             const row = document.createElement("tr");
 
             row.innerHTML = `
-                <td>${formatRecordDate(record.date)}</td>
-                <td>${record.description || ""}</td>
-                <td>${record.details || ""}</td>
-                <td>₹${record.amount}</td>
-            `;
+    <td>
+        <div class="account-name-date">
 
-            expenseBody.appendChild(row);
-        });
-    }
+            <span class="record-name">
+                ${record.description || ""}
+            </span>
+
+            <span class="record-date">
+                ${formatRecordDate(record.date)}
+            </span>
+
+        </div>
+    </td>
+
+    <td>
+        ${record.details || ""}
+    </td>
+
+    <td>
+        ₹${record.amount}
+    </td>
+`;
 
 
     // ==============================
