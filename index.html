@@ -2356,55 +2356,90 @@ let expenseCurrentPage = 1;
    LOAD AAY DATA
 ========================= */
 
-async function loadIncomeData() {
+/* =========================
+   FAST ACCOUNTS DATA CACHE
+========================= */
 
-    const selectedYear =
-        document.getElementById("incomeYear").value;
+let accountsDataCache = null;
+let accountsDataLoading = null;
 
-    const selectedMonth =
-        document.getElementById("incomeMonth").value;
 
-    if (selectedYear === "" || selectedMonth === "") {
-        alert("कृपया पहले आय का वर्ष और महीना चुनें");
-        return;
+/* =========================
+   DATA केवल एक बार LOAD करें
+========================= */
+
+async function loadAccountsDataOnce() {
+
+    // अगर data पहले से मौजूद है तो तुरंत वापस दें
+    if (accountsDataCache) {
+        return accountsDataCache;
     }
 
-    try {
+    // अगर पहले से loading चल रही है तो उसी का इंतजार करें
+    if (accountsDataLoading) {
+        return accountsDataLoading;
+    }
 
-        /* =========================
-           NORMAL / OFFLINE आय
-        ========================= */
 
-        const normalResponse = await fetch(
+    accountsDataLoading = Promise.all([
+
+        /* NORMAL आय + व्यय */
+        fetch(
             "https://script.google.com/macros/s/AKfycbz3_GtBFIWVwN2rEtzAJhnSBKGqxDrXJjQHf4XSmtJ7HDodZa-BKbPIz9LtIOlBVN5f/exec?action=data"
-        );
+        ).then(function(response) {
+            return response.json();
+        }),
+
+
+        /* VERIFIED ONLINE CHANDA */
+        fetch(
+            DONATION_API + "?action=verified"
+        ).then(function(response) {
+            return response.json();
+        })
+
+    ]).then(function(results) {
 
         const normalData =
-            await normalResponse.json();
+            results[0];
+
+        const verifiedData =
+            results[1];
+
+
+        /* =========================
+           NORMAL RECORDS
+        ========================= */
+
+        const allNormalRecords =
+            normalData.records || [];
+
 
         const normalIncome =
-            (normalData.records || [])
-            .filter(record => {
+            allNormalRecords.filter(function(record) {
 
-                return String(record.type || "").trim() === "आय";
+                return String(
+                    record.type || ""
+                ).trim() === "आय";
+
+            });
+
+
+        const normalExpense =
+            allNormalRecords.filter(function(record) {
+
+                return String(
+                    record.type || ""
+                ).trim() === "व्यय";
 
             });
 
 
         /* =========================
-           VERIFIED ONLINE DONATION
+           VERIFIED ONLINE INCOME
         ========================= */
 
-        const verifiedResponse =
-            await fetch(
-                DONATION_API + "?action=verified"
-            );
-
-        const verifiedData =
-            await verifiedResponse.json();
-
-
-        verifiedDonationRecords = [];
+        const verifiedIncome = [];
 
 
         if (Array.isArray(verifiedData)) {
@@ -2414,10 +2449,16 @@ async function loadIncomeData() {
                 const timestamp =
                     donation.Timestamp || "";
 
+
                 const dateObject =
                     new Date(timestamp);
 
-                if (isNaN(dateObject.getTime())) {
+
+                if (
+                    isNaN(
+                        dateObject.getTime()
+                    )
+                ) {
                     return;
                 }
 
@@ -2425,8 +2466,25 @@ async function loadIncomeData() {
                 const month =
                     dateObject.getMonth() + 1;
 
+
+                const day =
+                    dateObject.getDate();
+
+
                 const year =
                     dateObject.getFullYear();
+
+
+                const hour =
+                    dateObject.getHours();
+
+
+                const minute =
+                    dateObject.getMinutes();
+
+
+                const second =
+                    dateObject.getSeconds();
 
 
                 const name =
@@ -2436,32 +2494,35 @@ async function loadIncomeData() {
                 let village =
                     donation.Note || "";
 
+
                 village =
                     village
-                    .replace("गाँव:", "")
-                    .trim();
+                        .replace("गाँव:", "")
+                        .trim();
 
 
                 const amount =
-                    Number(donation.Amount) || 0;
+                    Number(
+                        donation.Amount
+                    ) || 0;
 
 
-                verifiedDonationRecords.push({
+                verifiedIncome.push({
 
                     type: "आय",
 
                     date:
                         String(month).padStart(2, "0") +
                         "/" +
-                        String(dateObject.getDate()).padStart(2, "0") +
+                        String(day).padStart(2, "0") +
                         "/" +
                         year +
                         " " +
-                        String(dateObject.getHours()).padStart(2, "0") +
+                        String(hour).padStart(2, "0") +
                         ":" +
-                        String(dateObject.getMinutes()).padStart(2, "0") +
+                        String(minute).padStart(2, "0") +
                         ":" +
-                        String(dateObject.getSeconds()).padStart(2, "0"),
+                        String(second).padStart(2, "0"),
 
                     description:
                         name,
@@ -2483,13 +2544,87 @@ async function loadIncomeData() {
 
 
         /* =========================
-           NORMAL + VERIFIED
-           आय को एक साथ जोड़ें
+           CACHE तैयार
+        ========================= */
+
+        accountsDataCache = {
+
+            normalIncome:
+                normalIncome,
+
+            normalExpense:
+                normalExpense,
+
+            verifiedIncome:
+                verifiedIncome
+
+        };
+
+
+        return accountsDataCache;
+
+
+    }).catch(function(error) {
+
+        // अगर loading में error हो तो अगली कोशिश की अनुमति दें
+        accountsDataLoading = null;
+
+        throw error;
+
+    });
+
+
+    return accountsDataLoading;
+}
+
+
+/* =========================
+   FAST LOAD INCOME
+========================= */
+
+async function loadIncomeData() {
+
+    const selectedYear =
+        document.getElementById(
+            "incomeYear"
+        ).value;
+
+
+    const selectedMonth =
+        document.getElementById(
+            "incomeMonth"
+        ).value;
+
+
+    if (
+        selectedYear === "" ||
+        selectedMonth === ""
+    ) {
+
+        alert(
+            "कृपया पहले आय का वर्ष और महीना चुनें"
+        );
+
+        return;
+    }
+
+
+    try {
+
+        const data =
+            await loadAccountsDataOnce();
+
+
+        /* =========================
+           NORMAL + VERIFIED आय
         ========================= */
 
         const allIncomeRecords = [
-            ...normalIncome,
-            ...verifiedDonationRecords
+
+            ...data.normalIncome,
+
+            ...data.verifiedIncome
+
         ];
 
 
@@ -2498,35 +2633,58 @@ async function loadIncomeData() {
         ========================= */
 
         incomeFilteredRecords =
-            allIncomeRecords.filter(record => {
+            allIncomeRecords.filter(
+                function(record) {
 
-                const parts =
-                    String(record.date || "").split(" ");
+                    const dateParts =
+                        String(
+                            record.date || ""
+                        )
+                        .split(" ")[0]
+                        .split("/");
 
-                if (parts.length === 0) {
-                    return false;
+
+                    if (
+                        dateParts.length !== 3
+                    ) {
+                        return false;
+                    }
+
+
+                    const month =
+                        Number(
+                            dateParts[0]
+                        );
+
+
+                    const year =
+                        Number(
+                            dateParts[2]
+                        );
+
+
+                    return (
+
+                        year ===
+                        Number(selectedYear)
+
+                        &&
+
+                        (
+                            selectedMonth ===
+                            "all"
+
+                            ||
+
+                            month ===
+                            Number(selectedMonth)
+                        )
+
+                    );
+
                 }
+            );
 
-               const dateParts =
-    String(record.date || "")
-    .split(" ")[0]
-    .split("/");
-
-const month =
-    Number(dateParts[0]);
-
-const year =
-    Number(dateParts[2]);
-
-
-return (
-    year === Number(selectedYear) &&
-    (
-        selectedMonth === "all" ||
-        month === Number(selectedMonth)
-    )
-);
-});
 
         /* =========================
            PAGE RESET
@@ -2536,26 +2694,10 @@ return (
 
 
         /* =========================
-           TABLE RENDER
+           TABLE तुरंत दिखाएँ
         ========================= */
 
         renderAccountTable();
-
-
-        console.log(
-            "Normal Income:",
-            normalIncome
-        );
-
-        console.log(
-            "Verified Online Income:",
-            verifiedDonationRecords
-        );
-
-        console.log(
-            "Final Income Records:",
-            incomeFilteredRecords
-        );
 
 
     } catch (error) {
@@ -2565,71 +2707,110 @@ return (
             error
         );
 
+
         document.getElementById(
             "incomeTableBody"
         ).innerHTML = `
+
             <tr>
-                <td colspan="4" class="no-entry">
+
+                <td
+                    colspan="4"
+                    class="no-entry"
+                >
                     आय का विवरण लोड नहीं हो पाया
                 </td>
+
             </tr>
+
         `;
 
     }
+
 }
 
 
 /* =========================
-   LOAD EXPENSE DATA
+   FAST LOAD EXPENSE
 ========================= */
 
 async function loadExpenseData() {
 
     const selectedYear =
-        document.getElementById("expenseYear").value;
+        document.getElementById(
+            "expenseYear"
+        ).value;
 
-    if (selectedYear === "") {
-        alert("कृपया पहले व्यय का वर्ष चुनें");
+
+    if (
+        selectedYear === ""
+    ) {
+
+        alert(
+            "कृपया पहले व्यय का वर्ष चुनें"
+        );
+
         return;
     }
 
+
     try {
 
-        const response = await fetch(
-    "https://script.google.com/macros/s/AKfycbz3_GtBFIWVwN2rEtzAJhnSBKGqxDrXJjQHf4XSmtJ7HDodZa-BKbPIz9LtIOlBVN5f/exec?action=data"
-);
+        const data =
+            await loadAccountsDataOnce();
 
-        const data = await response.json();
-console.log("सभी रिकॉर्ड:", data.records);
-console.log("रिकॉर्ड की संख्या:", (data.records || []).length);
+
+        /* =========================
+           YEAR FILTER
+        ========================= */
+
         expenseFilteredRecords =
-            (data.records || []).filter(record => {
+            data.normalExpense.filter(
+                function(record) {
 
-                if (String(record.type || "").trim() !== "व्यय") {
-    return false;
-}
+                    const dateParts =
+                        String(
+                            record.date || ""
+                        )
+                        .split(" ")[0]
+                        .split("/");
 
-                const parts = String(record.date || "").split(" ");
 
-if (parts.length === 0) {
-    return false;
-}
+                    if (
+                        dateParts.length !== 3
+                    ) {
+                        return false;
+                    }
 
-const dateParts = parts[0].split("/");
 
-if (dateParts.length !== 3) {
-    return false;
-}
+                    const year =
+                        Number(
+                            dateParts[2]
+                        );
 
-const year = Number(dateParts[2]);
 
-return year === Number(selectedYear);
+                    return (
+                        year ===
+                        Number(selectedYear)
+                    );
 
-            });
+                }
+            );
+
+
+        /* =========================
+           PAGE RESET
+        ========================= */
 
         expenseCurrentPage = 1;
 
+
+        /* =========================
+           TABLE तुरंत दिखाएँ
+        ========================= */
+
         renderAccountTable();
+
 
     } catch (error) {
 
@@ -2638,19 +2819,27 @@ return year === Number(selectedYear);
             error
         );
 
+
         document.getElementById(
             "expenseTableBody"
         ).innerHTML = `
+
             <tr>
-                <td colspan="4" class="no-entry">
+
+                <td
+                    colspan="4"
+                    class="no-entry"
+                >
                     व्यय का विवरण लोड नहीं हो पाया
                 </td>
+
             </tr>
+
         `;
 
     }
-}
 
+}
 /* =========================
    TABLE
 ========================= */
@@ -3699,15 +3888,17 @@ document.addEventListener(
                 updateSelectedTotals
             );
 
-        document.getElementById("expenseYear")
-            .addEventListener(
-                "change",
-                updateSelectedTotals
-            );
+       document.getElementById("expenseYear")
+    .addEventListener(
+        "change",
+        updateSelectedTotals
+    );
 
-        updateSelectedTotals();
+loadAccountsDataOnce().catch(console.error);
 
-   } 
+updateSelectedTotals();
+
+}
 );
 </script>
 </body>
